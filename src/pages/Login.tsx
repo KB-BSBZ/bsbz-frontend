@@ -167,10 +167,6 @@ const Line = styled.div`
 interface IFormData {
   user_id: string;
   password: string;
-  email: string;
-  user_name: string;
-  ssn: string;
-  phone_num: string;
 }
 
 export default function Signup() {

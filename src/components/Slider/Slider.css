@@ -1,8 +1,12 @@
 :root {
-  --swiper-navigation-color: black !important;
-  --swiper-theme-color: black !important;
+  --swiper-navigation-color: #ffd700ff !important;
+  --swiper-theme-color: #ffd700ff !important;
 }
 .swiper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   height: 100%;
-  width: 100%;
+  width: 80%;
 }
