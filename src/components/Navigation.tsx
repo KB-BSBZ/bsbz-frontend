@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import useScrollReset from "../utils/useScrollReset";
 import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
+import { loginState } from "../utils/atoms";
 
 const Container = styled.div`
   background-color: ${(props) => props.theme.navColor};
@@ -59,7 +61,8 @@ export default function Navigation() {
   const nav = useNavigate();
   let reset = useScrollReset();
   let cookie = null;
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useRecoilState(loginState);
+  // recoil 의 loginState 가져오기
 
   useEffect(() => {
     cookie = localStorage.getItem("cookie");
@@ -78,10 +81,12 @@ export default function Navigation() {
 
   const onLogout = (event: React.MouseEvent<HTMLSpanElement>) => {
     setIsLogin(false);
+    localStorage.setItem("isLoggedIn", "false");
   };
 
   const test = (event: React.MouseEvent<HTMLSpanElement>) => {
     setIsLogin(true);
+    localStorage.setItem("isLoggedIn", "true");
   };
   return (
     <Container>
@@ -98,6 +103,12 @@ export default function Navigation() {
         <span onClick={onMove} id="banking">
           뱅 킹
         </span>
+        <span onClick={onMove} id="signup">
+          회원 가입
+        </span>
+        <span onClick={test} id="test">
+          test
+        </span>
         {isLogin ? (
           <span onClick={onLogout} id="logout">
             로 그 아 웃
@@ -107,13 +118,6 @@ export default function Navigation() {
             로 그 인
           </span>
         )}
-        <span onClick={onMove} id="signup">
-          회원 가입
-        </span>
-
-        <span onClick={test} id="test">
-          test
-        </span>
       </NavBar>
     </Container>
   );

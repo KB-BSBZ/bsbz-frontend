@@ -4,6 +4,7 @@ import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
 import { theme } from "./utils/theme";
+import { RecoilRoot } from "recoil";
 
 const Grobal = createGlobalStyle`
   * {
@@ -26,9 +27,11 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <BrowserRouter>
-    <ThemeProvider theme={theme}>
-      <Grobal />
-      <App />
-    </ThemeProvider>
+    <RecoilRoot>
+      <ThemeProvider theme={theme}>
+        <Grobal />
+        <App />
+      </ThemeProvider>
+    </RecoilRoot>
   </BrowserRouter>
 );

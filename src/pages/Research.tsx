@@ -125,7 +125,7 @@ export default function Research() {
   return (
     <>
       {isLoading && <Loading />}
-      <Hood title={"RESEARCH"} />
+      <Hood title={"리서치"} />
       <Navigation />
       <Container>
         <Recommandation>
@@ -151,9 +151,9 @@ export default function Research() {
           <ChartTap>
             <Title>HELLO</Title>
             <Charts>
-              {chartList.map((chart) => (
+              {/* {chartList.map((chart) => (
                 <Chart />
-              ))}
+              ))} */}
             </Charts>
           </ChartTap>
         </BottomBar>

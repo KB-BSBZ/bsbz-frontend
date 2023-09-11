@@ -9,7 +9,7 @@ export default function Banking() {
   const [isLoading, setIsLoading] = useState(false);
   return (
     <>
-      <Hood title={"BANKING"} />
+      <Hood title={"입출금"} />
       {isLoading && <Loading />}
       <Navigation />
       <BankingMainBox />

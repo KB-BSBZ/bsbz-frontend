@@ -19,6 +19,7 @@ npm i --save @fortawesome/free-solid-svg-icons
 
 npm install swiper
 npm install axios
+npm install recoil
 
 npm install --save react-helmet
 
@@ -33,6 +34,8 @@ npm i react-hook-form
 // react-helmet 설치 (상단 바)
 // TS 설정
 // hook-form 설치
+// axios 설치
+// recoil 설치
 ```
 
 ## 메인화면 사진 자료

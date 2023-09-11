@@ -8,6 +8,7 @@ import Pentagon from "../components/Pentagon";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faForumbee } from "@fortawesome/free-brands-svg-icons";
 import axios from "axios";
+import Hood from "../components/Hood";
 
 const Container = styled.div`
   display: flex;
@@ -203,6 +204,8 @@ export default function Signup() {
     <>
       {isLoading && <Loading />}
       <Navigation />
+      <Hood title={"로그인"} />
+
       <Container>
         <Main>
           <LoginBox>
@@ -232,6 +235,7 @@ export default function Signup() {
                       })}
                       type="text"
                       placeholder="아이디"
+                      autoComplete="username"
                     />
                   </InputBox>
                   <InputBox>
@@ -241,6 +245,7 @@ export default function Signup() {
                       })}
                       type="password"
                       placeholder="비밀번호"
+                      autoComplete="current-password"
                     />
                   </InputBox>
 

@@ -5,6 +5,7 @@ import Navigation from "../components/Navigation";
 import Footer from "../components/Footer/Footer";
 import { useForm } from "react-hook-form";
 import Pentagon from "../components/Pentagon";
+import Hood from "../components/Hood";
 
 const Container = styled.div`
   display: flex;
@@ -183,6 +184,7 @@ export default function Signup() {
     <>
       {isLoading && <Loading />}
       <Navigation />
+      <Hood title={"회원가입"} />
       <Container>
         <Main>
           <TextBox>
@@ -201,6 +203,7 @@ export default function Signup() {
                     })}
                     type="text"
                     placeholder="아이디"
+                    autoComplete="username"
                   />
                 </InputBox>
                 <InputBox>
@@ -222,6 +225,7 @@ export default function Signup() {
                       },
                     })}
                     type="password"
+                    autoComplete="current-password"
                     placeholder="비밀번호"
                   />
                 </InputBox>

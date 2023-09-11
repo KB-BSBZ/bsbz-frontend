@@ -14,7 +14,7 @@ export default function Home() {
 
   return (
     <>
-      <Hood title={"HOMEPAGE"} />
+      <Hood title={"홈페이지"} />
       {isLoading && <Loading />}
       <Navigation />
       {/* <Slider data={imgList} /> */}
