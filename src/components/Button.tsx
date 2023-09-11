@@ -10,6 +10,9 @@ const OuterBox = styled.div<IBoxProps>`
 
   width: ${(props) => props.width};
   height: ${(props) => props.height};
+
+  cursor: pointer;
+  user-select: none;
 `;
 
 const InnerBox = styled.div<IBoxProps>`

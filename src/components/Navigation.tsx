@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import useScrollReset from "../utils/useScrollReset";
+import { useEffect, useState } from "react";
 
 const Container = styled.div`
   background-color: ${(props) => props.theme.navColor};
@@ -57,6 +58,15 @@ const Logo = styled.div`
 export default function Navigation() {
   const nav = useNavigate();
   let reset = useScrollReset();
+  let cookie = null;
+  const [isLogin, setIsLogin] = useState(false);
+
+  useEffect(() => {
+    cookie = localStorage.getItem("cookie");
+    if (cookie != null) {
+      setIsLogin(true);
+    }
+  }, [cookie]);
 
   const onMove = (event: React.MouseEvent<HTMLSpanElement>) => {
     // console.log(event);
@@ -66,6 +76,13 @@ export default function Navigation() {
     destination === "home" ? reset("/") : reset(`/${destination}`);
   };
 
+  const onLogout = (event: React.MouseEvent<HTMLSpanElement>) => {
+    setIsLogin(false);
+  };
+
+  const test = (event: React.MouseEvent<HTMLSpanElement>) => {
+    setIsLogin(true);
+  };
   return (
     <Container>
       <Logo>
@@ -81,11 +98,21 @@ export default function Navigation() {
         <span onClick={onMove} id="banking">
           뱅 킹
         </span>
-        <span onClick={onMove} id="login">
-          로 그 인
-        </span>
+        {isLogin ? (
+          <span onClick={onLogout} id="logout">
+            로 그 아 웃
+          </span>
+        ) : (
+          <span onClick={onMove} id="login">
+            로 그 인
+          </span>
+        )}
         <span onClick={onMove} id="signup">
           회원 가입
+        </span>
+
+        <span onClick={test} id="test">
+          test
         </span>
       </NavBar>
     </Container>

@@ -18,6 +18,7 @@ npm i --save @fortawesome/free-regular-svg-icons
 npm i --save @fortawesome/free-solid-svg-icons
 
 npm install swiper
+npm install axios
 
 npm install --save react-helmet
 
