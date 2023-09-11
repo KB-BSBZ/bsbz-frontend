@@ -1,14 +1,11 @@
-import { useState } from "react";
 import { styled } from "styled-components";
-import Withdraw from "./Withdraw";
-import Deposit from "./Deposit";
+import BankSlider from "./BankSlider.jsx";
+import { imgList } from "../../jsons/imgList.js";
 
 const Container = styled.div`
   display: flex;
-  flex-direction: row;
   justify-content: center;
   align-items: center;
-
   padding-top: 12vh;
   background-color: ${(props) => props.theme.mainColor};
   margin-bottom: 50px;
@@ -19,148 +16,148 @@ const Main = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`;
-const Box = styled.div`
-  border-radius: 12px;
-  height: 88vh;
-  width: 50vw;
-  //border: 1px solid;
-  display: flex;
-
   flex-direction: column;
-
-  flex-wrap: wrap;
-  background-color: #ffd700ff;
-
-  > .unClickableAreaLeftOn {
-    width: 25vw;
-    height: 6vh;
-
-    //border: 1px solid;
-    pointer-events: none; /* 클릭 비활성화 */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-bottom: 1px solid #000000ff;
-
-    z-index: 2; /* 텍스트를 토글 버튼 위로 올립니다. */
-  }
-  > .unClickableAreaLeftOff {
-    pointer-events: auto; /* 클릭 활성화 */
-
-    // 클릭시 비활성화 부분 밑줄 코드 1)
-    border-bottom: 1px solid #ffd700ff;
-  }
-
-  > .unClickableAreaRightOn {
-    width: 25vw;
-    height: 6vh;
-    position: absolute;
-    left: 50%;
-    //border: 1px solid;
-    pointer-events: auto; /* 클릭 활성화 */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-bottom: 1px solid #ffd700ff;
-    z-index: 2; /* 텍스트를 토글 버튼 위로 올립니다. */
-  }
-  > .unClickableAreaRightOff {
-    pointer-events: none; /* 클릭 비활성화 */
-
-    // 클릭시 비활성화 부분 밑줄 코드 2 )
-    border-bottom: 1px solid #000000ff;
-  }
+  border: 1px solid;
+`;
+const BankSlide = styled.div`
+  height: 30vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* border: 1px solid; */
 `;
 
-const ToggleContainer = styled.div`
-  position: relative;
-  cursor: pointer;
-  width: 25vw;
-  height: 0px;
+const InputSection = styled.div`
+  border: 1px solid;
+  height: 40vh;
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+`;
+const SeletedBank = styled.div`
+  border: 1px solid;
+  width: 100%;
+  height: 18%;
+  display: flex;
+`;
+const BankName = styled.div`
+  width: 20%;
+  height: 100%;
+  font-size: 24px;
+  /* border: 1px solid; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const AccountNum = styled.div`
+  width: 80%;
+  height: 80%;
+  font-size: 24px;
+  border-bottom: 1px solid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const TriangleBox = styled.div`
+  display: flex;
+  height: 18%;
+  justify-content: end;
+`;
 
-  > .toggle-container {
-    width: 50vw;
-    height: 6vh;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-    background-color: #e9e9eaff;
-  }
-  //.toggle--checked 클래스가 활성화 되었을 경우의 CSS를 구현
-  > .toggle--checked {
-    background-color: #e9e9eaff;
+const Triangle = styled.div`
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent; /* 왼쪽 변 */
+  border-right: 20px solid transparent; /* 오른쪽 변 */
+  border-top: 40px solid #f00; /* 아래쪽 변 및 배경색 (여기서는 빨간색) */
+  margin: 2%;
+`;
 
-    // 애니메이션 효과 3곳 주석처리
-    //transition: 0.5s;
-  }
+const BSBZBank = styled.div`
+  border: 1px solid;
+  width: 100%;
+  height: 18%;
+  display: flex;
+`;
 
-  > .toggle-circle {
-    position: absolute;
-    top: 0px;
-    left: 25vw;
-    width: 25vw;
-    height: 6vh;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-    background-color: ${(props) => props.theme.highlightColor};
+const InputPrice = styled.div`
+  margin-top: 50px;
+  border: 1px solid;
+  width: 100%;
+  height: 18%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
-    // 애니메이션 효과 3곳 주석처리
-    //transition: 0.5s;
-    //.toggle--checked 클래스가 활성화 되었을 경우의 CSS를 구현
-  }
-  > .toggle--checked {
-    left: 0;
+const Price = styled.div`
+  height: 80%;
+  width: 20%;
+  font-size: 24px;
+  padding: 3%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+`;
+const InputBalance = styled.input`
+  height: 60%;
+  width: 70%;
+  border: none;
+  font-size: 24px;
+  text-align: end;
+  padding-right: 10px;
+`;
+const Blank = styled.div`
+  width: 20%;
+`;
 
-    // 애니메이션 효과 3곳 주석처리
-    //transition: 0.5s;
-  }
+const SubmitBtn = styled.div`
+  width: 100%;
+  height: 20%;
+  border: 1px solid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const Btn = styled.div`
+  width: 20%;
+  height: 60%;
+  border: 1px solid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export default function BankingInfo() {
-  const [isOn, setisOn] = useState(true);
-
-  const toggleHandler = () => {
-    // isOn의 상태를 변경하는 메소드를 구현
-    setisOn(!isOn);
-  };
   return (
     <>
       <Container>
         <Main>
-          <Box>
-            <ToggleContainer
-              // 클릭하면 토글이 켜진 상태(isOn)를 boolean 타입으로 변경하는 메소드가 실행
-              onClick={toggleHandler}
-            >
-              {/* 아래에 div 엘리먼트 2개가 있다. 각각의 클래스를 'toggle-container', 'toggle-circle' 로 지정 */}
-              {/* Toggle Switch가 ON인 상태일 경우에만 toggle--checked 클래스를 div 엘리먼트 2개에 모두 추가. 조건부 스타일링을 활용*/}
-              <div
-                className={`toggle-container ${
-                  isOn ? "toggle--checked" : null
-                }`}
-              ></div>
-              <div
-                className={`toggle-circle ${isOn ? "toggle--checked" : null}`}
-              ></div>
-            </ToggleContainer>
-            <div
-              className={`unClickableAreaLeftOn ${
-                isOn ? "unClickableAreaLeftOff" : null
-              }`}
-            >
-              <a className="DepositBtn">입 금</a>
-            </div>
-            <div
-              className={`unClickableAreaRightOn ${
-                isOn ? "unClickableAreaRightOff" : null
-              }`}
-            >
-              <a className="WithdrawBtn">출 금</a>
-            </div>
-            {/* Desc 컴포넌트를 활용*/}
-            {/* Toggle Switch가 ON인 상태일 경우에 Desc 컴포넌트 내부의 텍스트를 'Toggle Switch ON'으로, 그렇지 않은 경우 'Toggle Switch OFF'. 조건부 렌더링을 활용. */}
-            {isOn === false ? <Withdraw></Withdraw> : <Deposit></Deposit>}
-          </Box>
+          <BankSlide>
+            <BankSlider data={imgList}></BankSlider>
+          </BankSlide>
+          <InputSection>
+            <SeletedBank>
+              <BankName>국민 은행</BankName>
+              <AccountNum>111-111-1111-1111</AccountNum>
+            </SeletedBank>
+            <TriangleBox>
+              <Triangle></Triangle>
+            </TriangleBox>
+            <BSBZBank>
+              <BankName>벌부 계좌</BankName>
+              <AccountNum>222-222-2222-2222</AccountNum>
+            </BSBZBank>
+            <InputPrice>
+              <Blank></Blank>
+              <InputBalance></InputBalance>
+              <Price>원</Price>
+            </InputPrice>
+            <SubmitBtn>
+              <Btn>입 금 하 기</Btn>
+            </SubmitBtn>
+          </InputSection>
         </Main>
       </Container>
     </>
