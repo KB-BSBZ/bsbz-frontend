@@ -7,6 +7,8 @@ import Loading from "./components/Loading";
 import Signup from "./pages/Signup";
 import Banking from "./pages/Banking";
 import Research from "./pages/Research";
+import Product from "./pages/Product";
+import MyPage from "./pages/MyPage";
 
 export default function App() {
   return (
@@ -17,6 +19,8 @@ export default function App() {
       <Route path="/loading" element={<Loading />} />
       <Route path="/banking" element={<Banking />} />
       <Route path="/research" element={<Research />} />
+      <Route path="/product" element={<Product />} />
+      <Route path="/mypage" element={<MyPage />} />
     </Routes>
   );
 }
