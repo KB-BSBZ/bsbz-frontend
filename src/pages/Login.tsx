@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faForumbee } from "@fortawesome/free-brands-svg-icons";
 import axios from "axios";
 import Hood from "../components/Hood";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -173,6 +174,7 @@ interface IFormData {
 
 export default function Signup() {
   const [isLoading, setIsLoading] = useState(false);
+  const nav = useNavigate();
 
   const {
     register,
@@ -190,6 +192,7 @@ export default function Signup() {
       const response = await axios.post(`${BASE_URL}/user/login`, data);
 
       console.log(response.data); // 서버 응답 데이터 출력
+      nav("/");
     } catch (error) {
       console.error(error);
     } finally {

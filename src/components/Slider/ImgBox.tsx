@@ -1,18 +1,13 @@
 import { styled } from "styled-components";
 // import { ISliderData } from "./Slider";
 
-const Container = styled.span`
+const Container = styled.span<{ url: string }>`
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: start;
   align-items: flex-end;
-`;
-
-const Image = styled.span<{ url: string }>`
-  width: 100%;
-  height: 100%;
 
   background-image: linear-gradient(
       to right,
@@ -25,10 +20,26 @@ const Image = styled.span<{ url: string }>`
   object-fit: cover;
 `;
 
-const TextBox = styled.div`
-  background-color: ${(props) => props.theme.borderColor};
+// const Image = styled.span<{ url: string }>`
+//   width: 100%;
+//   height: 100%;
 
-  padding-top: 12px;
+//   background-image: linear-gradient(
+//       to right,
+//       rgba(0, 0, 0, 0.6),
+//       rgba(0, 0, 0, 0)
+//     ),
+//     url(${(props) => props.url});
+//   background-position: center;
+//   background-size: cover;
+//   object-fit: cover;
+// `;
+
+const TextBox = styled.div`
+  /* background-color: ${(props) => props.theme.borderColor}; */
+
+  padding-top: 48px;
+  padding-left: 24px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -57,8 +68,8 @@ const TextBox = styled.div`
 
 export default function ImgBox({ url, name, price, productid }: any) {
   return (
-    <Container>
-      <Image url={url} />
+    <Container url={url}>
+      {/* <Image /> */}
       <TextBox>
         <h2>{name}</h2>
         <p>{price}</p>
