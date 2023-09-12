@@ -10,6 +10,7 @@ import { faForumbee } from "@fortawesome/free-brands-svg-icons";
 import axios from "axios";
 import Hood from "../components/Hood";
 import { useNavigate } from "react-router-dom";
+import { theme } from "../utils/theme";
 
 const Container = styled.div`
   display: flex;
@@ -45,11 +46,6 @@ const TextBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  span {
-    color: ${(props) => props.theme.errorColor};
-    font-weight: bold;
-  }
 
   h2 {
     // 회원가입 텍스트
@@ -167,6 +163,45 @@ const Line = styled.div`
   margin-bottom: 2vh;
 `;
 
+const Header = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-size: 24px;
+  color: ${(props) => props.theme.highlightColor};
+  h4 {
+    color: ${(props) => props.theme.textColor};
+  }
+`;
+
+const Quote = styled.div`
+  margin-top: 6px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  gap: 12px;
+
+  b {
+    cursor: pointer;
+    transition: color ease 0.3s;
+    &:hover {
+      color: ${(props) => props.theme.highlightColor};
+    }
+  }
+`;
+
+const Error = styled.span`
+  margin-top: 6px;
+
+  color: ${(props) => props.theme.errorColor};
+  font-weight: bold;
+`;
+
 interface IFormData {
   userId: string;
   password: string;
@@ -192,15 +227,19 @@ export default function Signup() {
       const response = await axios.post(`${BASE_URL}/user/login`, data);
 
       console.log(response.data); // 서버 응답 데이터 출력
-      nav("/");
     } catch (error) {
       console.error(error);
     } finally {
       setIsLoading(false);
+      nav("/");
     }
 
     console.log(data);
     console.log(errors);
+  };
+
+  const onSignup = () => {
+    nav("/signup");
   };
 
   return (
@@ -215,10 +254,6 @@ export default function Signup() {
             <LeftBox>
               <Lines>
                 <Line>
-                  <h4>벌써부자</h4>
-                  <FontAwesomeIcon icon={faForumbee} />
-                </Line>
-                <Line>
                   <h2>환영합니다!</h2>
                 </Line>
                 <Line>
@@ -228,7 +263,10 @@ export default function Signup() {
             </LeftBox>
             <TextBox>
               <Forms>
-                <h2>로 그 인</h2>
+                <Header>
+                  <h4>벌써부자</h4>
+                  <FontAwesomeIcon icon={faForumbee} />
+                </Header>
 
                 <form onSubmit={handleSubmit(onValid)}>
                   <InputBox>
@@ -253,18 +291,21 @@ export default function Signup() {
                   </InputBox>
 
                   <ButtonBox>
-                    <button>가입 하기</button>
+                    <button>로 그 인</button>
                   </ButtonBox>
                 </form>
               </Forms>
-
-              <span>
+              <Quote>
+                <p>아직 회원이 아니신가요?</p>
+                <b onClick={onSignup}>회원 가입</b>
+              </Quote>
+              <Error>
                 {errors?.userId?.message
                   ? errors?.userId?.message
                   : errors?.password?.message
                   ? errors?.password?.message
                   : " "}
-              </span>
+              </Error>
             </TextBox>
           </LoginBox>
 

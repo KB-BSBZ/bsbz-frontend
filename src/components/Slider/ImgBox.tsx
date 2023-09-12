@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 // import { ISliderData } from "./Slider";
 
@@ -67,8 +68,16 @@ const TextBox = styled.div`
 `;
 
 export default function ImgBox({ url, name, price, productid }: any) {
+  const nav = useNavigate();
+
+  const onMoveDetail = (event: React.MouseEvent<HTMLSpanElement>) => {
+    console.log(event.currentTarget.id);
+    let target = event.currentTarget.id;
+    nav(`product/detail/${target}`);
+  };
+
   return (
-    <Container url={url}>
+    <Container url={url} onClick={onMoveDetail} id={productid}>
       {/* <Image /> */}
       <TextBox>
         <h2>{name}</h2>

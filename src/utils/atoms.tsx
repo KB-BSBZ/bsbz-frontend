@@ -6,3 +6,13 @@ export const loginState = atom({
   default: false,
   //   default: localStorage.getItem("isLoggedIn") === "true", // localStorage에서 상태를 가져옴
 });
+
+export const userNameState = atom({
+  key: "userName",
+  default: "",
+});
+
+export const userIdState = atom({
+  key: "userId",
+  default: "",
+});

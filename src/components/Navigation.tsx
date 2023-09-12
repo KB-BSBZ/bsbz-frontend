@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 import useScrollReset from "../utils/useScrollReset";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { loginState } from "../utils/atoms";
+import { loginState, userIdState, userNameState } from "../utils/atoms";
 
 const Container = styled.div`
   background-color: ${(props) => props.theme.navColor};
@@ -24,9 +24,11 @@ const Container = styled.div`
 const NavBar = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   gap: 12px;
+  width: 45%;
+  margin-left: 20%;
 
   span {
     color: ${(props) => props.theme.textColor};
@@ -57,12 +59,35 @@ const Logo = styled.div`
   }
 `;
 
+const UserTap = styled.span`
+  width: 10%;
+  height: 90%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 12px;
+
+  b {
+    margin-right: 10px;
+  }
+
+  p {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+`;
+
 export default function Navigation() {
   const nav = useNavigate();
   let reset = useScrollReset();
   let cookie = null;
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   // recoil 의 loginState 가져오기
+  const [userName, setUserName] = useRecoilState(userNameState);
+  const [userId, setUserId] = useRecoilState(userIdState);
 
   useEffect(() => {
     cookie = localStorage.getItem("cookie");
@@ -81,13 +106,20 @@ export default function Navigation() {
 
   const onLogout = (event: React.MouseEvent<HTMLSpanElement>) => {
     setIsLogin(false);
-    localStorage.setItem("isLoggedIn", "false");
+    setUserName("");
+    setUserId("");
   };
 
   const test = (event: React.MouseEvent<HTMLSpanElement>) => {
     setIsLogin(true);
-    localStorage.setItem("isLoggedIn", "true");
+    setUserName("이준모");
+    setUserId("1");
   };
+
+  const onMoveUserInfo = (event: React.MouseEvent<HTMLSpanElement>) => {
+    nav(`/user/${userId}`);
+  };
+
   return (
     <Container>
       <Logo>
@@ -97,21 +129,24 @@ export default function Navigation() {
         <span onClick={onMove} id="home">
           홈
         </span>
+        <span onClick={onMove} id="product">
+          투자 상품
+        </span>
         <span onClick={onMove} id="research">
           리 서 치
         </span>
-        <span onClick={onMove} id="banking">
+        {/* <span onClick={onMove} id="banking">
           뱅 킹
-        </span>
-        <span onClick={onMove} id="signup">
-          회원 가입
+        </span> */}
+        <span onClick={onMove} id="">
+          나의 자산
         </span>
         <span onClick={test} id="test">
           test
         </span>
         {isLogin ? (
-          <span onClick={onLogout} id="logout">
-            로 그 아 웃
+          <span onClick={onMove} id="mypage">
+            마이 페이지
           </span>
         ) : (
           <span onClick={onMove} id="login">
@@ -119,6 +154,16 @@ export default function Navigation() {
           </span>
         )}
       </NavBar>
+      {userName !== "" ? (
+        <UserTap>
+          <b>{userName} 님,</b>
+          <p onClick={onLogout} id="logout">
+            로그아웃
+          </p>
+        </UserTap>
+      ) : (
+        <UserTap></UserTap>
+      )}
     </Container>
   );
 }
