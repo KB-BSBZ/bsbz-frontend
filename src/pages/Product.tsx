@@ -1,24 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Loading from "../components/Loading";
 import Navigation from "../components/Navigation";
 import styled from "styled-components";
 import Button from "../components/Button";
 import { productList } from "../jsons/productList";
-import ProductBox from "../components/Product/ProductBox";
+import ProductBox, { IProductProps } from "../components/Product/ProductBox";
 import { useNavigate } from "react-router-dom";
-
+import axios from "axios";
 const Container = styled.div`
   padding-top: 10vh;
   /* background-color: wheat; */
   height: 100vh;
   width: 100vw;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
-
 const Info = styled.div`
   /* background-color: blue; */
   width: 90%;
@@ -28,36 +26,29 @@ const Info = styled.div`
   justify-content: end;
   align-items: center;
 `;
-
 const ButtonBox = styled.div`
   margin-left: 5vw;
   width: 18%;
   height: 60%;
-
   /* background-color: gainsboro; */
   position: fixed;
   left: 0;
 `;
-
 const MainBox = styled.div`
   width: 80%;
   height: 100vh;
-
   /* background-color: yellow; */
   display: flex;
   flex-direction: column;
 `;
-
 const TabBox = styled.div`
   margin-top: 8vh;
   display: flex;
   flex-direction: row;
   justify-content: end;
   width: 100%;
-
   gap: 24px;
 `;
-
 const Tab = styled.span<{ clicked: string }>`
   padding-bottom: 8px;
   border-bottom: 2px solid
@@ -66,7 +57,6 @@ const Tab = styled.span<{ clicked: string }>`
         ? props.theme.highlightColor
         : props.theme.backgroundColor};
 `;
-
 const Products = styled.div`
   margin-top: 12vh;
   width: 100%;
@@ -76,34 +66,63 @@ const Products = styled.div`
   gap: 2vh;
   flex-direction: column;
 `;
-
 export default function Product() {
-  const [isLoading, setIsLoading] = useState();
+  const [isLoading, setIsLoading] = useState(false);
   const nav = useNavigate();
-
-  let orderType = "";
-
   const onPush = (event: React.MouseEvent<HTMLSpanElement>) => {
     let destination = `/product/${event.currentTarget.id}`;
     console.log(destination);
     window.history.pushState({}, "", `${destination}`);
+    setType(event.currentTarget.id);
   };
+
+  const [data, setData] = useState<IProductProps[]>([]);
+  const [orderType, setOrderType] = useState("");
+  const [type, setType] = useState("allproducts");
+
+  useEffect(() => {
+    const url = "http://localhost:9999/product/" + type;
+
+    const options = {
+      method: "GET",
+      headers: {
+        // 'headers' 올바른 이름으로 수정
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      params: {
+        orderType: orderType,
+      },
+    };
+
+    axios(url, options)
+      .then((response) => {
+        setIsLoading(true);
+        // console.log("로딩 시작");
+
+        setData(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => console.error(error))
+      .finally(() => {
+        setIsLoading(false);
+        // console.log("로딩 끝");
+      }); // 오류 처리 추가
+  }, [orderType, type]);
 
   const onTabClick = (event: React.MouseEvent<HTMLSpanElement>) => {
     // console.log(event.currentTarget.clicked);
     console.log(event.currentTarget.id);
     let destination = event.currentTarget.id;
-    orderType = "";
-
+    setOrderType("");
     destination === "latest"
-      ? (orderType = "")
+      ? setOrderType("")
       : destination === "views"
-      ? (orderType = "조회수")
+      ? setOrderType("조회수")
       : destination === "deadline"
-      ? (orderType = "마감")
-      : (orderType = "");
+      ? setOrderType("마감")
+      : setOrderType("");
   };
-
   return (
     <>
       {isLoading && <Loading />}
@@ -111,7 +130,7 @@ export default function Product() {
       <Container>
         <Info>
           <ButtonBox>
-            <span onClick={onPush} id={"allproduct"}>
+            <span onClick={onPush} id={"allproducts"}>
               <Button
                 width={"60%"}
                 height={"12%"}
@@ -130,7 +149,6 @@ export default function Product() {
                 // border={"36px"}
               />
             </span>
-
             <span onClick={onPush} id={"luxuries"}>
               <Button
                 width={"60%"}
@@ -150,7 +168,7 @@ export default function Product() {
               />
             </span> */}
 
-            <span onClick={onPush} id={"musiccopylight"}>
+            <span onClick={onPush} id={"musiccopyright"}>
               <Button
                 width={"60%"}
                 height={"12%"}
@@ -195,14 +213,23 @@ export default function Product() {
             </TabBox>
 
             <Products>
-              {productList.map((product) => (
+              {data?.map((product, index) => (
                 <ProductBox
-                  key={product.productid}
-                  url={product.url}
-                  name={product.name}
-                  price={product.price}
-                  productid={product.productid}
-                  type={product.type}
+                  key={index}
+                  profileUrl={product.profileUrl}
+                  productName={product.productName}
+                  productCost={product.productCost}
+                  productId={product.productId}
+                  productType={product.productType}
+                  bonus={product.bonus}
+                  endDate={product.endDate}
+                  imageUrl={product.imageUrl}
+                  left_royal={product.left_royal}
+                  registerDate={product.registerDate}
+                  totalRoyal={product.totalRoyal}
+                  views={product.views}
+                  description={product.description}
+                  extra={product.extra}
                 />
               ))}
             </Products>

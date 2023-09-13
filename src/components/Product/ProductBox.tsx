@@ -37,36 +37,47 @@ const TextBox = styled.span`
   }
 `;
 
-interface IProductProps {
-  url: string;
-  name: string;
-  price: string;
-  productid: number;
-  type: string;
+export interface IProductProps {
+  bonus: number;
+  description: string | null;
+  endDate: string;
+  extra: string | null;
+  imageUrl: string;
+  left_royal: number;
+  productCost: number;
+  productId: number;
+  productName: string;
+  productType: string;
+  profileUrl: string;
+  registerDate: string;
+  totalRoyal: number;
+  views: number;
 }
 
 export default function ProductBox({
-  url,
-  name,
-  price,
-  productid,
-  type,
+  imageUrl,
+  productName,
+  productCost,
+  productId,
+  productType,
+  left_royal,
+  profileUrl,
 }: IProductProps) {
   const nav = useNavigate();
 
   const onMove = (event: React.MouseEvent<HTMLDivElement>) => {
-    nav(`/product/detail/${productid}`);
+    nav(`/product/detail/${productId}`);
   };
 
   return (
     <Container onClick={onMove}>
-      <ImgBox url={url} />
+      <ImgBox url={profileUrl} />
       <TextBox>
-        <p>{type}</p>
-        <h3>{name}</h3>
-        <p>{price}</p>
-        <p>{price}</p>
-        <p>{price}</p>
+        <p>{productType}</p>
+        <h3>{productName}</h3>
+        <p>{left_royal}</p>
+        <p>{productCost}</p>
+        <p>{productId}</p>
       </TextBox>
     </Container>
   );

@@ -131,7 +131,7 @@ export default function Navigation() {
         <span onClick={onMove} id="home">
           홈
         </span>
-        <span onClick={onMove} id="product">
+        <span onClick={onMove} id="product/allproducts">
           투자 상품
         </span>
         <span onClick={onMove} id="research">
