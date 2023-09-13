@@ -11,6 +11,8 @@ import axios from "axios";
 import Hood from "../components/Hood";
 import { useNavigate } from "react-router-dom";
 import { theme } from "../utils/theme";
+import { useRecoilState } from "recoil";
+import { userIdState, userNameState } from "../utils/atoms";
 
 const Container = styled.div`
   display: flex;
@@ -207,8 +209,10 @@ interface IFormData {
   password: string;
 }
 
-export default function Signup() {
+export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
+  const [userId, setUserId] = useRecoilState(userIdState);
+  const [userName, setUserName] = useRecoilState(userNameState);
   const nav = useNavigate();
 
   const {
@@ -226,12 +230,13 @@ export default function Signup() {
       // 서버로 요청을 보내는 부분
       const response = await axios.post(`${BASE_URL}/user/login`, data);
 
-      console.log(response.data); // 서버 응답 데이터 출력
+      localStorage.setItem("userData", JSON.stringify(response.data));
+      // console.log(response.data); // 서버 응답 데이터 출력
+      nav("/");
     } catch (error) {
       console.error(error);
     } finally {
       setIsLoading(false);
-      nav("/");
     }
 
     console.log(data);

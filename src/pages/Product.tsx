@@ -5,6 +5,7 @@ import styled from "styled-components";
 import Button from "../components/Button";
 import { productList } from "../jsons/productList";
 import ProductBox from "../components/Product/ProductBox";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   padding-top: 10vh;
@@ -71,16 +72,19 @@ const Products = styled.div`
   width: 100%;
   height: auto;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 2vh;
   flex-direction: column;
 `;
 
 export default function Product() {
   const [isLoading, setIsLoading] = useState();
+  const nav = useNavigate();
 
   const onPush = (event: React.MouseEvent<HTMLSpanElement>) => {
-    console.log(event.currentTarget.id);
+    let destination = `/product/${event.currentTarget.id}`;
+    console.log(destination);
+    window.history.pushState({}, "", `${destination}`);
   };
 
   const onTabClick = (event: React.MouseEvent<HTMLSpanElement>) => {
@@ -94,7 +98,7 @@ export default function Product() {
       <Container>
         <Info>
           <ButtonBox>
-            <span onClick={onPush} id={"estate"}>
+            <span onClick={onPush} id={"realestate"}>
               <Button
                 width={"60%"}
                 height={"12%"}
@@ -104,7 +108,7 @@ export default function Product() {
               />
             </span>
 
-            <span onClick={onPush} id={"luxury"}>
+            <span onClick={onPush} id={"luxuries"}>
               <Button
                 width={"60%"}
                 height={"12%"}
@@ -113,7 +117,7 @@ export default function Product() {
                 // border={"36px"}
               />
             </span>
-            <span onClick={onPush} id={"art"}>
+            {/* <span onClick={onPush} id={"art"}>
               <Button
                 width={"60%"}
                 height={"12%"}
@@ -121,9 +125,9 @@ export default function Product() {
                 text={"미 술 품"}
                 // border={"36px"}
               />
-            </span>
+            </span> */}
 
-            <span onClick={onPush} id={"music"}>
+            <span onClick={onPush} id={"musiccopylight"}>
               <Button
                 width={"60%"}
                 height={"12%"}
@@ -157,19 +161,20 @@ export default function Product() {
                 border={"36px"}
               /> */}
               <Tab clicked={"false"} onClick={onTabClick}>
-                <h3>등록 순</h3>
+                <h3>등록순</h3>
               </Tab>
               <Tab clicked={"false"} onClick={onTabClick}>
-                <h3>조회 순</h3>
+                <h3>조회순</h3>
               </Tab>
               <Tab clicked={"false"} onClick={onTabClick}>
-                <h3>마감 순</h3>
+                <h3>마감순</h3>
               </Tab>
             </TabBox>
 
             <Products>
               {productList.map((product) => (
                 <ProductBox
+                  key={product.productid}
                   url={product.url}
                   name={product.name}
                   price={product.price}

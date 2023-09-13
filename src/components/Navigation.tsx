@@ -83,16 +83,17 @@ const UserTap = styled.span`
 export default function Navigation() {
   const nav = useNavigate();
   let reset = useScrollReset();
-  let cookie = null;
+  let cookie = localStorage.getItem("userData");
+
   const [isLogin, setIsLogin] = useRecoilState(loginState);
   // recoil 의 loginState 가져오기
   const [userName, setUserName] = useRecoilState(userNameState);
   const [userId, setUserId] = useRecoilState(userIdState);
 
   useEffect(() => {
-    cookie = localStorage.getItem("cookie");
-    if (cookie != null) {
+    if (cookie !== null) {
       setIsLogin(true);
+      // setUserId(cookie);
     }
   }, [cookie]);
 
@@ -108,13 +109,14 @@ export default function Navigation() {
     setIsLogin(false);
     setUserName("");
     setUserId("");
+    localStorage.removeItem("userData");
   };
 
-  const test = (event: React.MouseEvent<HTMLSpanElement>) => {
-    setIsLogin(true);
-    setUserName("이준모");
-    setUserId("1");
-  };
+  // const test = (event: React.MouseEvent<HTMLSpanElement>) => {
+  //   setIsLogin(true);
+  //   setUserName("이준모");
+  //   setUserId("1");
+  // };
 
   const onMoveUserInfo = (event: React.MouseEvent<HTMLSpanElement>) => {
     nav(`/user/${userId}`);
@@ -141,9 +143,9 @@ export default function Navigation() {
         <span onClick={onMove} id="">
           나의 자산
         </span>
-        <span onClick={test} id="test">
+        {/* <span onClick={test} id="test">
           test
-        </span>
+        </span> */}
         {isLogin ? (
           <span onClick={onMove} id="mypage">
             마이 페이지
@@ -154,9 +156,9 @@ export default function Navigation() {
           </span>
         )}
       </NavBar>
-      {userName !== "" ? (
+      {cookie !== null ? (
         <UserTap>
-          <b>{userName} 님,</b>
+          <b>{JSON.parse(localStorage.getItem("userData")!).userName} 님,</b>
           <p onClick={onLogout} id="logout">
             로그아웃
           </p>

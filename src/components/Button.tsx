@@ -6,7 +6,7 @@ const OuterBox = styled.div<IBoxProps>`
   border-radius: ${(props) => (props.border ? props.border : "8px")};
   border: 2px solid ${(props) => props.theme.borderColor};
   overflow: hidden;
-  padding: 0 1px 4px 1px;
+  padding: 0 1px 1px 1px;
 
   width: ${(props) => props.width};
   height: ${(props) => props.height};
@@ -19,7 +19,7 @@ const InnerBox = styled.div<IBoxProps>`
   background-color: ${(props) => props.theme.backgroundColor};
   border-radius: ${(props) => (props.border ? props.border : "0 0 6px 6px")};
   width: 100%;
-  height: 85%;
+  height: 90%;
 
   display: flex;
   flex-direction: column;
