@@ -9,6 +9,7 @@ import Banking from "./pages/Banking";
 import Research from "./pages/Research";
 import Product from "./pages/Product";
 import MyPage from "./pages/MyPage";
+import ProductDetail from "./pages/ProductDetail";
 
 export default function App() {
   return (
@@ -19,7 +20,9 @@ export default function App() {
       <Route path="/loading" element={<Loading />} />
       <Route path="/banking" element={<Banking />} />
       <Route path="/research" element={<Research />} />
+      <Route path="/product" element={<Product />} />
       <Route path="/product/allproducts" element={<Product />} />
+      <Route path="/product/detail/:productId" element={<ProductDetail />} />
       <Route path="/mypage" element={<MyPage />} />
     </Routes>
   );

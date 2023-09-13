@@ -125,7 +125,12 @@ export default function Navigation() {
   return (
     <Container>
       <Logo>
-        <img onClick={onMove} id="home" src="images/bsbz-icon.png" alt="logo" />
+        <img
+          onClick={onMove}
+          id="home"
+          src="../../images/bsbz-icon.png"
+          alt="logo"
+        />
       </Logo>
       <NavBar>
         <span onClick={onMove} id="home">

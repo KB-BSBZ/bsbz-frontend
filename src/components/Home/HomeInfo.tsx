@@ -123,12 +123,12 @@ export default function HomeInfo() {
               text={"HELLO"}
             /> */}
           </TextBox>
-          <ImgBox url={"images/resource_img_01.png"} />
+          <ImgBox url={"../images/resource_img_01.png"} />
         </Box>
         <Pentagon reverse={"false"} color={"bg"} bgColor={"yellow"} />
 
         <Box bgtype={"yellow"}>
-          <ImgBox url={"images/resource_img_01.png"} />
+          <ImgBox url={"../images/resource_img_01.png"} />
           <TextBox>
             <Header fontcolor={"black"}>
               <h2>🎹 음원 투자</h2>
@@ -220,7 +220,7 @@ export default function HomeInfo() {
               text={"HELLO"}
             /> */}
           </TextBox>
-          <ImgBox url={"images/resource_img_01.png"} />
+          <ImgBox url={"../images/resource_img_01.png"} />
         </Box>
         <Pentagon reverse={"false"} color={"bg"} bgColor={"mint"} />
 
@@ -280,7 +280,7 @@ export default function HomeInfo() {
               />
             </Line>
           </TextBox>
-          <ImgBox url={"images/resource_img_01.png"} />
+          <ImgBox url={"../images/resource_img_01.png"} />
         </Box>
         <Pentagon reverse={"false"} color={"mint"} bgColor={"bg"} />
 
@@ -321,7 +321,7 @@ export default function HomeInfo() {
               text={"HELLO"}
             /> */}
           </TextBox>
-          <ImgBox url={"images/resource_img_01.png"} />
+          <ImgBox url={"../images/resource_img_01.png"} />
         </Box>
       </Container>
     </>
