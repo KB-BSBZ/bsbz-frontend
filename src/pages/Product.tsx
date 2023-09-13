@@ -81,6 +81,8 @@ export default function Product() {
   const [isLoading, setIsLoading] = useState();
   const nav = useNavigate();
 
+  let orderType = "";
+
   const onPush = (event: React.MouseEvent<HTMLSpanElement>) => {
     let destination = `/product/${event.currentTarget.id}`;
     console.log(destination);
@@ -89,6 +91,17 @@ export default function Product() {
 
   const onTabClick = (event: React.MouseEvent<HTMLSpanElement>) => {
     // console.log(event.currentTarget.clicked);
+    console.log(event.currentTarget.id);
+    let destination = event.currentTarget.id;
+    orderType = "";
+
+    destination === "latest"
+      ? (orderType = "")
+      : destination === "views"
+      ? (orderType = "조회수")
+      : destination === "deadline"
+      ? (orderType = "마감")
+      : (orderType = "");
   };
 
   return (
@@ -98,6 +111,16 @@ export default function Product() {
       <Container>
         <Info>
           <ButtonBox>
+            <span onClick={onPush} id={"allproduct"}>
+              <Button
+                width={"60%"}
+                height={"12%"}
+                hover={"yellow"}
+                text={"전 체"}
+                // border={"36px"}
+              />
+            </span>
+
             <span onClick={onPush} id={"realestate"}>
               <Button
                 width={"60%"}
@@ -160,13 +183,13 @@ export default function Product() {
                 text={"마감 순"}
                 border={"36px"}
               /> */}
-              <Tab clicked={"false"} onClick={onTabClick}>
+              <Tab clicked={"false"} onClick={onTabClick} id="latest">
                 <h3>등록순</h3>
               </Tab>
-              <Tab clicked={"false"} onClick={onTabClick}>
+              <Tab clicked={"false"} onClick={onTabClick} id="views">
                 <h3>조회순</h3>
               </Tab>
-              <Tab clicked={"false"} onClick={onTabClick}>
+              <Tab clicked={"false"} onClick={onTabClick} id="deadline">
                 <h3>마감순</h3>
               </Tab>
             </TabBox>

@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -40,7 +41,7 @@ interface IProductProps {
   url: string;
   name: string;
   price: string;
-  productid: string;
+  productid: number;
   type: string;
 }
 
@@ -51,8 +52,14 @@ export default function ProductBox({
   productid,
   type,
 }: IProductProps) {
+  const nav = useNavigate();
+
+  const onMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    nav(`/product/detail/${productid}`);
+  };
+
   return (
-    <Container>
+    <Container onClick={onMove}>
       <ImgBox url={url} />
       <TextBox>
         <p>{type}</p>
