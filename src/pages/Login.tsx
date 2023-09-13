@@ -229,8 +229,9 @@ export default function Login() {
 
       // 서버로 요청을 보내는 부분
       const response = await axios.post(`${BASE_URL}/user/login`, data);
-
-      localStorage.setItem("userData", JSON.stringify(response.data));
+      if (response.data !== "로그인 실패") {
+        localStorage.setItem("userData", JSON.stringify(response.data));
+      }
       // console.log(response.data); // 서버 응답 데이터 출력
       nav("/");
     } catch (error) {

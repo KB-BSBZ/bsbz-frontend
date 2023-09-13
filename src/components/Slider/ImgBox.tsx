@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
+import useScrollReset from "../../utils/useScrollReset";
 // import { ISliderData } from "./Slider";
 
 const Container = styled.span<{ url: string }>`
@@ -68,12 +69,13 @@ const TextBox = styled.div`
 `;
 
 export default function ImgBox({ url, name, price, productid }: any) {
-  const nav = useNavigate();
+  // const nav = useNavigate();
+  let reset = useScrollReset();
 
   const onMoveDetail = (event: React.MouseEvent<HTMLSpanElement>) => {
     console.log(event.currentTarget.id);
     let target = event.currentTarget.id;
-    nav(`product/detail/${target}`);
+    reset(`/product/detail/${target}`);
   };
 
   return (

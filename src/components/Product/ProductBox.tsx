@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import useScrollReset from "../../utils/useScrollReset";
 
 const Container = styled.div`
   width: 100%;
@@ -63,10 +64,10 @@ export default function ProductBox({
   left_royal,
   profileUrl,
 }: IProductProps) {
-  const nav = useNavigate();
+  let reset = useScrollReset();
 
   const onMove = (event: React.MouseEvent<HTMLDivElement>) => {
-    nav(`/product/detail/${productId}`);
+    reset(`/product/detail/${productId}`);
   };
 
   return (

@@ -7,6 +7,7 @@ import { productList } from "../jsons/productList";
 import ProductBox, { IProductProps } from "../components/Product/ProductBox";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Hood from "../components/Hood";
 const Container = styled.div`
   padding-top: 10vh;
   /* background-color: wheat; */
@@ -49,7 +50,9 @@ const TabBox = styled.div`
   width: 100%;
   gap: 24px;
 `;
+
 const Tab = styled.span<{ clicked: string }>`
+  cursor: pointer;
   padding-bottom: 8px;
   border-bottom: 2px solid
     ${(props) =>
@@ -57,6 +60,7 @@ const Tab = styled.span<{ clicked: string }>`
         ? props.theme.highlightColor
         : props.theme.backgroundColor};
 `;
+
 const Products = styled.div`
   margin-top: 12vh;
   width: 100%;
@@ -79,6 +83,7 @@ export default function Product() {
   const [data, setData] = useState<IProductProps[]>([]);
   const [orderType, setOrderType] = useState("");
   const [type, setType] = useState("allproducts");
+  const [isClicked, setIsClicked] = useState("false");
 
   useEffect(() => {
     const url = "http://localhost:9999/product/" + type;
@@ -111,6 +116,7 @@ export default function Product() {
   }, [orderType, type]);
 
   const onTabClick = (event: React.MouseEvent<HTMLSpanElement>) => {
+    setIsClicked("true");
     // console.log(event.currentTarget.clicked);
     console.log(event.currentTarget.id);
     let destination = event.currentTarget.id;
@@ -127,6 +133,7 @@ export default function Product() {
     <>
       {isLoading && <Loading />}
       <Navigation />
+      <Hood title={"투자 상품"} />
       <Container>
         <Info>
           <ButtonBox>
@@ -201,13 +208,13 @@ export default function Product() {
                 text={"마감 순"}
                 border={"36px"}
               /> */}
-              <Tab clicked={"false"} onClick={onTabClick} id="latest">
+              <Tab clicked={isClicked} onClick={onTabClick} id="latest">
                 <h3>등록순</h3>
               </Tab>
-              <Tab clicked={"false"} onClick={onTabClick} id="views">
+              <Tab clicked={isClicked} onClick={onTabClick} id="views">
                 <h3>조회순</h3>
               </Tab>
-              <Tab clicked={"false"} onClick={onTabClick} id="deadline">
+              <Tab clicked={isClicked} onClick={onTabClick} id="deadline">
                 <h3>마감순</h3>
               </Tab>
             </TabBox>
