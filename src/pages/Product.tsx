@@ -70,6 +70,7 @@ const Products = styled.div`
   gap: 2vh;
   flex-direction: column;
 `;
+
 export default function Product() {
   const [isLoading, setIsLoading] = useState(false);
   const nav = useNavigate();
@@ -83,7 +84,10 @@ export default function Product() {
   const [data, setData] = useState<IProductProps[]>([]);
   const [orderType, setOrderType] = useState("");
   const [type, setType] = useState("allproducts");
-  const [isClicked, setIsClicked] = useState("false");
+
+  const [latestClicked, setLatestClicked] = useState("false");
+  const [viewsClicked, setViewsClicked] = useState("false");
+  const [deadlineClicked, setDeadlineClicked] = useState("false");
 
   useEffect(() => {
     const url = "http://localhost:9999/product/" + type;
@@ -115,8 +119,10 @@ export default function Product() {
       }); // 오류 처리 추가
   }, [orderType, type]);
 
-  const onTabClick = (event: React.MouseEvent<HTMLSpanElement>) => {
-    setIsClicked("true");
+  const onLatestClick = (event: React.MouseEvent<HTMLSpanElement>) => {
+    setLatestClicked("true");
+    setViewsClicked("false");
+    setDeadlineClicked("false");
     // console.log(event.currentTarget.clicked);
     console.log(event.currentTarget.id);
     let destination = event.currentTarget.id;
@@ -129,6 +135,41 @@ export default function Product() {
       ? setOrderType("마감")
       : setOrderType("");
   };
+
+  const onViewsClick = (event: React.MouseEvent<HTMLSpanElement>) => {
+    setLatestClicked("false");
+    setViewsClicked("true");
+    setDeadlineClicked("false");
+    // console.log(event.currentTarget.clicked);
+    console.log(event.currentTarget.id);
+    let destination = event.currentTarget.id;
+    setOrderType("");
+    destination === "latest"
+      ? setOrderType("")
+      : destination === "views"
+      ? setOrderType("조회수")
+      : destination === "deadline"
+      ? setOrderType("마감")
+      : setOrderType("");
+  };
+
+  const onDeadlineClick = (event: React.MouseEvent<HTMLSpanElement>) => {
+    setLatestClicked("false");
+    setViewsClicked("false");
+    setDeadlineClicked("true");
+    // console.log(event.currentTarget.clicked);
+    console.log(event.currentTarget.id);
+    let destination = event.currentTarget.id;
+    setOrderType("");
+    destination === "latest"
+      ? setOrderType("")
+      : destination === "views"
+      ? setOrderType("조회수")
+      : destination === "deadline"
+      ? setOrderType("마감")
+      : setOrderType("");
+  };
+
   return (
     <>
       {isLoading && <Loading />}
@@ -208,13 +249,17 @@ export default function Product() {
                 text={"마감 순"}
                 border={"36px"}
               /> */}
-              <Tab clicked={isClicked} onClick={onTabClick} id="latest">
+              <Tab clicked={latestClicked} onClick={onLatestClick} id="latest">
                 <h3>등록순</h3>
               </Tab>
-              <Tab clicked={isClicked} onClick={onTabClick} id="views">
+              <Tab clicked={viewsClicked} onClick={onViewsClick} id="views">
                 <h3>조회순</h3>
               </Tab>
-              <Tab clicked={isClicked} onClick={onTabClick} id="deadline">
+              <Tab
+                clicked={deadlineClicked}
+                onClick={onDeadlineClick}
+                id="deadline"
+              >
                 <h3>마감순</h3>
               </Tab>
             </TabBox>

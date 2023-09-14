@@ -21,6 +21,7 @@ export const theme: DefaultTheme = {
   // 기본 텍스트 색상 3 - 회색
   errorColor: "#ff6347ff",
   // 에러 메세지 색상 - 빨강색
+  blurColor: "#343434CC",
 };
 
 export const darkTheme: DefaultTheme = {

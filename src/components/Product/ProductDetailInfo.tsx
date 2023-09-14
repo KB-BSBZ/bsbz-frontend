@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import { IProductProps } from "./ProductBox";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Button from "../Button";
 import Hood from "../Hood";
 import Loading from "../Loading";
+const ProgressBar = require("progressbar.js");
 
 const Container = styled.div`
   padding-top: 10vh;
@@ -32,6 +33,7 @@ const ImgBox = styled.span<{ url: string | undefined }>`
 
   background-image: url(${(props) => props.url});
   background-position: center;
+  background-repeat: no-repeat;
   object-fit: cover;
 `;
 
@@ -89,6 +91,24 @@ const StatisticsBar = styled.div`
   background-color: ${(props) => props.theme.highlightColor};
 `;
 
+const Line = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+`;
+
+const ProgressBarContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%; /* 프로그레스 바의 너비를 조절 */
+
+  position: relative;
+`;
+
 interface IDetailProps {
   productid: string;
 }
@@ -96,6 +116,8 @@ interface IDetailProps {
 export default function ProductDetailInfo({ productid }: IDetailProps) {
   const [data, setData] = useState<IProductProps>();
   const [isLoading, setIsLoading] = useState(false);
+
+  const progressBarRef = useRef(null);
 
   useEffect(() => {
     const url = "http://localhost:9999/product/detail/";
@@ -125,6 +147,52 @@ export default function ProductDetailInfo({ productid }: IDetailProps) {
         setIsLoading(false);
         // console.log("로딩 끝");
       }); // 오류 처리 추가
+
+    // ProgressBar.js 초기화
+    const bar = new ProgressBar.Line(progressBarRef.current, {
+      strokeWidth: 12,
+      easing: "easeInOut",
+      duration: 3000, // 애니메이션 지속 시간 (2초)
+      color: "#ffd700ff", // 프로그레스 바 색상
+      trailColor: "#f0f0f0", // 빈 공간 색상
+      trailWidth: 12, // 빈 공간 너비
+      svgStyle: { width: "100%", height: "100%" },
+      text: {
+        style: {
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          fontWeight: "bold",
+          fontSize: "24px",
+          // Text color.
+          // Default: same as stroke color (options.color)
+          color: "#343434ff",
+          position: "absolute",
+          top: "0",
+          right: "45%",
+          padding: 0,
+          margin: 0,
+          transform: null,
+        },
+        autoStyleContainer: false,
+      },
+      from: { color: "#FFEA82" },
+      to: { color: "#ED6A5A" },
+      step: (state: any, bar: any) => {
+        // 여기서 퍼센테이지 텍스트를 업데이트합니다.
+        bar.setText(Math.round(bar.value() * 100) + " %");
+      },
+    });
+
+    // 예를 들어, 50% 진행 상태로 업데이트
+    // bar.animate((productCost / 10000 - left_royal) / productCost);
+    bar.animate(0.8);
+
+    // 컴포넌트 언마운트 시 ProgressBar.js 해제
+    return () => {
+      bar.destroy();
+    };
   }, []);
 
   return (
@@ -146,6 +214,12 @@ export default function ProductDetailInfo({ productid }: IDetailProps) {
               <h2>{data?.description}</h2>
               <h2>{data?.endDate}</h2>
             </TextLines>
+
+            <Line>
+              <ProgressBarContainer>
+                <div ref={progressBarRef} />
+              </ProgressBarContainer>
+            </Line>
             <ButtonBox>
               <Button
                 width={"40%"}
