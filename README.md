@@ -27,6 +27,11 @@ npm i --save-dev @types/react-helmet
 
 npm i react-hook-form
 
+
+npm install apexcharts --save
+npm install react-apexcharts apexcharts
+
+
 // router 설치
 // styled-components 설치
 // fontawesome 설치
@@ -36,6 +41,7 @@ npm i react-hook-form
 // hook-form 설치
 // axios 설치
 // recoil 설치
+// 파이 그래프 관련 설치 2줄
 ```
 
 ## 메인화면 사진 자료
