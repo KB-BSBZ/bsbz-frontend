@@ -8,7 +8,7 @@ import Loading from "../Loading";
 const ProgressBar = require("progressbar.js");
 
 const Container = styled.div`
-  padding-top: 10vh;
+  padding-top: 15vh;
 
   width: 100%;
   display: flex;
@@ -18,18 +18,18 @@ const Container = styled.div`
 `;
 
 const TopBar = styled.div`
-  height: 90vh;
+  height: 190vh;
   width: 80%;
   /* background-color: blue; */
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  align-items: start;
 `;
 
 const ImgBox = styled.span<{ url: string | undefined }>`
   width: 50%;
-  height: 80%;
+  height: 40%;
 
   background-image: url(${(props) => props.url});
   background-position: center;
@@ -39,7 +39,7 @@ const ImgBox = styled.span<{ url: string | undefined }>`
 
 const TextBox = styled.span`
   width: 45%;
-  height: 80%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -48,7 +48,7 @@ const TextBox = styled.span`
 
 const HeadLine = styled.div`
   width: 100%;
-  height: 30%;
+  height: 15%;
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -59,7 +59,7 @@ const HeadLine = styled.div`
 `;
 
 const InfoBox = styled.div`
-  height: 80%;
+  height: 85%;
   width: 100%;
   /* background-color: red; */
   display: flex;
@@ -83,6 +83,8 @@ const TextLines = styled.div`
   flex-direction: column;
   justify-content: start;
   align-items: end;
+
+  gap: 6vh;
 `;
 
 const StatisticsBar = styled.div`
@@ -92,11 +94,14 @@ const StatisticsBar = styled.div`
 `;
 
 const Line = styled.div`
+  margin: 0 5%;
+  width: 90%;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  width: 100%;
+  margin-bottom: 8px;
+  border-bottom: 2px solid ${(props) => props.theme.backgroundColor};
 `;
 
 const ProgressBarContainer = styled.div`
@@ -107,6 +112,22 @@ const ProgressBarContainer = styled.div`
   width: 100%; /* 프로그레스 바의 너비를 조절 */
 
   position: relative;
+`;
+
+const Box = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-top: 6px solid ${(props) => props.theme.textColor};
+  padding-top: 12px;
+`;
+
+const Info = styled.div`
+  margin-top: 12px;
+
+  background-color: ${(props) => props.theme.blurColor2};
+  padding: 12px;
+  border-radius: 24px;
 `;
 
 interface IDetailProps {
@@ -208,22 +229,93 @@ export default function ProductDetailInfo({ productid }: IDetailProps) {
 
           <InfoBox>
             <TextLines>
-              <h2>총 {data?.productCost} 원</h2>
-              <h2>총 {data?.totalRoyal} ROYAL</h2>
-              <h2>남은 {data?.left_royal} ROYAL</h2>
+              <Box>
+                <h3>조각모집 현황</h3>
+                <Info>
+                  <Line>
+                    <p>현재 모집금액</p>
+                    <p>{data?.productCost}</p>
+                  </Line>
+                  <Line>
+                    <p>남은 로얄</p>
+                    <p>{data?.left_royal} ROYAL</p>
+                  </Line>
+                </Info>
+              </Box>
+
+              <Line>
+                <ProgressBarContainer>
+                  <div ref={progressBarRef} />
+                </ProgressBarContainer>
+              </Line>
+
+              <Box>
+                <h3>수익화 분석</h3>
+                <Info>
+                  <Line>
+                    <p>1년 후 예상 수익률</p>
+                    <p>10%</p>
+                  </Line>
+                  <Line>
+                    <p>수익화 예상 기간</p>
+                    <p>12개월</p>
+                  </Line>
+                  <Line>
+                    <p>구매 상품 위험도</p>
+                    <p>안정적</p>
+                  </Line>
+                </Info>
+              </Box>
+
+              <Box>
+                <h3>조각 모집 정보</h3>
+                <Info>
+                  <Line>
+                    <p>모집 기간</p>
+                    <p>
+                      {data?.registerDate.slice(0, 4) !==
+                      data?.endDate.slice(0, 4)
+                        ? `${data?.registerDate.slice(
+                            0,
+                            10
+                          )} ~ ${data?.endDate.slice(0, 10)}`
+                        : `${data?.registerDate.slice(
+                            0,
+                            10
+                          )} ~ ${data?.endDate.slice(5, 10)}`}
+                    </p>
+                  </Line>
+                  <Line>
+                    <p>모집 가격</p>
+                    <p>{data?.productCost} 원</p>
+                  </Line>
+                  <Line>
+                    <p>조각당 가격</p>
+                    <p>10,000 원</p>
+                  </Line>
+                </Info>
+              </Box>
+
+              {/* <Box>
+                <h3>조각모집 현황</h3>
+                <Info>
+                  <Line>
+                    <p>현재 모집금액</p>
+                    <p>{data?.}</p>
+                  </Line>
+                  <Line>
+                    <p>남은 로얄</p>
+                    <p>{data?.left_royal} ROYAL</p>
+                  </Line>
+                </Info>
+              </Box> */}
               <h2>{data?.description}</h2>
-              <h2>{data?.endDate}</h2>
             </TextLines>
 
-            <Line>
-              <ProgressBarContainer>
-                <div ref={progressBarRef} />
-              </ProgressBarContainer>
-            </Line>
             <ButtonBox>
               <Button
                 width={"40%"}
-                height={"100%"}
+                height={"20%"}
                 hover={"yellow"}
                 text={"구매 하기"}
               />

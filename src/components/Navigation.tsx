@@ -145,7 +145,7 @@ export default function Navigation() {
         {/* <span onClick={onMove} id="banking">
           뱅 킹
         </span> */}
-        <span onClick={onMove} id="">
+        <span onClick={onMove} id="myasset">
           나의 자산
         </span>
         {/* <span onClick={test} id="test">

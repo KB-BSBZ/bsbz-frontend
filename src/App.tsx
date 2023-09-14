@@ -10,6 +10,7 @@ import Research from "./pages/Research";
 import Product from "./pages/Product";
 import MyPage from "./pages/MyPage";
 import ProductDetail from "./pages/ProductDetail";
+import MyAsset from "./pages/MyAsset";
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
       <Route path="/product/allproducts" element={<Product />} />
       <Route path="/product/detail/:productId" element={<ProductDetail />} />
       <Route path="/mypage" element={<MyPage />} />
+      <Route path="/myasset" element={<MyAsset />} />
     </Routes>
   );
 }
