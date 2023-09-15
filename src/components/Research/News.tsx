@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -27,24 +28,28 @@ const ImgBox = styled.div`
   align-items: center;
 `;
 
-interface INewsProps {
+export interface INewsProps {
   title: string;
-  paragraph: string;
-  url: string;
-  postNumber: string;
+  pubDate: string;
+  originallink: string;
+  link: string;
+  description: string;
 }
 
 export default function News({
   title,
-  paragraph,
-  postNumber,
-  url,
+  pubDate, 
+  originallink,
+  link,
+  description,
 }: INewsProps) {
+  // console.log("title " + {title});
+  // console.log(news?.title);
   return (
     <Container>
       <TextBox>
         <b>{title}</b>
-        <p>{paragraph}</p>
+        <p>{description}</p>
       </TextBox>
       <ImgBox>
         <h2>IMG</h2>

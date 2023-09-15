@@ -9,9 +9,10 @@ import { imgList } from "../jsons/imgList";
 import { newsList } from "../jsons/newsList";
 import { chartList } from "../jsons/chartList";
 
-import News from "../components/Research/News";
+import News, { INewsProps } from "../components/Research/News";
 import Loading from "../components/Loading";
 import Chart from "../components/Research/Chart";
+import axios from "axios";
 
 const Container = styled.div`
   display: flex;
@@ -105,23 +106,45 @@ interface ISliderProps {
   productId: string;
 }
 
+
 export default function Research() {
   const [sliderData, setSliderData] = useState<ISliderProps[]>();
   const [isLoading, setIsLoading] = useState(false);
+  const [news, setNews] = useState<INewsProps[]>([]);
+  useEffect(() => {
+    const url = "http://localhost:8000/pricelog/news/";
 
-  // useEffect(() => {
-  //   fetch("/src/jsons/imgList.json")
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       setSliderData(data);
-  //       // 데이터 주입
-  //       setIsLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       console.error("ERROR: fetching slider-data error.");
-  //     });
-  // }, []);
+    const options = {
+      method: "GET",
+      headers: {
+        // 'headers' 올바른 이름으로 수정
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    };
 
+    axios(url, options)
+    .then((response) => {
+      // setIsLoading(true);
+      // console.log("로딩 시작");
+      console.log(response.data);
+      setNews(response.data);
+    })
+    .catch((error) => console.error(error))
+    .finally(() => {
+      // if (data?.estate) {
+      //   const estate = data.estate;
+      //   const luxury = data.luxury;
+      //   const music = data.music;
+      // }
+      setIsLoading(false);
+      // console.log("로딩 끝");
+    }); 
+  }, []);
+  console.log("here")
+  news?.map(function(element){
+    console.log(element.title)
+  })
   return (
     <>
       {isLoading && <Loading />}
@@ -136,15 +159,15 @@ export default function Research() {
           <NewsTap>
             <Title>Hello</Title>
             <NewsList>
-              {newsList.map((news) => (
+              {news?.map((n, index) => (
                 <News
-                  key={news.postNumber}
-                  title={news.title}
-                  paragraph={news.paragraph}
-                  postNumber={news.postNumber}
-                  url={news.url}
+                  title = {n.title}
+                  pubDate={n.pubDate}
+                  originallink={n.originallink}
+                  link={n.link}
+                  description={n.description}
                 />
-              ))}
+                ))}
             </NewsList>
           </NewsTap>
 
