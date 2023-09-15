@@ -198,57 +198,70 @@ export default function ProductDetailInfo({ productid }: IDetailProps) {
   const [remainingTime, setRemainingTime] = useState(0);
   const [data, setData] = useState<IProductProps>();
   const [isLoading, setIsLoading] = useState(false);
-  const [isBlur, setIsBlur] = useState("false");
+  const [isBlur, setIsBlur] = useState("true");
 
   const progressBarRef = useRef(null);
 
   useEffect(() => {
-    const url = "http://localhost:9999/product/detail/";
+    const fetchData = async () => {
+      const url = "http://localhost:9999/product/detail/";
 
-    const options = {
-      method: "GET",
-      headers: {
-        // 'headers' 올바른 이름으로 수정
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      params: {
-        productId: Number(productid),
-      },
-    };
+      const options = {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        params: {
+          productId: Number(productid),
+        },
+      };
 
-    axios(url, options)
-      .then((response) => {
+      try {
+        const response = await axios(url, options);
         setIsLoading(true);
-        // console.log("로딩 시작");
-
         setData(response.data);
         console.log(response.data);
-      })
-      .catch((error) => console.error(error))
-      .finally(() => {
-        setIsLoading(false);
-        // console.log("로딩 끝");
-      }); // 오류 처리 추가
 
-    // ProgressBar.js 초기화
-    let currentDate = new Date();
-    let targetDate = new Date(data?.endDate!);
+        let currentDate = new Date();
+        let targetDate = new Date(data?.endDate!);
 
-    if (currentDate > targetDate) {
-      setIsBlur("true");
-    } else {
-      setIsBlur("false");
-    }
+        if (currentDate > targetDate) {
+          setIsBlur("true");
+        } else {
+          setIsBlur("false");
+        }
 
-    // ProgressBar.js 초기화
+        const intervalId = setInterval(async () => {
+          const currentTime = new Date();
+          const timeDifference = Number(data?.endDate) - Number(currentTime);
+          const secondsRemaining = Math.floor(timeDifference / 1000);
+          setRemainingTime(secondsRemaining);
+
+          if (secondsRemaining <= 0) {
+            clearInterval(intervalId);
+          }
+        }, 1000);
+
+        return () => {
+          clearInterval(intervalId);
+        };
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, [isLoading]);
+
+  useEffect(() => {
     const bar = new ProgressBar.Line(progressBarRef.current, {
       strokeWidth: 12,
       easing: "easeInOut",
-      duration: 3000, // 애니메이션 지속 시간 (2초)
-      color: "#ffd700ff", // 프로그레스 바 색상
-      trailColor: "#f0f0f0", // 빈 공간 색상
-      trailWidth: 12, // 빈 공간 너비
+      duration: 3000,
+      color: "#ffd700ff",
+      trailColor: "#f0f0f0",
+      trailWidth: 12,
       svgStyle: { width: "100%", height: "100%" },
       text: {
         style: {
@@ -258,8 +271,6 @@ export default function ProductDetailInfo({ productid }: IDetailProps) {
           alignItems: "center",
           fontWeight: "bold",
           fontSize: "24px",
-          // Text color.
-          // Default: same as stroke color (options.color)
           color: "#343434ff",
           position: "absolute",
           top: "0",
@@ -273,33 +284,14 @@ export default function ProductDetailInfo({ productid }: IDetailProps) {
       from: { color: "#FFEA82" },
       to: { color: "#ED6A5A" },
       step: (state: any, bar: any) => {
-        // 여기서 퍼센테이지 텍스트를 업데이트합니다.
         bar.setText(Math.round(bar.value() * 100) + " %");
       },
     });
 
-    // 예를 들어, 50% 진행 상태로 업데이트
-    // bar.animate(productCost / 10000 - left_royal) / productCost);
     bar.animate(1.0);
 
-    // 1초마다 시간을 갱신하고 상태 업데이트
-    const intervalId = setInterval(() => {
-      const currentTime = new Date();
-      console.log(Number(String(data?.endDate)));
-      const timeDifference = Number(data?.endDate) - Number(currentTime);
-      const secondsRemaining = Math.floor(timeDifference / 1000); // 밀리초를 초로 변환
-      setRemainingTime(secondsRemaining);
-      console.log(secondsRemaining);
-
-      if (secondsRemaining <= 0) {
-        clearInterval(intervalId); // 시간이 다 되면 타이머 중지
-      }
-    }, 1000); // 1초마다 실행
-
-    // 컴포넌트 언마운트 시 ProgressBar.js 해제
     return () => {
       bar.destroy();
-      clearInterval(intervalId);
     };
   }, []);
 
