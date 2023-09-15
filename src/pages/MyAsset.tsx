@@ -32,31 +32,36 @@ export default function MyAsset() {
 
   const [data, setData] = useState<AllProductGraphProps>();
   useEffect(() => {
-    const url = "http://localhost:9999/user/ownproducts/graph";
+    const fetchData = async () => {
+      const url = "http://localhost:9999/user/ownproducts/graph";
 
-    const options = {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      data: {
-        userId: "lcy923",
-      },
-    };
-    axios(url, options)
-      .then((response) => {
+      const options = {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        data: {
+          userId: "cyh",
+        },
+      };
+
+      try {
         // setIsLoading(true);
         // console.log("로딩 시작");
 
+        const response = await axios(url, options);
         setData(response.data);
         console.log(response.data);
-      })
-      .catch((error) => console.error(error))
-      .finally(() => {
-        // setIsLoading(false);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
         // console.log("로딩 끝");
-      }); // 오류 처리 추가
+      }
+    };
+
+    fetchData();
   }, []);
 
   const [LineChartData, setLineChartData] = useState<RoyalLog[]>([]);
@@ -72,7 +77,7 @@ export default function MyAsset() {
           "Content-Type": "application/json",
         },
         data: {
-          userId: "lcy923",
+          userId: "cyh",
         },
       };
 
