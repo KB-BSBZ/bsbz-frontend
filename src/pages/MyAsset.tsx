@@ -4,8 +4,9 @@ import Navigation from "../components/Navigation";
 import Footer from "../components/Footer/Footer";
 import styled from "styled-components";
 import Hood from "../components/Hood";
-import Donut, { AllProductGraphProps } from "../components/Donut";
+import Donut, { AllProductGraphProps } from "../components/MyAsset/PieChart";
 import axios from "axios";
+import LineChart, { RoyalLog } from "../components/MyAsset/LineChart";
 
 const Container = styled.div`
   display: flex;
@@ -53,15 +54,55 @@ export default function MyAsset() {
       })
       .catch((error) => console.error(error))
       .finally(() => {
-        if (data?.estate) {
-          const estate = data.estate;
-          const luxury = data.luxury;
-          const music = data.music;
-        }
         // setIsLoading(false);
         // console.log("로딩 끝");
       }); // 오류 처리 추가
   }, []);
+
+  const [LineChartData, setLineChartData] = useState<RoyalLog[]>([]);
+  const [datesArray, setdatesArray] = useState<string[]>([]);
+  const [royalsArray, setroyalsArray] = useState<number[]>([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const url = "http://localhost:9999/user/ownproducts/totalroyalsDaily";
+      const options = {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        data: {
+          userId: "lcy923",
+        },
+      };
+
+      try {
+        const response = await axios(url, options);
+
+        setLineChartData(response.data);
+
+        console.log("전체 데이터");
+        console.log(response.data);
+
+        const tempDatesArray: string[] = [];
+        const tempRoyalsArray: number[] = [];
+
+        response.data.forEach((lineData: any) => {
+          tempDatesArray.push(lineData.tradeDate);
+          tempRoyalsArray.push(lineData.sumRoyal);
+        });
+
+        setdatesArray(tempDatesArray);
+        setroyalsArray(tempRoyalsArray);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData(); // fetchData 함수를 호출하여 비동기 작업 수행
+  }, [setdatesArray, setroyalsArray]);
 
   const Main = styled.div`
     width: 80%;
@@ -81,17 +122,17 @@ export default function MyAsset() {
   const GraphBox = styled.div`
     width: 33.3%;
     height: 100%;
-    border: 1px solid;
+    /* border: 1px solid; */
   `;
   const GraphBox2 = styled.div`
     width: 33.3%;
     height: 100%;
-    border: 1px solid;
+    /* border: 1px solid; */
   `;
   const GraphBox3 = styled.div`
     width: 33.3%;
     height: 100%;
-    border: 1px solid;
+    /* border: 1px solid; */
   `;
 
   const MainGraphBox = styled.div`
@@ -145,7 +186,9 @@ export default function MyAsset() {
                 )}
               </GraphBox>
               <GraphBox2>
-                <p>나의 로얄 수 추이</p>
+                {LineChartData && (
+                  <LineChart dates={datesArray} royals={royalsArray} />
+                )}
               </GraphBox2>
               <GraphBox3>
                 <p>나의 벌부 랭킹</p>

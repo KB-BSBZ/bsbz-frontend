@@ -3,12 +3,12 @@ import ReactDOM from "react-dom";
 import ReactApexChart from "react-apexcharts";
 import styled from "styled-components"; // styled-components 추가
 import axios from "axios";
-import Loading from "./Loading";
+import Loading from "../Loading";
 
 const Container = styled.div`
-  border: 1px solid;
-  width: 100%;
-  height: 100%;
+  /* border: 1px solid; */
+  width: 90%;
+  height: 90%;
 `;
 
 export interface AllProductGraphProps {
@@ -33,8 +33,8 @@ export default function ApexChart({
         series={series}
         options={{
           chart: {
-            height: 500,
-            width: 500,
+            height: 300,
+            width: 300,
             toolbar: {
               show: false,
             },
