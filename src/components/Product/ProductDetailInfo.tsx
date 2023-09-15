@@ -5,6 +5,9 @@ import axios from "axios";
 import Button from "../Button";
 import Hood from "../Hood";
 import Loading from "../Loading";
+import { PriceLogGraph } from "../PriceLogGraph";
+import ReactApexChart from "react-apexcharts";
+import LineChart from "../MyAsset/LineChart";
 const ProgressBar = require("progressbar.js");
 
 const Container = styled.div`
@@ -194,13 +197,39 @@ const LeftBox = styled.div`
   align-items: center;
 `;
 
+export interface ILogProps {
+  ymd: string;
+  price: number;
+}
+
+const dummy: ILogProps[] = [
+  {
+    ymd: "",
+    price: 0,
+  },
+  {
+    ymd: "",
+    price: 0,
+  },
+  {
+    ymd: "",
+    price: 0,
+  },
+];
+
 export default function ProductDetailInfo({ productid }: IDetailProps) {
   const [remainingTime, setRemainingTime] = useState(0);
   const [data, setData] = useState<IProductProps>();
   const [isLoading, setIsLoading] = useState(false);
   const [isBlur, setIsBlur] = useState("true");
+  const [logData, setLogData] = useState<ILogProps[]>([]);
+  const [isType, setIsType] = useState(0);
+
+  const [datesArray, setdatesArray] = useState<string[]>([]);
+  const [royalsArray, setroyalsArray] = useState<number[]>([]);
 
   const progressBarRef = useRef(null);
+  const [count, setCount] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -217,42 +246,98 @@ export default function ProductDetailInfo({ productid }: IDetailProps) {
         },
       };
 
-      try {
-        const response = await axios(url, options);
-        setIsLoading(true);
-        setData(response.data);
-        console.log(response.data);
+      const response = await axios(url, options);
+      setIsLoading(true);
+      setData(response.data);
+      console.log(response.data);
 
-        let currentDate = new Date();
-        let targetDate = new Date(data?.endDate!);
+      let currentDate = new Date();
+      let targetDate = new Date(data?.endDate!);
 
-        if (currentDate > targetDate) {
-          setIsBlur("true");
-        } else {
-          setIsBlur("false");
-        }
-
-        const intervalId = setInterval(async () => {
-          const currentTime = new Date();
-          const timeDifference = Number(data?.endDate) - Number(currentTime);
-          const secondsRemaining = Math.floor(timeDifference / 1000);
-          setRemainingTime(secondsRemaining);
-
-          if (secondsRemaining <= 0) {
-            clearInterval(intervalId);
-          }
-        }, 1000);
-
-        return () => {
-          clearInterval(intervalId);
-        };
-      } catch (error) {
-        console.error(error);
+      if (currentDate > targetDate) {
+        setIsBlur("true");
+      } else {
+        setIsBlur("false");
       }
+
+      let newIsType;
+      // 바뀐 장고 서버에 요청할 때 사용될 url
+      // let url = "http://127.0.0.1:8000/pricelog/" + {data?.productType} + "_log/"
+      if (data?.productType === "estate") {
+        newIsType = 1;
+      } else if (data?.productType === "luxury") {
+        newIsType = 2;
+      } else if (data?.productType === "music") {
+        newIsType = 3;
+      } else {
+        newIsType = 0;
+      }
+
+      setIsType(newIsType);
+
+      console.log(isType);
+
+      // const intervalId = setInterval(async () => {
+      //   const currentTime = new Date();
+      //   const timeDifference = Number(data?.endDate) - Number(currentTime);
+      //   const secondsRemaining = Math.floor(timeDifference / 1000);
+      //   setRemainingTime(secondsRemaining);
+
+      //   if (secondsRemaining <= 0) {
+      //     clearInterval(intervalId);
+      //   }
+      // }, 1000);
+
+      // return () => {
+      //   clearInterval(intervalId);
+      // };
     };
 
     fetchData();
-  }, [isLoading]);
+  }, [count]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      // const options = {
+      //   method: "GET",
+      //   headers: {
+      //     Accept: "application/json",
+      //     "Content-Type": "application/json",
+      //   },
+      //   params: {
+      //     productId: Number(productid),
+      //   },
+      // };
+      await axios
+        .get(`http://127.0.0.1:8000/pricelog/log/11/2`)
+        .then((response) => {
+          console.log("전체 데이터");
+          console.log(logData);
+
+          const tempDatesArray: string[] = [];
+          const tempRoyalsArray: number[] = [];
+          // console.log("aaaaaaa");
+
+          response.data.forEach((lineData: any) => {
+            tempDatesArray.push(lineData.ymd);
+            tempRoyalsArray.push(lineData.price);
+          });
+
+          console.log("array 보여줘");
+          console.log(tempDatesArray);
+          console.log(tempRoyalsArray);
+
+          setdatesArray(tempDatesArray);
+          setroyalsArray(tempRoyalsArray);
+        })
+        .catch((error) => console.error(error))
+        .finally(() => {
+          setIsLoading(false);
+        });
+    };
+
+    fetchData();
+  }, []);
 
   useEffect(() => {
     const bar = new ProgressBar.Line(progressBarRef.current, {
@@ -290,6 +375,7 @@ export default function ProductDetailInfo({ productid }: IDetailProps) {
 
     bar.animate(1.0);
 
+    // 컴포넌트가 언마운트될 때 타이머를 정리합니다.
     return () => {
       bar.destroy();
     };
@@ -302,6 +388,7 @@ export default function ProductDetailInfo({ productid }: IDetailProps) {
       <TopBar>
         <LeftBox>
           <ImgBox url={data?.profileUrl} isblur={isBlur} />
+          {logData && <LineChart dates={datesArray} royals={royalsArray} />}
         </LeftBox>
         <TextBox>
           <b>

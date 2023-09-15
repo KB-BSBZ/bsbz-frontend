@@ -27,6 +27,66 @@ const Body = styled.div`
   padding: 5%;
 `;
 
+const Main = styled.div`
+  width: 80%;
+  height: 80%;
+  border: 1px solid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const BalanceBox = styled.div`
+  border: 1px solid;
+  width: 80%;
+  height: 30%;
+  margin-bottom: 50px;
+`;
+const GraphBox = styled.div`
+  width: 33.3%;
+  height: 100%;
+  /* border: 1px solid; */
+`;
+const GraphBox2 = styled.div`
+  width: 33.3%;
+  height: 100%;
+  /* border: 1px solid; */
+`;
+const GraphBox3 = styled.div`
+  width: 33.3%;
+  height: 100%;
+  /* border: 1px solid; */
+`;
+
+const MainGraphBox = styled.div`
+  border: 1px solid;
+  width: 80%;
+  height: 30%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 50px;
+`;
+const LogBox = styled.div`
+  border: 1px solid;
+  width: 80%;
+  height: 30%;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: row;
+`;
+const AssetList = styled.div`
+  width: 50%;
+  height: 100%;
+  border: 1px solid;
+`;
+const TradeLog = styled.div`
+  width: 50%;
+  height: 100%;
+  border: 1px solid;
+`;
+
 export default function MyAsset() {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -108,66 +168,6 @@ export default function MyAsset() {
 
     fetchData(); // fetchData 함수를 호출하여 비동기 작업 수행
   }, [setdatesArray, setroyalsArray]);
-
-  const Main = styled.div`
-    width: 80%;
-    height: 80%;
-    border: 1px solid;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  `;
-
-  const BalanceBox = styled.div`
-    border: 1px solid;
-    width: 80%;
-    height: 30%;
-    margin-bottom: 50px;
-  `;
-  const GraphBox = styled.div`
-    width: 33.3%;
-    height: 100%;
-    /* border: 1px solid; */
-  `;
-  const GraphBox2 = styled.div`
-    width: 33.3%;
-    height: 100%;
-    /* border: 1px solid; */
-  `;
-  const GraphBox3 = styled.div`
-    width: 33.3%;
-    height: 100%;
-    /* border: 1px solid; */
-  `;
-
-  const MainGraphBox = styled.div`
-    border: 1px solid;
-    width: 80%;
-    height: 30%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 50px;
-  `;
-  const LogBox = styled.div`
-    border: 1px solid;
-    width: 80%;
-    height: 30%;
-    margin-bottom: 50px;
-    display: flex;
-    flex-direction: row;
-  `;
-  const AssetList = styled.div`
-    width: 50%;
-    height: 100%;
-    border: 1px solid;
-  `;
-  const TradeLog = styled.div`
-    width: 50%;
-    height: 100%;
-    border: 1px solid;
-  `;
 
   return (
     <>
