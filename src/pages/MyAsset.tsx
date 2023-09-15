@@ -23,6 +23,7 @@ const Body = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 5%;
 `;
 
 export default function MyAsset() {
@@ -61,9 +62,65 @@ export default function MyAsset() {
         // console.log("로딩 끝");
       }); // 오류 처리 추가
   }, []);
+
+  const Main = styled.div`
+    width: 80%;
+    height: 80%;
+    border: 1px solid;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  `;
+
+  const BalanceBox = styled.div`
+    border: 1px solid;
+    width: 80%;
+    height: 30%;
+    margin-bottom: 50px;
+  `;
   const GraphBox = styled.div`
+    width: 33.3%;
+    height: 100%;
+    border: 1px solid;
+  `;
+  const GraphBox2 = styled.div`
+    width: 33.3%;
+    height: 100%;
+    border: 1px solid;
+  `;
+  const GraphBox3 = styled.div`
+    width: 33.3%;
+    height: 100%;
+    border: 1px solid;
+  `;
+
+  const MainGraphBox = styled.div`
+    border: 1px solid;
+    width: 80%;
+    height: 30%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+  `;
+  const LogBox = styled.div`
+    border: 1px solid;
+    width: 80%;
+    height: 30%;
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: row;
+  `;
+  const AssetList = styled.div`
     width: 50%;
-    height: 50%;
+    height: 100%;
+    border: 1px solid;
+  `;
+  const TradeLog = styled.div`
+    width: 50%;
+    height: 100%;
+    border: 1px solid;
   `;
 
   return (
@@ -73,15 +130,36 @@ export default function MyAsset() {
       <Navigation />
       <Container>
         <Body>
-          <GraphBox>
-            {data && (
-              <Donut
-                estate={data.estate}
-                music={data.music}
-                luxury={data.luxury}
-              />
-            )}
-          </GraphBox>
+          <Main>
+            <BalanceBox>
+              <p>나의 자산 (총 로얄수) / 배당금 정보 출력 칸</p>
+            </BalanceBox>
+            <MainGraphBox>
+              <GraphBox>
+                {data && (
+                  <Donut
+                    estate={data.estate}
+                    music={data.music}
+                    luxury={data.luxury}
+                  />
+                )}
+              </GraphBox>
+              <GraphBox2>
+                <p>나의 로얄 수 추이</p>
+              </GraphBox2>
+              <GraphBox3>
+                <p>나의 벌부 랭킹</p>
+              </GraphBox3>
+            </MainGraphBox>
+            <LogBox>
+              <AssetList>
+                <p>보유중인 나의 자산 리스트 출력 칸</p>
+              </AssetList>
+              <TradeLog>
+                <p>거래 로그 출력 칸</p>
+              </TradeLog>
+            </LogBox>
+          </Main>
         </Body>
       </Container>
       <Footer />

@@ -6,23 +6,25 @@ import axios from "axios";
 import Loading from "./Loading";
 
 const Container = styled.div`
-  /* 원하는 스타일을 적용하세요 */
+  border: 1px solid;
+  width: 100%;
+  height: 100%;
 `;
 
 export interface AllProductGraphProps {
   estate: number;
-  music: number;
   luxury: number;
+  music: number;
 }
 
 export default function ApexChart({
   estate,
-  music,
   luxury,
+  music,
 }: AllProductGraphProps) {
   const [series, setSeries] = useState<number[]>([44, 55, 100]);
   useEffect(() => {
-    setSeries([estate, music, luxury]);
+    setSeries([estate, luxury, music]);
   }, []);
   return (
     <Container>
