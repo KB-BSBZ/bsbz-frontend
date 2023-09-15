@@ -18,8 +18,8 @@ const Container = styled.div`
 `;
 
 const TopBar = styled.div`
-  height: 190vh;
-  width: 80%;
+  height: 180vh;
+  width: 75%;
   /* background-color: blue; */
   display: flex;
   flex-direction: row;
@@ -27,14 +27,25 @@ const TopBar = styled.div`
   align-items: start;
 `;
 
-const ImgBox = styled.span<{ url: string | undefined }>`
-  width: 50%;
+const ImgBox = styled.span<{ url: string | undefined; isblur: string }>`
+  width: 100%;
   height: 40%;
 
   background-image: url(${(props) => props.url});
   background-position: center;
   background-repeat: no-repeat;
   object-fit: cover;
+
+  filter: ${(props) =>
+    props.isblur === "true"
+      ? "grayscale(100%)"
+      : null}; /* 블러 효과 적용 (픽셀 수 조절 가능) */
+  opacity: ${(props) =>
+    props.isblur === "true"
+      ? 0.6
+      : null}; /* 투명도 설정 (0.0에서 1.0 사이의 값) */
+
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
 `;
 
 const TextBox = styled.span`
@@ -42,7 +53,7 @@ const TextBox = styled.span`
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: center;
   align-items: start;
 `;
 
@@ -130,13 +141,64 @@ const Info = styled.div`
   border-radius: 24px;
 `;
 
+const DetailBox = styled.span`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 12px;
+
+  padding: 1px 4px;
+  border: 1px solid
+    ${(props) =>
+      props.color === "mint"
+        ? props.theme.highlightColor2
+        : props.color === "white"
+        ? props.theme.backgroundColor
+        : props.color === "red"
+        ? props.theme.errorColor
+        : props.theme.highlightColor};
+
+  width: fit-content;
+  background-color: ${(props) => props.theme.blurColor};
+  color: ${(props) =>
+    props.color === "mint"
+      ? props.theme.highlightColor2
+      : props.color === "white"
+      ? props.theme.backgroundColor
+      : props.color === "red"
+      ? props.theme.errorColor
+      : props.theme.highlightColor};
+
+  margin-right: 2px;
+`;
+
+const HeadInfo = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+`;
+
 interface IDetailProps {
   productid: string;
 }
 
+const LeftBox = styled.div`
+  width: 50%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 export default function ProductDetailInfo({ productid }: IDetailProps) {
+  const [remainingTime, setRemainingTime] = useState(0);
   const [data, setData] = useState<IProductProps>();
   const [isLoading, setIsLoading] = useState(false);
+  const [isBlur, setIsBlur] = useState("false");
 
   const progressBarRef = useRef(null);
 
@@ -168,6 +230,16 @@ export default function ProductDetailInfo({ productid }: IDetailProps) {
         setIsLoading(false);
         // console.log("로딩 끝");
       }); // 오류 처리 추가
+
+    // ProgressBar.js 초기화
+    let currentDate = new Date();
+    let targetDate = new Date(data?.endDate!);
+
+    if (currentDate > targetDate) {
+      setIsBlur("true");
+    } else {
+      setIsBlur("false");
+    }
 
     // ProgressBar.js 초기화
     const bar = new ProgressBar.Line(progressBarRef.current, {
@@ -207,12 +279,27 @@ export default function ProductDetailInfo({ productid }: IDetailProps) {
     });
 
     // 예를 들어, 50% 진행 상태로 업데이트
-    // bar.animate((productCost / 10000 - left_royal) / productCost);
-    bar.animate(0.8);
+    // bar.animate(productCost / 10000 - left_royal) / productCost);
+    bar.animate(1.0);
+
+    // 1초마다 시간을 갱신하고 상태 업데이트
+    const intervalId = setInterval(() => {
+      const currentTime = new Date();
+      console.log(Number(String(data?.endDate)));
+      const timeDifference = Number(data?.endDate) - Number(currentTime);
+      const secondsRemaining = Math.floor(timeDifference / 1000); // 밀리초를 초로 변환
+      setRemainingTime(secondsRemaining);
+      console.log(secondsRemaining);
+
+      if (secondsRemaining <= 0) {
+        clearInterval(intervalId); // 시간이 다 되면 타이머 중지
+      }
+    }, 1000); // 1초마다 실행
 
     // 컴포넌트 언마운트 시 ProgressBar.js 해제
     return () => {
       bar.destroy();
+      clearInterval(intervalId);
     };
   }, []);
 
@@ -221,10 +308,31 @@ export default function ProductDetailInfo({ productid }: IDetailProps) {
       {isLoading && <Loading />}
       <Hood title={data?.productName || ""} />
       <TopBar>
-        <ImgBox url={data?.profileUrl} />
+        <LeftBox>
+          <ImgBox url={data?.profileUrl} isblur={isBlur} />
+        </LeftBox>
         <TextBox>
+          <b>
+            {remainingTime > 0 ? (
+              <p>목표 날짜까지 {remainingTime} 초 남았습니다.</p>
+            ) : (
+              <p>목표 시간이 이미 지났습니다.</p>
+            )}
+          </b>
           <b>{data?.registerDate.slice(0, 10)}</b>
-          <b>{data?.productType}</b>
+          <HeadInfo>
+            {data?.productType === "estate" ? (
+              <DetailBox>부동산</DetailBox>
+            ) : data?.productType === "luxury" ? (
+              <DetailBox>럭셔리</DetailBox>
+            ) : data?.productType === "music" ? (
+              <DetailBox>음악 저작권</DetailBox>
+            ) : null}
+            {isBlur === "true" ? (
+              <DetailBox color="red">마 감</DetailBox>
+            ) : null}
+          </HeadInfo>
+
           <HeadLine>{data?.productName}</HeadLine>
 
           <InfoBox>
@@ -313,12 +421,21 @@ export default function ProductDetailInfo({ productid }: IDetailProps) {
             </TextLines>
 
             <ButtonBox>
-              <Button
-                width={"40%"}
-                height={"20%"}
-                hover={"yellow"}
-                text={"구매 하기"}
-              />
+              {isBlur === "true" ? (
+                <Button
+                  width={"40%"}
+                  height={"20%"}
+                  hover={"red"}
+                  text={"마감 되었습니다"}
+                />
+              ) : (
+                <Button
+                  width={"40%"}
+                  height={"20%"}
+                  hover={"yellow"}
+                  text={"구매 하기"}
+                />
+              )}
             </ButtonBox>
           </InfoBox>
         </TextBox>

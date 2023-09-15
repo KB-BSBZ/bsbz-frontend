@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import useScrollReset from "../../utils/useScrollReset";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 const ProgressBar = require("progressbar.js");
 
 const Container = styled.div`
@@ -20,12 +20,21 @@ const Container = styled.div`
   margin-bottom: 8vh;
 `;
 
-const ImgBox = styled.div<{ url: string }>`
+const ImgBox = styled.div<{ url: string; isblur: string }>`
   width: 100%;
   height: 48vh;
   background-position: center;
   object-fit: cover;
   background-repeat: no-repeat;
+
+  filter: ${(props) =>
+    props.isblur === "true"
+      ? "grayscale(100%)"
+      : null}; /* 블러 효과 적용 (픽셀 수 조절 가능) */
+  opacity: ${(props) =>
+    props.isblur === "true"
+      ? 0.6
+      : null}; /* 투명도 설정 (0.0에서 1.0 사이의 값) */
 
   background-image: linear-gradient(
       to top,
@@ -64,7 +73,7 @@ const InnerBar = styled.div`
 const Line = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: start;
+  justify-content: space-between;
   align-items: center;
 `;
 
@@ -83,6 +92,8 @@ const DetailBox = styled.span`
         ? props.theme.highlightColor2
         : props.color === "white"
         ? props.theme.backgroundColor
+        : props.color === "red"
+        ? props.theme.errorColor
         : props.theme.highlightColor};
 
   width: fit-content;
@@ -92,6 +103,8 @@ const DetailBox = styled.span`
       ? props.theme.highlightColor2
       : props.color === "white"
       ? props.theme.backgroundColor
+      : props.color === "red"
+      ? props.theme.errorColor
       : props.theme.highlightColor};
 
   margin-right: 2px;
@@ -132,8 +145,10 @@ export default function ProductBox({
   productType,
   left_royal,
   profileUrl,
+  endDate,
 }: IProductProps) {
   let reset = useScrollReset();
+  const [isBlur, setIsBlur] = useState("false");
 
   const onMove = (event: React.MouseEvent<HTMLDivElement>) => {
     reset(`/product/detail/${productId}`);
@@ -143,6 +158,15 @@ export default function ProductBox({
 
   useEffect(() => {
     // ProgressBar.js 초기화
+    let currentDate = new Date();
+    let targetDate = new Date(endDate);
+
+    if (currentDate > targetDate) {
+      setIsBlur("true");
+    } else {
+      setIsBlur("false");
+    }
+
     const bar = new ProgressBar.Line(progressBarRef.current, {
       strokeWidth: 6,
       easing: "easeInOut",
@@ -184,9 +208,11 @@ export default function ProductBox({
   }, []);
   return (
     <Container onClick={onMove}>
-      <ImgBox url={profileUrl}>
+      <ImgBox url={profileUrl} isblur={isBlur}>
         <InnerBar>
           <Line>
+            {left_royal < 1000 ? <DetailBox>마감임박</DetailBox> : null}
+
             <DetailBox color="white">
               {productType === "estate"
                 ? "부동산"
@@ -196,7 +222,6 @@ export default function ProductBox({
                 ? "음악"
                 : ""}
             </DetailBox>
-            {left_royal < 1000 ? <DetailBox>마감임박</DetailBox> : null}
           </Line>
 
           <Line>
@@ -207,11 +232,15 @@ export default function ProductBox({
         </InnerBar>
       </ImgBox>
       <TextBox>
-        <h3>
-          {productName.length > 16
-            ? productName.slice(0, 16) + " ..."
-            : productName}
-        </h3>
+        <Line>
+          <h3>
+            {productName.length > 12
+              ? productName.slice(0, 12) + " ..."
+              : productName}
+          </h3>
+          {isBlur === "true" ? <DetailBox color="red">마 감</DetailBox> : null}
+        </Line>
+
         <p>{left_royal}</p>
         <p>{productCost}</p>
       </TextBox>

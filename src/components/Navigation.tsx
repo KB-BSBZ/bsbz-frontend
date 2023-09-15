@@ -27,7 +27,7 @@ const NavBar = styled.div`
   justify-content: start;
   align-items: center;
   gap: 12px;
-  width: 45%;
+  width: 55%;
   margin-left: 20%;
 
   span {
@@ -110,6 +110,7 @@ export default function Navigation() {
     setUserName("");
     setUserId("");
     localStorage.removeItem("userData");
+    reset("/");
   };
 
   // const test = (event: React.MouseEvent<HTMLSpanElement>) => {
@@ -142,15 +143,16 @@ export default function Navigation() {
         <span onClick={onMove} id="research">
           리 서 치
         </span>
-        {/* <span onClick={onMove} id="banking">
-          뱅 킹
-        </span> */}
+
         <span onClick={onMove} id="myasset">
           나의 자산
         </span>
         {/* <span onClick={test} id="test">
           test
         </span> */}
+        <span onClick={onMove} id="banking">
+          뱅 킹
+        </span>
         {isLogin ? (
           <span onClick={onMove} id="mypage">
             마이 페이지
