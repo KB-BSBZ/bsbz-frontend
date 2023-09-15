@@ -73,13 +73,13 @@ const Products = styled.div`
   flex-direction: column;
 `;
 
-export default function Product() {
+export default function ProductLuxuries() {
   const [isLoading, setIsLoading] = useState(false);
   const [isCounter, setCounter] = useState(0);
   const reset = useScrollReset();
   const onPush = (event: React.MouseEvent<HTMLSpanElement>) => {
     let destination = `/product/${event.currentTarget.id}`;
-    // console.log(destination);
+    console.log(destination);
     // window.history.pushState({}, "", `${destination}`);
     // setType(event.currentTarget.id);
     // setCounter((currentValue) => currentValue + 1);
@@ -98,7 +98,7 @@ export default function Product() {
 
   useEffect(() => {
     const fetchData = async () => {
-      url = "http://localhost:9999/product/" + type;
+      url = "http://localhost:9999/product/luxuries";
 
       const options = {
         method: "GET",

@@ -11,6 +11,9 @@ import Product from "./pages/Product";
 import MyPage from "./pages/MyPage";
 import ProductDetail from "./pages/ProductDetail";
 import MyAsset from "./pages/MyAsset";
+import ProductEstate from "./pages/ProductEstate";
+import ProductLuxuries from "./pages/ProductLuxuries";
+import ProductMusic from "./pages/ProductMusic";
 
 export default function App() {
   return (
@@ -23,6 +26,9 @@ export default function App() {
       <Route path="/research" element={<Research />} />
       <Route path="/product" element={<Product />} />
       <Route path="/product/allproducts" element={<Product />} />
+      <Route path="/product/realestate" element={<ProductEstate />} />
+      <Route path="/product/luxuries" element={<ProductLuxuries />} />
+      <Route path="/product/musiccopyright" element={<ProductMusic />} />
       <Route path="/product/detail/:productId" element={<ProductDetail />} />
       <Route path="/mypage" element={<MyPage />} />
       <Route path="/myasset" element={<MyAsset />} />

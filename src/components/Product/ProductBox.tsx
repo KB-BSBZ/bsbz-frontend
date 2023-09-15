@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import useScrollReset from "../../utils/useScrollReset";
 import { useEffect, useRef, useState } from "react";
+import Loading from "../Loading";
 const ProgressBar = require("progressbar.js");
 
 const Container = styled.div`
@@ -149,6 +150,7 @@ export default function ProductBox({
 }: IProductProps) {
   let reset = useScrollReset();
   const [isBlur, setIsBlur] = useState("false");
+  const [isLoading, setIsLoading] = useState();
 
   const onMove = (event: React.MouseEvent<HTMLDivElement>) => {
     reset(`/product/detail/${productId}`);
@@ -157,57 +159,65 @@ export default function ProductBox({
   const progressBarRef = useRef(null);
 
   useEffect(() => {
-    // ProgressBar.js 초기화
-    let currentDate = new Date();
-    let targetDate = new Date(endDate);
+    const fetchData = async () => {
+      try {
+        // ProgressBar.js 초기화
+        let currentDate = new Date();
+        let targetDate = new Date(endDate);
 
-    if (currentDate > targetDate) {
-      setIsBlur("true");
-    } else {
-      setIsBlur("false");
-    }
+        if (currentDate >= targetDate) {
+          setIsBlur("true");
+        }
 
-    const bar = new ProgressBar.Line(progressBarRef.current, {
-      strokeWidth: 6,
-      easing: "easeInOut",
-      duration: 3000, // 애니메이션 지속 시간 (2초)
-      color: "#ffd700ff", // 프로그레스 바 색상
-      trailColor: "#f0f0f0", // 빈 공간 색상
-      trailWidth: 1, // 빈 공간 너비
-      svgStyle: { width: "100%", height: "100%" },
-      text: {
-        style: {
-          // Text color.
-          // Default: same as stroke color (options.color)
-          color: "#fafafaff",
-          position: "absolute",
-          right: "12px",
-          bottom: "30px",
-          padding: 0,
-          margin: 0,
-          transform: null,
-        },
-        autoStyleContainer: false,
-      },
-      from: { color: "#FFEA82" },
-      to: { color: "#ED6A5A" },
-      step: (state: any, bar: any) => {
-        // 여기서 퍼센테이지 텍스트를 업데이트합니다.
-        bar.setText(Math.round(bar.value() * 100) + " %");
-      },
-    });
+        const bar = new ProgressBar.Line(progressBarRef.current, {
+          strokeWidth: 6,
+          easing: "easeInOut",
+          duration: 3000, // 애니메이션 지속 시간 (2초)
+          color: "#ffd700ff", // 프로그레스 바 색상
+          trailColor: "#f0f0f0", // 빈 공간 색상
+          trailWidth: 1, // 빈 공간 너비
+          svgStyle: { width: "100%", height: "100%" },
+          text: {
+            style: {
+              // Text color.
+              // Default: same as stroke color (options.color)
+              color: "#fafafaff",
+              position: "absolute",
+              right: "12px",
+              bottom: "30px",
+              padding: 0,
+              margin: 0,
+              transform: null,
+            },
+            autoStyleContainer: false,
+          },
+          from: { color: "#FFEA82" },
+          to: { color: "#ED6A5A" },
+          step: (state: any, bar: any) => {
+            // 여기서 퍼센테이지 텍스트를 업데이트합니다.
+            bar.setText(Math.round(bar.value() * 100) + " %");
+          },
+        });
 
-    // 예를 들어, 50% 진행 상태로 업데이트
-    // bar.animate((productCost / 10000 - left_royal) / productCost);
-    bar.animate(0.8);
+        // 예를 들어, 50% 진행 상태로 업데이트
+        bar.animate((left_royal * 10000 - productCost) / productCost);
+        // bar.animate(0.8);
 
-    // 컴포넌트 언마운트 시 ProgressBar.js 해제
-    return () => {
-      bar.destroy();
+        // 컴포넌트 언마운트 시 ProgressBar.js 해제
+        return () => {
+          bar.destroy();
+        };
+      } catch (error) {
+        console.error(error);
+      }
     };
-  }, []);
+
+    fetchData(); // 비동기 함수 호출
+  }, [isLoading]); // endDate를 의존성 배열에 추가
+
   return (
     <Container onClick={onMove}>
+      {isLoading && <Loading />}
       <ImgBox url={profileUrl} isblur={isBlur}>
         <InnerBar>
           <Line>

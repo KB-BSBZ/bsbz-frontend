@@ -106,7 +106,6 @@ interface ISliderProps {
   productId: string;
 }
 
-
 export default function Research() {
   const [sliderData, setSliderData] = useState<ISliderProps[]>();
   const [isLoading, setIsLoading] = useState(false);
@@ -124,27 +123,27 @@ export default function Research() {
     };
 
     axios(url, options)
-    .then((response) => {
-      // setIsLoading(true);
-      // console.log("로딩 시작");
-      console.log(response.data);
-      setNews(response.data);
-    })
-    .catch((error) => console.error(error))
-    .finally(() => {
-      // if (data?.estate) {
-      //   const estate = data.estate;
-      //   const luxury = data.luxury;
-      //   const music = data.music;
-      // }
-      setIsLoading(false);
-      // console.log("로딩 끝");
-    }); 
+      .then((response) => {
+        // setIsLoading(true);
+        // console.log("로딩 시작");
+        console.log(response.data);
+        setNews(response.data);
+      })
+      .catch((error) => console.error(error))
+      .finally(() => {
+        // if (data?.estate) {
+        //   const estate = data.estate;
+        //   const luxury = data.luxury;
+        //   const music = data.music;
+        // }
+        setIsLoading(false);
+        // console.log("로딩 끝");
+      });
   }, []);
-  console.log("here")
-  news?.map(function(element){
-    console.log(element.title)
-  })
+  console.log("here");
+  news?.map(function (element) {
+    console.log(element.title);
+  });
   return (
     <>
       {isLoading && <Loading />}
@@ -161,13 +160,13 @@ export default function Research() {
             <NewsList>
               {news?.map((n, index) => (
                 <News
-                  title = {n.title}
+                  title={n.title}
                   pubDate={n.pubDate}
                   originallink={n.originallink}
                   link={n.link}
                   description={n.description}
                 />
-                ))}
+              ))}
             </NewsList>
           </NewsTap>
 

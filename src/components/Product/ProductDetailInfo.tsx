@@ -229,85 +229,107 @@ export default function ProductDetailInfo({ productid }: IDetailProps) {
   const [royalsArray, setroyalsArray] = useState<number[]>([]);
 
   const progressBarRef = useRef(null);
-  const [count, setCount] = useState(false);
+
+  let bar: any = null;
 
   useEffect(() => {
     const fetchData = async () => {
-      const url = "http://localhost:9999/product/detail/";
+      try {
+        const url = "http://localhost:9999/product/detail/";
 
-      const options = {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        params: {
-          productId: Number(productid),
-        },
-      };
+        const options = {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          params: {
+            productId: Number(productid),
+          },
+        };
 
-      const response = await axios(url, options);
-      setIsLoading(true);
-      setData(response.data);
-      console.log(response.data);
+        const response = await axios(url, options);
+        setIsLoading(true);
+        setData(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        let currentDate = new Date();
+        let targetDate = new Date(data?.endDate!);
 
-      let currentDate = new Date();
-      let targetDate = new Date(data?.endDate!);
+        if (currentDate > targetDate) {
+          setIsBlur("true");
+        } else {
+          setIsBlur("false");
+        }
 
-      if (currentDate > targetDate) {
-        setIsBlur("true");
-      } else {
-        setIsBlur("false");
+        let newIsType;
+        // 바뀐 장고 서버에 요청할 때 사용될 url
+        // let url = "http://127.0.0.1:8000/pricelog/" + {data?.productType} + "_log/"
+        if (data?.productType === "estate") {
+          newIsType = 1;
+        } else if (data?.productType === "luxury") {
+          newIsType = 2;
+        } else if (data?.productType === "music") {
+          newIsType = 3;
+        } else {
+          newIsType = 0;
+        }
+
+        setIsType(newIsType);
+
+        console.log(isType);
+
+        bar = new ProgressBar.Line(progressBarRef.current, {
+          strokeWidth: 12,
+          easing: "easeInOut",
+          duration: 3000,
+          color: "#ffd700ff",
+          trailColor: "#f0f0f0",
+          trailWidth: 12,
+          svgStyle: { width: "100%", height: "100%" },
+          text: {
+            style: {
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              fontWeight: "bold",
+              fontSize: "24px",
+              color: "#343434ff",
+              position: "absolute",
+              top: "0",
+              right: "45%",
+              padding: 0,
+              margin: 0,
+              transform: null,
+            },
+            autoStyleContainer: false,
+          },
+          from: { color: "#FFEA82" },
+          to: { color: "#ED6A5A" },
+          step: (state: any, bar: any) => {
+            bar.setText(Math.round(bar.value() * 100) + " %");
+          },
+        });
+
+        bar.animate(
+          // (data.left_royal * 10000 - data.productCost) / data.productCost
+          0.2
+        );
       }
-
-      let newIsType;
-      // 바뀐 장고 서버에 요청할 때 사용될 url
-      // let url = "http://127.0.0.1:8000/pricelog/" + {data?.productType} + "_log/"
-      if (data?.productType === "estate") {
-        newIsType = 1;
-      } else if (data?.productType === "luxury") {
-        newIsType = 2;
-      } else if (data?.productType === "music") {
-        newIsType = 3;
-      } else {
-        newIsType = 0;
-      }
-
-      setIsType(newIsType);
-
-      console.log(isType);
-
-      // const intervalId = setInterval(async () => {
-      //   const currentTime = new Date();
-      //   const timeDifference = Number(data?.endDate) - Number(currentTime);
-      //   const secondsRemaining = Math.floor(timeDifference / 1000);
-      //   setRemainingTime(secondsRemaining);
-
-      //   if (secondsRemaining <= 0) {
-      //     clearInterval(intervalId);
-      //   }
-      // }, 1000);
-
-      // return () => {
-      //   clearInterval(intervalId);
-      // };
     };
 
     fetchData();
-  }, [count]);
+
+    return () => {
+      bar.destroy();
+    };
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
-      // const options = {
-      //   method: "GET",
-      //   headers: {
-      //     Accept: "application/json",
-      //     "Content-Type": "application/json",
-      //   },
-      //   params: {
-      //     productId: Number(productid),
-      //   },
-      // };
       await axios
         .get(`http://127.0.0.1:8000/pricelog/log/11/2`)
         .then((response) => {
@@ -337,48 +359,6 @@ export default function ProductDetailInfo({ productid }: IDetailProps) {
     };
 
     fetchData();
-  }, []);
-
-  useEffect(() => {
-    const bar = new ProgressBar.Line(progressBarRef.current, {
-      strokeWidth: 12,
-      easing: "easeInOut",
-      duration: 3000,
-      color: "#ffd700ff",
-      trailColor: "#f0f0f0",
-      trailWidth: 12,
-      svgStyle: { width: "100%", height: "100%" },
-      text: {
-        style: {
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          fontWeight: "bold",
-          fontSize: "24px",
-          color: "#343434ff",
-          position: "absolute",
-          top: "0",
-          right: "45%",
-          padding: 0,
-          margin: 0,
-          transform: null,
-        },
-        autoStyleContainer: false,
-      },
-      from: { color: "#FFEA82" },
-      to: { color: "#ED6A5A" },
-      step: (state: any, bar: any) => {
-        bar.setText(Math.round(bar.value() * 100) + " %");
-      },
-    });
-
-    bar.animate(1.0);
-
-    // 컴포넌트가 언마운트될 때 타이머를 정리합니다.
-    return () => {
-      bar.destroy();
-    };
   }, []);
 
   return (
