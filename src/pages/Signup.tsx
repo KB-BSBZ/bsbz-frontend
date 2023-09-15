@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import Loading from "../components/Loading";
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer/Footer";
 import { useForm } from "react-hook-form";
 import Pentagon from "../components/Pentagon";
 import Hood from "../components/Hood";
+import PreferencePopup from "../components/Signup/PreferencePopUp";
 
 const Container = styled.div`
   display: flex;
@@ -179,6 +180,24 @@ export default function Signup() {
       return numericPhone;
     }
   };
+  // 팝업 상태 및 선택한 취향 상태 초기화
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [selectedPreference, setSelectedPreference] = useState("");
+
+  // 팝업 열기 함수
+  const openPopup = () => {
+    setIsPopupOpen(true);
+  };
+
+  // 팝업 닫기 함수
+  const closePopup = () => {
+    setIsPopupOpen(false);
+  };
+
+  // 선택한 취향 처리 함수
+  const handlePreferenceSelect = (preference: SetStateAction<string>) => {
+    setSelectedPreference(preference);
+  };
 
   return (
     <>
@@ -287,8 +306,20 @@ export default function Signup() {
                   />
                 </InputBox>
                 <ButtonBox>
-                  <button>가입 하기</button>
+                  <button onClick={openPopup}>가입 하기</button>
                 </ButtonBox>
+                {/* 취향 선택 팝업 */}
+                {isPopupOpen && (
+                  <PreferencePopup
+                    onClose={closePopup}
+                    onSelectPreference={handlePreferenceSelect}
+                  />
+                )}
+
+                {/* 선택한 취향 출력 */}
+
+                선택한 취향: {selectedPreference}
+
               </form>
             </Forms>
 
@@ -296,16 +327,16 @@ export default function Signup() {
               {errors?.user_id?.message
                 ? errors?.user_id?.message
                 : errors?.password?.message
-                ? errors?.password?.message
-                : errors?.email?.message
-                ? errors?.email?.message
-                : errors?.user_name?.message
-                ? errors?.user_name?.message
-                : errors?.ssn?.message
-                ? errors?.ssn?.message
-                : errors?.phone_num?.message
-                ? errors?.phone_num?.message
-                : " "}
+                  ? errors?.password?.message
+                  : errors?.email?.message
+                    ? errors?.email?.message
+                    : errors?.user_name?.message
+                      ? errors?.user_name?.message
+                      : errors?.ssn?.message
+                        ? errors?.ssn?.message
+                        : errors?.phone_num?.message
+                          ? errors?.phone_num?.message
+                          : " "}
             </span>
           </TextBox>
 
