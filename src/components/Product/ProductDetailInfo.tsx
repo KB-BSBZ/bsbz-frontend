@@ -8,6 +8,7 @@ import Loading from "../Loading";
 import { PriceLogGraph } from "../PriceLogGraph";
 import ReactApexChart from "react-apexcharts";
 import LineChart from "../MyAsset/LineChart";
+import Purchase from "./Purchase";
 const ProgressBar = require("progressbar.js");
 
 const Container = styled.div`
@@ -183,10 +184,6 @@ const HeadInfo = styled.div`
   flex-direction: row;
 `;
 
-interface IDetailProps {
-  productid: string;
-}
-
 const LeftBox = styled.div`
   width: 50%;
   height: 100%;
@@ -197,25 +194,14 @@ const LeftBox = styled.div`
   align-items: center;
 `;
 
+interface IDetailProps {
+  productid: string;
+}
+
 export interface ILogProps {
   ymd: string;
   price: number;
 }
-
-const dummy: ILogProps[] = [
-  {
-    ymd: "",
-    price: 0,
-  },
-  {
-    ymd: "",
-    price: 0,
-  },
-  {
-    ymd: "",
-    price: 0,
-  },
-];
 
 export default function ProductDetailInfo({ productid }: IDetailProps) {
   const [remainingTime, setRemainingTime] = useState(0);
@@ -227,6 +213,7 @@ export default function ProductDetailInfo({ productid }: IDetailProps) {
 
   const [datesArray, setdatesArray] = useState<string[]>([]);
   const [royalsArray, setroyalsArray] = useState<number[]>([]);
+  const [isModal, setIsModal] = useState(false);
 
   const progressBarRef = useRef(null);
 
@@ -374,6 +361,10 @@ export default function ProductDetailInfo({ productid }: IDetailProps) {
     fetchData();
   }, []);
 
+  const onModal = () => {
+    setIsModal((current) => !current);
+  };
+
   return (
     <>
       {isLoading && <Loading />}
@@ -500,6 +491,7 @@ export default function ProductDetailInfo({ productid }: IDetailProps) {
                     width={"40%"}
                     height={"20%"}
                     hover={"red"}
+                    color={"red"}
                     text={"마감 되었습니다"}
                   />
                 ) : (
@@ -508,8 +500,10 @@ export default function ProductDetailInfo({ productid }: IDetailProps) {
                     height={"20%"}
                     hover={"yellow"}
                     text={"구매 하기"}
+                    onclick={onModal}
                   />
                 )}
+                {isModal && <Purchase onModal={onModal} />}
               </ButtonBox>
             </InfoBox>
           </TextBox>

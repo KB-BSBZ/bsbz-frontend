@@ -19,6 +19,8 @@ const InnerBox = styled.div<IBoxProps>`
   background-color: ${(props) =>
     props.color === "red"
       ? props.theme.errorColor
+      : props.color === "yellow"
+      ? props.theme.highlightColor
       : props.theme.backgroundColor};
   border-radius: ${(props) => (props.border ? props.border : "0 0 6px 6px")};
   width: 100%;
@@ -54,6 +56,7 @@ interface IButtonProps {
   text: string;
   border?: string;
   color?: string;
+  onclick?: () => void;
 }
 
 interface IBoxProps {
@@ -71,6 +74,7 @@ export default function Button({
   text,
   border,
   color,
+  onclick,
 }: IButtonProps) {
   return (
     <OuterBox
@@ -79,6 +83,7 @@ export default function Button({
       hover={hover}
       border={border}
       color={color}
+      onClick={onclick}
     >
       <InnerBox
         width={width}
