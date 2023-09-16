@@ -78,6 +78,13 @@ const Line = styled.div`
   align-items: center;
 `;
 
+const LineInfo = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+`;
+
 const DetailBox = styled.span`
   display: flex;
   flex-direction: column;
@@ -220,7 +227,7 @@ export default function ProductBox({
       {isLoading && <Loading />}
       <ImgBox url={profileUrl} isblur={isBlur}>
         <InnerBar>
-          <Line>
+          <LineInfo>
             {left_royal < 1000 ? <DetailBox>마감임박</DetailBox> : null}
 
             <DetailBox color="white">
@@ -232,7 +239,7 @@ export default function ProductBox({
                 ? "음악"
                 : ""}
             </DetailBox>
-          </Line>
+          </LineInfo>
 
           <Line>
             <ProgressBarContainer>
