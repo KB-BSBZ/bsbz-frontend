@@ -8,7 +8,7 @@ const Container = styled.div<{ visible: string }>`
   position: fixed;
   right: 3%;
   bottom: 12%;
-  z-index: 100;
+  z-index: 10;
 
   display: flex;
   flex-direction: column;

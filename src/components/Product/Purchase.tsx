@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleMinus, faCirclePlus } from "@fortawesome/free-solid-svg-icons";
+import useScrollReset from "../../utils/useScrollReset";
 
 const Container = styled.div`
   position: fixed;
@@ -94,6 +95,7 @@ interface IPurchaseData {
 export default function Purchase({ onModal }: IPurchaseProps) {
   const [amount, setAmount] = useState(0);
   const [money, setMoney] = useState(100000);
+  const reset = useScrollReset();
 
   const {
     register,
@@ -125,6 +127,11 @@ export default function Purchase({ onModal }: IPurchaseProps) {
   };
 
   const onValid = (data: IPurchaseData) => {
+    if (!localStorage.getItem("userData")) {
+      // 로그인 되어있지 않으면 로그인 창으로
+      reset("/login");
+    }
+
     if (data.quantity === "0") {
       // 구매하지 않았을 경우
     } else {

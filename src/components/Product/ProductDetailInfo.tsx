@@ -249,7 +249,7 @@ export default function ProductDetailInfo({ productid }: IDetailProps) {
         };
         const response = await axios(url, options);
         setData(response.data);
-        console.log(response.data);
+        // console.log(response.data);
       } catch (error) {
         console.error(error);
       } finally {
@@ -277,7 +277,7 @@ export default function ProductDetailInfo({ productid }: IDetailProps) {
 
         setIsType(newIsType);
 
-        console.log(isType);
+        // console.log(isType);
 
         bar = new ProgressBar.Line(progressBarRef.current, {
           strokeWidth: 12,

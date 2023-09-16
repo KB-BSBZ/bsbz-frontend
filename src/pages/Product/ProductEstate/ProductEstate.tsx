@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
-import Loading from "../components/Loading";
-import Navigation from "../components/Navigation";
+import Loading from "../../../components/Loading";
+import Navigation from "../../../components/Navigation";
 import styled from "styled-components";
-import Button from "../components/Button";
-import { productList } from "../jsons/productList";
-import ProductBox, { IProductProps } from "../components/Product/ProductBox";
+import Button from "../../../components/Button";
+import { productList } from "../../../jsons/productList";
+import ProductBox, {
+  IProductProps,
+} from "../../../components/Product/ProductBox";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Hood from "../components/Hood";
+import Hood from "../../../components/Hood";
 import { option } from "yargs";
-import useScrollReset from "../utils/useScrollReset";
-import ScrollTop from "../components/ScrollTop";
+import useScrollReset from "../../../utils/useScrollReset";
+import ScrollTop from "../../../components/ScrollTop";
 const Container = styled.div`
   padding-top: 10vh;
   /* background-color: wheat; */
@@ -80,7 +82,7 @@ export default function Product() {
   const reset = useScrollReset();
   const onPush = (event: React.MouseEvent<HTMLSpanElement>) => {
     let destination = `/product/${event.currentTarget.id}`;
-    // console.log(destination);
+    console.log(destination);
     // window.history.pushState({}, "", `${destination}`);
     // setType(event.currentTarget.id);
     // setCounter((currentValue) => currentValue + 1);
@@ -91,7 +93,7 @@ export default function Product() {
   const [orderType, setOrderType] = useState("");
   const [type, setType] = useState("allproducts");
 
-  const [latestClicked, setLatestClicked] = useState("false");
+  const [latestClicked, setLatestClicked] = useState("true");
   const [viewsClicked, setViewsClicked] = useState("false");
   const [deadlineClicked, setDeadlineClicked] = useState("false");
 
@@ -99,7 +101,7 @@ export default function Product() {
 
   useEffect(() => {
     const fetchData = async () => {
-      url = "http://localhost:9999/product/" + type;
+      url = "http://localhost:9999/product/realestate";
 
       const options = {
         method: "GET",
@@ -108,7 +110,7 @@ export default function Product() {
           "Content-Type": "application/json",
         },
         params: {
-          orderType: orderType,
+          orderType: "",
         },
       };
 
@@ -129,55 +131,15 @@ export default function Product() {
     fetchData(); // 비동기 함수 호출
   }, [orderType, type, isCounter, url]);
 
-  const onLatestClick = (event: React.MouseEvent<HTMLSpanElement>) => {
-    setLatestClicked("true");
-    setViewsClicked("false");
-    setDeadlineClicked("false");
-    // console.log(event.currentTarget.clicked);
-    console.log(event.currentTarget.id);
+  const onMoveClick = (event: React.MouseEvent<HTMLSpanElement>) => {
     let destination = event.currentTarget.id;
-    setOrderType("");
     destination === "latest"
-      ? setOrderType("")
+      ? reset("/product/realestate")
       : destination === "views"
-      ? setOrderType("조회수")
+      ? reset("/product/realestate/views")
       : destination === "deadline"
-      ? setOrderType("마감")
-      : setOrderType("");
-  };
-
-  const onViewsClick = (event: React.MouseEvent<HTMLSpanElement>) => {
-    setLatestClicked("false");
-    setViewsClicked("true");
-    setDeadlineClicked("false");
-    // console.log(event.currentTarget.clicked);
-    console.log(event.currentTarget.id);
-    let destination = event.currentTarget.id;
-    setOrderType("");
-    destination === "latest"
-      ? setOrderType("")
-      : destination === "views"
-      ? setOrderType("조회수")
-      : destination === "deadline"
-      ? setOrderType("마감")
-      : setOrderType("");
-  };
-
-  const onDeadlineClick = (event: React.MouseEvent<HTMLSpanElement>) => {
-    setLatestClicked("false");
-    setViewsClicked("false");
-    setDeadlineClicked("true");
-    // console.log(event.currentTarget.clicked);
-    console.log(event.currentTarget.id);
-    let destination = event.currentTarget.id;
-    setOrderType("");
-    destination === "latest"
-      ? setOrderType("")
-      : destination === "views"
-      ? setOrderType("조회수")
-      : destination === "deadline"
-      ? setOrderType("마감")
-      : setOrderType("");
+      ? reset("/product/realestate/deadline")
+      : reset("product/realestate");
   };
 
   return (
@@ -225,15 +187,15 @@ export default function Product() {
           </ButtonBox>
           <MainBox>
             <TabBox>
-              <Tab clicked={latestClicked} onClick={onLatestClick} id="latest">
+              <Tab clicked={latestClicked} onClick={onMoveClick} id="latest">
                 <h3>등록순</h3>
               </Tab>
-              <Tab clicked={viewsClicked} onClick={onViewsClick} id="views">
+              <Tab clicked={viewsClicked} onClick={onMoveClick} id="views">
                 <h3>조회순</h3>
               </Tab>
               <Tab
                 clicked={deadlineClicked}
-                onClick={onDeadlineClick}
+                onClick={onMoveClick}
                 id="deadline"
               >
                 <h3>마감순</h3>
