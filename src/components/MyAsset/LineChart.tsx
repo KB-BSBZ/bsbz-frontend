@@ -8,7 +8,7 @@ import Loading from "../Loading";
 const Container = styled.div`
   /* border: 1px solid; */
   width: 100%;
-  height: 100%;
+  height: 100px;
 `;
 
 export interface RoyalLog {
@@ -52,7 +52,7 @@ export default function LineChart({
         series={series}
         options={{
           chart: {
-            height: 350,
+            height: 100,
             type: "line",
             zoom: {
               enabled: false,
@@ -112,9 +112,9 @@ export default function LineChart({
           },
           yaxis: {
             // 여기에 Y 축 설정을 추가합니다.
-            min: 10000, // Y 축의 최소 값 설정
-            max: 100000, // Y 축의 최대 값 설정
-            tickAmount: 5, // Y 축의 눈금 간격 설정
+            min: 0, // Y 축의 최소 값 설정
+            max: 5000, // Y 축의 최대 값 설정
+            tickAmount: 10, // Y 축의 눈금 간격 설정
           },
         }}
       />

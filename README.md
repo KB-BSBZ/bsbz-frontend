@@ -31,6 +31,8 @@ npm i react-hook-form
 npm install apexcharts --save
 npm install react-apexcharts apexcharts
 
+npm i framer-motion
+
 
 // router 설치
 // styled-components 설치
@@ -42,6 +44,7 @@ npm install react-apexcharts apexcharts
 // axios 설치
 // recoil 설치
 // 파이 그래프 관련 설치 2줄
+// 애니메이션 효과 관련 설치
 ```
 
 ## 메인화면 사진 자료
