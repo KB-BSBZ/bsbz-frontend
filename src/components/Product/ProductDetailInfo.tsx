@@ -220,7 +220,7 @@ const dummy: ILogProps[] = [
 export default function ProductDetailInfo({ productid }: IDetailProps) {
   const [remainingTime, setRemainingTime] = useState(0);
   const [data, setData] = useState<IProductProps>();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isBlur, setIsBlur] = useState("true");
   const [logData, setLogData] = useState<ILogProps[]>([]);
   const [isType, setIsType] = useState(0);
@@ -231,6 +231,19 @@ export default function ProductDetailInfo({ productid }: IDetailProps) {
   const progressBarRef = useRef(null);
 
   let bar: any = null;
+
+  const [refresh, setRefresh] = useState(false);
+
+  // 일정 시간(예: 10초) 후에 리랜더링
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setRefresh(true);
+    }, 1000); // 10초(10000밀리초) 후에 리랜더링
+
+    return () => {
+      clearTimeout(timer); // 컴포넌트 언마운트 시 타이머 정리
+    };
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -247,9 +260,7 @@ export default function ProductDetailInfo({ productid }: IDetailProps) {
             productId: Number(productid),
           },
         };
-
         const response = await axios(url, options);
-        setIsLoading(true);
         setData(response.data);
         console.log(response.data);
       } catch (error) {
@@ -314,10 +325,12 @@ export default function ProductDetailInfo({ productid }: IDetailProps) {
           },
         });
 
-        bar.animate(
-          // (data.left_royal * 10000 - data.productCost) / data.productCost
-          0.2
-        );
+        if (data) {
+          bar.animate(
+            (data.left_royal * 10000 - data.productCost) / data.productCost
+            // 0.2
+          );
+        }
       }
     };
 
@@ -326,7 +339,7 @@ export default function ProductDetailInfo({ productid }: IDetailProps) {
     return () => {
       bar.destroy();
     };
-  }, []);
+  }, [refresh]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -362,108 +375,110 @@ export default function ProductDetailInfo({ productid }: IDetailProps) {
   }, []);
 
   return (
-    <Container>
+    <>
       {isLoading && <Loading />}
-      <Hood title={data?.productName || ""} />
-      <TopBar>
-        <LeftBox>
-          <ImgBox url={data?.profileUrl} isblur={isBlur} />
-          {logData && <LineChart dates={datesArray} royals={royalsArray} />}
-        </LeftBox>
-        <TextBox>
-          <b>
-            {remainingTime > 0 ? (
-              <p>목표 날짜까지 {remainingTime} 초 남았습니다.</p>
-            ) : (
-              <p>목표 시간이 이미 지났습니다.</p>
-            )}
-          </b>
-          <b>{data?.registerDate.slice(0, 10)}</b>
-          <HeadInfo>
-            {data?.productType === "estate" ? (
-              <DetailBox>부동산</DetailBox>
-            ) : data?.productType === "luxury" ? (
-              <DetailBox>럭셔리</DetailBox>
-            ) : data?.productType === "music" ? (
-              <DetailBox>음악 저작권</DetailBox>
-            ) : null}
-            {isBlur === "true" ? (
-              <DetailBox color="red">마 감</DetailBox>
-            ) : null}
-          </HeadInfo>
+      <Container>
+        <Hood title={data?.productName || ""} />
 
-          <HeadLine>{data?.productName}</HeadLine>
+        <TopBar>
+          <LeftBox>
+            <ImgBox url={data?.profileUrl} isblur={isBlur} />
+            {logData && <LineChart dates={datesArray} royals={royalsArray} />}
+          </LeftBox>
+          <TextBox>
+            <b>
+              {remainingTime > 0 ? (
+                <p>목표 날짜까지 {remainingTime} 초 남았습니다.</p>
+              ) : (
+                <p>목표 시간이 이미 지났습니다.</p>
+              )}
+            </b>
+            <b>{data?.registerDate.slice(0, 10)}</b>
+            <HeadInfo>
+              {data?.productType === "estate" ? (
+                <DetailBox>부동산</DetailBox>
+              ) : data?.productType === "luxury" ? (
+                <DetailBox>럭셔리</DetailBox>
+              ) : data?.productType === "music" ? (
+                <DetailBox>음악 저작권</DetailBox>
+              ) : null}
+              {isBlur === "true" ? (
+                <DetailBox color="red">마 감</DetailBox>
+              ) : null}
+            </HeadInfo>
 
-          <InfoBox>
-            <TextLines>
-              <Box>
-                <h3>조각모집 현황</h3>
-                <Info>
-                  <Line>
-                    <p>현재 모집금액</p>
-                    <p>{data?.productCost}</p>
-                  </Line>
-                  <Line>
-                    <p>남은 로얄</p>
-                    <p>{data?.left_royal} ROYAL</p>
-                  </Line>
-                </Info>
-              </Box>
+            <HeadLine>{data?.productName}</HeadLine>
 
-              <Line>
-                <ProgressBarContainer>
-                  <div ref={progressBarRef} />
-                </ProgressBarContainer>
-              </Line>
+            <InfoBox>
+              <TextLines>
+                <Box>
+                  <h3>조각모집 현황</h3>
+                  <Info>
+                    <Line>
+                      <p>현재 모집금액</p>
+                      <p>{data?.productCost}</p>
+                    </Line>
+                    <Line>
+                      <p>남은 로얄</p>
+                      <p>{data?.left_royal} ROYAL</p>
+                    </Line>
+                  </Info>
+                </Box>
 
-              <Box>
-                <h3>수익화 분석</h3>
-                <Info>
-                  <Line>
-                    <p>1년 후 예상 수익률</p>
-                    <p>10%</p>
-                  </Line>
-                  <Line>
-                    <p>수익화 예상 기간</p>
-                    <p>12개월</p>
-                  </Line>
-                  <Line>
-                    <p>구매 상품 위험도</p>
-                    <p>안정적</p>
-                  </Line>
-                </Info>
-              </Box>
+                <Line>
+                  <ProgressBarContainer>
+                    <div ref={progressBarRef} />
+                  </ProgressBarContainer>
+                </Line>
 
-              <Box>
-                <h3>조각 모집 정보</h3>
-                <Info>
-                  <Line>
-                    <p>모집 기간</p>
-                    <p>
-                      {data?.registerDate.slice(0, 4) !==
-                      data?.endDate.slice(0, 4)
-                        ? `${data?.registerDate.slice(
-                            0,
-                            10
-                          )} ~ ${data?.endDate.slice(0, 10)}`
-                        : `${data?.registerDate.slice(
-                            0,
-                            10
-                          )} ~ ${data?.endDate.slice(5, 10)}`}
-                    </p>
-                  </Line>
-                  <Line>
-                    <p>모집 가격</p>
-                    <p>{data?.productCost} 원</p>
-                  </Line>
-                  <Line>
-                    <p>조각당 가격</p>
-                    <p>10,000 원</p>
-                  </Line>
-                </Info>
-              </Box>
+                <Box>
+                  <h3>수익화 분석</h3>
+                  <Info>
+                    <Line>
+                      <p>1년 후 예상 수익률</p>
+                      <p>10%</p>
+                    </Line>
+                    <Line>
+                      <p>수익화 예상 기간</p>
+                      <p>12개월</p>
+                    </Line>
+                    <Line>
+                      <p>구매 상품 위험도</p>
+                      <p>안정적</p>
+                    </Line>
+                  </Info>
+                </Box>
 
-              {/* <Box>
+                <Box>
+                  <h3>조각 모집 정보</h3>
+                  <Info>
+                    <Line>
+                      <p>모집 기간</p>
+                      <p>
+                        {data?.registerDate.slice(0, 4) !==
+                        data?.endDate.slice(0, 4)
+                          ? `${data?.registerDate.slice(
+                              0,
+                              10
+                            )} ~ ${data?.endDate.slice(0, 10)}`
+                          : `${data?.registerDate.slice(
+                              0,
+                              10
+                            )} ~ ${data?.endDate.slice(5, 10)}`}
+                      </p>
+                    </Line>
+                    <Line>
+                      <p>모집 가격</p>
+                      <p>{data?.productCost} 원</p>
+                    </Line>
+                    <Line>
+                      <p>조각당 가격</p>
+                      <p>10,000 원</p>
+                    </Line>
+                  </Info>
+                </Box>
+
+                {/* <Box>
                 <h3>조각모집 현황</h3>
                 <Info>
                   <Line>
@@ -476,30 +491,31 @@ export default function ProductDetailInfo({ productid }: IDetailProps) {
                   </Line>
                 </Info>
               </Box> */}
-              <h2>{data?.description}</h2>
-            </TextLines>
+                <h2>{data?.description}</h2>
+              </TextLines>
 
-            <ButtonBox>
-              {isBlur === "true" ? (
-                <Button
-                  width={"40%"}
-                  height={"20%"}
-                  hover={"red"}
-                  text={"마감 되었습니다"}
-                />
-              ) : (
-                <Button
-                  width={"40%"}
-                  height={"20%"}
-                  hover={"yellow"}
-                  text={"구매 하기"}
-                />
-              )}
-            </ButtonBox>
-          </InfoBox>
-        </TextBox>
-      </TopBar>
-      <StatisticsBar></StatisticsBar>
-    </Container>
+              <ButtonBox>
+                {isBlur === "true" ? (
+                  <Button
+                    width={"40%"}
+                    height={"20%"}
+                    hover={"red"}
+                    text={"마감 되었습니다"}
+                  />
+                ) : (
+                  <Button
+                    width={"40%"}
+                    height={"20%"}
+                    hover={"yellow"}
+                    text={"구매 하기"}
+                  />
+                )}
+              </ButtonBox>
+            </InfoBox>
+          </TextBox>
+        </TopBar>
+        <StatisticsBar></StatisticsBar>
+      </Container>
+    </>
   );
 }
