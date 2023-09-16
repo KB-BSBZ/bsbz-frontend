@@ -8,6 +8,7 @@ import { styled } from "styled-components";
 import Hood from "../components/Hood";
 import { title } from "process";
 import HomeInfo from "../components/Home/HomeInfo";
+import ScrollTop from "../components/ScrollTop";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
@@ -20,6 +21,7 @@ export default function Home() {
       {/* <Slider data={imgList} /> */}
       {/* <MainInfo /> */}
       <HomeInfo />
+      <ScrollTop />
       <Footer />
     </>
   );

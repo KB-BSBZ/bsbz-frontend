@@ -13,6 +13,7 @@ import News, { INewsProps } from "../components/Research/News";
 import Loading from "../components/Loading";
 import Chart from "../components/Research/Chart";
 import axios from "axios";
+import ScrollTop from "../components/ScrollTop";
 
 const Container = styled.div`
   display: flex;
@@ -180,6 +181,7 @@ export default function Research() {
           </ChartTap>
         </BottomBar>
       </Container>
+      <ScrollTop />
       <Footer />
     </>
   );

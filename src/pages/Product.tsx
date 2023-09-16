@@ -10,6 +10,7 @@ import axios from "axios";
 import Hood from "../components/Hood";
 import { option } from "yargs";
 import useScrollReset from "../utils/useScrollReset";
+import ScrollTop from "../components/ScrollTop";
 const Container = styled.div`
   padding-top: 10vh;
   /* background-color: wheat; */
@@ -22,7 +23,7 @@ const Container = styled.div`
 `;
 const Info = styled.div`
   /* background-color: blue; */
-  width: 90%;
+  width: 82%;
   height: 100%;
   display: flex;
   flex-direction: row;
@@ -263,6 +264,7 @@ export default function Product() {
           </MainBox>
         </Info>
       </Container>
+      <ScrollTop />
     </>
   );
 }

@@ -6,6 +6,7 @@ import Footer from "../components/Footer/Footer";
 import styled from "styled-components";
 import useScrollReset from "../utils/useScrollReset";
 import CardSlider from "../components/Banking/CardSlider";
+import ScrollTop from "../components/ScrollTop";
 
 const Container = styled.div`
   padding: 10vh 0;
@@ -64,6 +65,7 @@ export default function Banking() {
           <h2>카드를 선택해주세요.</h2>
         </CardBox>
       </Container>
+      <ScrollTop />
       <Footer />
     </>
   );

@@ -10,6 +10,7 @@ import axios from "axios";
 import Hood from "../components/Hood";
 import { option } from "yargs";
 import useScrollReset from "../utils/useScrollReset";
+import ScrollTop from "../components/ScrollTop";
 const Container = styled.div`
   padding-top: 10vh;
   /* background-color: wheat; */
@@ -263,6 +264,7 @@ export default function ProductLuxuries() {
           </MainBox>
         </Info>
       </Container>
+      <ScrollTop />
     </>
   );
 }
