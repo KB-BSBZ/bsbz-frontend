@@ -210,7 +210,7 @@ const LeftBox = styled.div`
 `;
 
 interface IDetailProps {
-  productid: string;
+  productId: string;
 }
 
 export interface ILogProps {
@@ -249,7 +249,7 @@ const CloudBar = styled.div`
   }
 `;
 
-export default function ProductDetailInfo({ productid }: IDetailProps) {
+export default function ProductDetailInfo({ productId }: IDetailProps) {
   const [remainingTime, setRemainingTime] = useState(0);
   const [data, setData] = useState<IProductProps>();
   const [isLoading, setIsLoading] = useState(true);
@@ -290,7 +290,7 @@ export default function ProductDetailInfo({ productid }: IDetailProps) {
             "Content-Type": "application/json",
           },
           params: {
-            productId: Number(productid),
+            productId: Number(productId),
           },
         };
         const response = await axios(url, options);
@@ -559,7 +559,9 @@ export default function ProductDetailInfo({ productid }: IDetailProps) {
                     onclick={onModal}
                   />
                 )}
-                {isModal && <Purchase onModal={onModal} />}
+                {isModal && (
+                  <Purchase onModal={onModal} productId={data?.productId} />
+                )}
               </ButtonBox>
             </InfoBox>
           </TextBox>

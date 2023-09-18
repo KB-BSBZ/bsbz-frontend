@@ -257,7 +257,26 @@ export default function MyAsset() {
   const [bonus, setBonus] = useState<number>(0);
   const [logData, setLogData] = useState<LogData[]>([]);
   const [assetData, setAssetData] = useState<LogData[]>([]);
+  const [userId, setUserId] = useState("");
 
+  useEffect(() => {
+    const userDataString = localStorage.getItem("userData");
+
+    interface UserData {
+      userId: string;
+      password: string;
+      email: string;
+      userName: string;
+      ssn: string;
+      phoneNum: string;
+      tradeCnt: number;
+    }
+
+    if (userDataString) {
+      const userData: UserData = JSON.parse(userDataString);
+      setUserId(userData.userId);
+    }
+  }, [userId]);
   // 그래프 데이터 (보유 로얄 수 추이)
   useEffect(() => {
     const fetchData = async () => {
@@ -269,7 +288,7 @@ export default function MyAsset() {
           "Content-Type": "application/json",
         },
         data: {
-          userId: "cyh",
+          userId: userId,
         },
       };
 
@@ -299,7 +318,7 @@ export default function MyAsset() {
     };
 
     fetchData(); // fetchData 함수를 호출하여 비동기 작업 수행
-  }, []);
+  }, [userId]);
   // 유저 랭킹 가져오기
   useEffect(() => {
     const fetchData = async () => {
@@ -311,7 +330,7 @@ export default function MyAsset() {
           "Content-Type": "application/json",
         },
         data: {
-          userId: "cyh",
+          userId: userId,
         },
       };
 
@@ -332,7 +351,7 @@ export default function MyAsset() {
     };
 
     fetchData(); // fetchData 함수를 호출하여 비동기 작업 수행
-  }, []);
+  }, [userId]);
   // 총 로얄수 가져오기
   useEffect(() => {
     const fetchData = async () => {
@@ -344,7 +363,7 @@ export default function MyAsset() {
           "Content-Type": "application/json",
         },
         data: {
-          userId: "cyh",
+          userId: userId,
         },
       };
 
@@ -361,7 +380,7 @@ export default function MyAsset() {
     };
 
     fetchData(); // fetchData 함수를 호출하여 비동기 작업 수행
-  }, []);
+  }, [userId]);
   // 배당금 가져오기
   useEffect(() => {
     const fetchData = async () => {
@@ -373,7 +392,7 @@ export default function MyAsset() {
           "Content-Type": "application/json",
         },
         data: {
-          userId: "cyh",
+          userId: userId,
         },
       };
 
@@ -390,7 +409,7 @@ export default function MyAsset() {
     };
 
     fetchData(); // fetchData 함수를 호출하여 비동기 작업 수행
-  }, []);
+  }, [userId]);
   // 거래 로그 가져오기
   useEffect(() => {
     const fetchData = async () => {
@@ -402,7 +421,7 @@ export default function MyAsset() {
           "Content-Type": "application/json",
         },
         data: {
-          userId: "cyh",
+          userId: userId,
         },
       };
 
@@ -419,7 +438,7 @@ export default function MyAsset() {
     };
 
     fetchData(); // fetchData 함수를 호출하여 비동기 작업 수행
-  }, []);
+  }, [userId]);
   // 보유 항목 가져오기
   useEffect(() => {
     const fetchData = async () => {
@@ -431,7 +450,7 @@ export default function MyAsset() {
           "Content-Type": "application/json",
         },
         data: {
-          userId: "cyh",
+          userId: userId,
         },
       };
 
@@ -446,9 +465,8 @@ export default function MyAsset() {
         setIsLoading(false);
       }
     };
-
-    fetchData(); // fetchData 함수를 호출하여 비동기 작업 수행
-  }, []);
+    fetchData();
+  }, [userId]);
 
   return (
     <>

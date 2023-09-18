@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import Button from "../Button";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleMinus, faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import useScrollReset from "../../utils/useScrollReset";
+import axios from "axios";
 
 const Container = styled.div`
   position: fixed;
@@ -36,6 +37,7 @@ const Content = styled.div`
 
 interface IPurchaseProps {
   onModal: () => void;
+  productId: number | undefined;
 }
 
 const ButtonBox = styled.div`
@@ -92,9 +94,12 @@ interface IPurchaseData {
   quantity: string;
 }
 
-export default function Purchase({ onModal }: IPurchaseProps) {
+export default function Purchase(
+  { onModal }: IPurchaseProps,
+  productId: number
+) {
   const [amount, setAmount] = useState(0);
-  const [money, setMoney] = useState(100000);
+  const [money, setMoney] = useState(0);
   const reset = useScrollReset();
 
   const {
@@ -125,20 +130,79 @@ export default function Purchase({ onModal }: IPurchaseProps) {
       });
     }
   };
-
-  const onValid = (data: IPurchaseData) => {
+  // 거래 하기
+  const onValid = async (data: IPurchaseData) => {
     if (!localStorage.getItem("userData")) {
       // 로그인 되어있지 않으면 로그인 창으로
       reset("/login");
     }
 
     if (data.quantity === "0") {
-      // 구매하지 않았을 경우
     } else {
-      console.log(data);
+      const url = "http://localhost:9999/trade";
+      const options = {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        data: {
+          userId: userId,
+          productId: productId,
+          tradeRoyalCnt: data,
+        },
+      };
+      try {
+        const response = await axios(url, options);
+
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+      }
+      console.log(productId);
+      console.log("거래 수량:" + data.quantity);
       onModal();
     }
   };
+  // 현재 잔액 가져오기
+  const [userId, setUserId] = useState("");
+  useEffect(() => {
+    const userDataString = localStorage.getItem("userData");
+
+    interface UserData {
+      userId: string;
+      password: string;
+      email: string;
+      userName: string;
+      ssn: string;
+      phoneNum: string;
+      tradeCnt: number;
+    }
+
+    if (userDataString) {
+      const userData: UserData = JSON.parse(userDataString);
+      setUserId(userData.userId);
+    }
+
+    const fetchData = async () => {
+      try {
+        const response = await axios.post(
+          "http://localhost:9999/account/balance",
+          {
+            userId: userId,
+          }
+        );
+
+        console.log(response.data);
+        setMoney(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData(); // fetchData 함수를 호출하여 비동기 작업 수행
+  }, [userId]);
 
   return (
     <Container>

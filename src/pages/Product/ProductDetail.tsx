@@ -15,7 +15,7 @@ export default function ProductDetail() {
   return (
     <>
       <Navigation />
-      <ProductDetailInfo productid={productId ? productId : "0"} />
+      <ProductDetailInfo productId={productId ? productId : "0"} />
       <ScrollTop />
       <Footer />
     </>
