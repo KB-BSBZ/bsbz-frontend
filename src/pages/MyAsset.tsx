@@ -11,6 +11,7 @@ import Ranking from "../components/MyAsset/Ranking";
 import ScrollTop from "../components/ScrollTop";
 import LogBoxDetail, { LogData } from "../components/MyAsset/LogBox";
 import MyProductsListBox from "../components/MyAsset/MyProductsListBox";
+import UseCountNum from "../components/MyAsset/UseCountUp";
 
 const Container = styled.div`
   display: flex;
@@ -256,6 +257,7 @@ export default function MyAsset() {
   const [bonus, setBonus] = useState<number>(0);
   const [logData, setLogData] = useState<LogData[]>([]);
   const [assetData, setAssetData] = useState<LogData[]>([]);
+
   // 그래프 데이터 (보유 로얄 수 추이)
   useEffect(() => {
     const fetchData = async () => {

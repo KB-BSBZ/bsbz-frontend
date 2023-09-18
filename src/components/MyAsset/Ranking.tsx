@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { motion } from "framer-motion";
 import { styled } from "styled-components";
+import UseCountNum from "./UseCountUp";
 
 const Main = styled.div`
   display: flex;
@@ -51,6 +52,11 @@ export default function Ranking({ ranking }: { ranking: number }) {
   const scrollToBottom = () => {
     divRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+  const count = UseCountNum({
+    end: ranking, // 원하는 최종 숫자
+    start: 0, // 시작 숫자 (기본값: 0)
+    duration: 2000, // 애니메이션 기간 (기본값: 2000ms)
+  });
   return (
     <Main>
       <div className="wrap">
@@ -65,11 +71,11 @@ export default function Ranking({ ranking }: { ranking: number }) {
             transition: { delay: 0.05 },
           }}
           whileHover={{
-            scale: 1.0,
+            scale: 0.8,
             transition: { type: "spring", stiffness: 400, damping: 20 },
           }}
         >
-          <p>상위 {ranking}%</p>
+          <p>상위 {count}%</p>
         </motion.div>
       </div>
     </Main>
