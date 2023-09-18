@@ -144,6 +144,14 @@ export default function Navigation() {
           리 서 치
         </span>
 
+        <span
+          onClick={() => {
+            localStorage.setItem("userData", "123");
+          }}
+        >
+          TEST
+        </span>
+
         <span onClick={onMove} id="myasset">
           나의 자산
         </span>
