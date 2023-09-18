@@ -36,7 +36,13 @@ const RegSuccessPopup = () => {
       <ModalContent>
         <h2>회원가입 성공</h2>
         <p>회원가입이 성공적으로 완료되었습니다.</p>
-        <Button width={"40%"} height={"12%"} hover={"mint"} text={"확 인"} />
+        <Button
+          width={"40%"}
+          height={"12%"}
+          hover={"mint"}
+          text={"확 인"}
+          onclick={() => reset("/")}
+        />
       </ModalContent>
     </ModalBackground>
   );
