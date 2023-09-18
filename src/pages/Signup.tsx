@@ -8,8 +8,8 @@ import Pentagon from "../components/Pentagon";
 import Hood from "../components/Hood";
 import axios from "axios";
 import useScrollReset from "../utils/useScrollReset";
-import PreferencePopup from "../components/LoginHome/PreferencePopUp";
 import React from "react";
+import RegSuccessPopup from "../components/SignUp/RegSuccessPopup";
 
 const Container = styled.div`
   display: flex;
@@ -133,6 +133,7 @@ export default function Signup() {
   const reset = useScrollReset();
   const [isLoading, setIsLoading] = useState(false);
   const [ssnResult, setSsnResult] = useState("");
+  const [isSignUpSuccess, setIsSignUpSuccess] = useState(false);
 
   const {
     register,
@@ -140,7 +141,9 @@ export default function Signup() {
     handleSubmit,
     formState: { errors },
   } = useForm<IFormData>();
+
   const BASE_URL = "http://localhost:9999"; // 서버 주소 설정
+
   const onValid = async (data: IFormData) => {
     try {
       setIsLoading(true);
@@ -150,7 +153,11 @@ export default function Signup() {
       data.ssn = ssnResult;
       console.log(data);
       const response = await axios.post(`${BASE_URL}/user/register`, data);
-      reset("/login");
+
+      //회원가입 성공 시 isSignUpSuccess 를 true로 설정
+      setIsSignUpSuccess(true);
+
+      // reset("/login");
     } catch (error) {}
     // console.log(errors);
   };
@@ -191,6 +198,7 @@ export default function Signup() {
   return (
     <>
       {isLoading && <Loading />}
+      {isSignUpSuccess && <RegSuccessPopup />}
       <Navigation />
       <Hood title={"회원가입"} />
       <Container>

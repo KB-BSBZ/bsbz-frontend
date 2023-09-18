@@ -33,6 +33,8 @@ npm install react-apexcharts apexcharts
 
 npm i framer-motion
 
+npm install @mui/icons-material @mui/material @emotion/styled @emotion/react
+
 
 // router 설치
 // styled-components 설치
