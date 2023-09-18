@@ -34,7 +34,7 @@ export default function UseCountNum({
     return () => {
       clearInterval(counter);
     };
-  }, [end, frameRate, start, totalFrame]);
+  }, [end, frameRate, start, totalFrame, scroll]);
 
   return count;
 }

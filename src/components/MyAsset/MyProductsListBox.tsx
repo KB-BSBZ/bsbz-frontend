@@ -65,12 +65,14 @@ export default function MyProductsListBox({
     } else if (product.productType === "luxury") {
       setType("럭 셔 리");
     }
+    console.log(product.imageUrl);
+    console.log(product);
   }, []);
   return (
     <>
       <Main>
         <Img>
-          <img src={product.imageUrl}></img>
+          <img src={product.profileUrl}></img>
         </Img>
         <Data>
           {type}

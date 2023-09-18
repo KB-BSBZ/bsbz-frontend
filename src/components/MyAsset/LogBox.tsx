@@ -61,13 +61,13 @@ export default function LogBoxDetail({
   useEffect(() => {
     if (product.productType === "estate") {
       setType("부 동 산");
-      setImgType("../../images/estate.png");
+      setImgType("../../images/home01.png");
     } else if (product.productType === "music") {
       setType(" 음 원 ");
-      setImgType("../../images/music.png");
+      setImgType("../../images/itunes.png");
     } else if (product.productType === "luxury") {
       setType("럭 셔 리");
-      setImgType("../../images/luck.png");
+      setImgType("../../images/premium.png");
     }
   }, []);
   return (

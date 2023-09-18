@@ -467,7 +467,7 @@ export default function MyAsset() {
                   <img
                     className="Balance"
                     alt="Balance"
-                    src="../../images/free-icon-font-usd-circle-7653682.png"
+                    src="../../images/honeycomb.png"
                   />
                 </BalanceImgBox>
                 <BalancePrintBox>
@@ -479,7 +479,7 @@ export default function MyAsset() {
                   <img
                     className="Bonus"
                     alt="Bonus"
-                    src="../../images/free-icon-font-usd-circle-7653682.png"
+                    src="../../images/money-bag.png"
                   />
                 </BonusImgBox>
                 <BonusPrintBox>
