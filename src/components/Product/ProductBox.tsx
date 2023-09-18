@@ -205,12 +205,13 @@ export default function ProductBox({
           to: { color: "#ED6A5A" },
           step: (state: any, bar: any) => {
             // 여기서 퍼센테이지 텍스트를 업데이트합니다.
-            bar.setText(Math.round(bar.value() * 100) + " %");
+            bar.setText(Math.floor(bar.value() * 100) + " %");
+            console.log(Math.floor(bar.value() * 100));
           },
         });
 
         // 예를 들어, 50% 진행 상태로 업데이트
-        bar.animate((left_royal * 10000 - productCost) / productCost);
+        bar.animate((productCost - left_royal * 10000) / productCost);
         // bar.animate(0.8);
 
         // 컴포넌트 언마운트 시 ProgressBar.js 해제

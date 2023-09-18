@@ -354,13 +354,21 @@ export default function ProductDetailInfo({ productid }: IDetailProps) {
           from: { color: "#FFEA82" },
           to: { color: "#ED6A5A" },
           step: (state: any, bar: any) => {
-            bar.setText(Math.round(bar.value() * 100) + " %");
+            // bar.setText(Math.floor(bar.value() * 100) + " %");
+            bar.setText(
+              Math.floor(
+                ((parseFloat(String(data?.productCost)) / 10000 -
+                  parseFloat(String(data?.left_royal))) /
+                  (parseFloat(String(data?.productCost)) / 10000)) *
+                  100
+              ) + " %"
+            );
           },
         });
 
         if (data) {
           bar.animate(
-            (data.left_royal * 10000 - data.productCost) / data.productCost
+            Math.floor(1)
             // 0.2
           );
         }
