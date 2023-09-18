@@ -39,6 +39,14 @@ export default function PriceLogLineChart() {
             width: 2.2,
           },
 
+          legend: {
+            show: true,
+            showForSingleSeries: true,
+            position: "bottom",
+            horizontalAlign: "center",
+            customLegendItems: ["단위 : 1만원"],
+          },
+
           yaxis: {
             show: true,
             labels: {
@@ -49,19 +57,6 @@ export default function PriceLogLineChart() {
               show: true,
             },
             tickAmount: 4,
-
-            title: {
-              text: "단위 : 10,000",
-              rotate: -90,
-              offsetX: 0,
-              offsetY: 0,
-              style: {
-                color: undefined,
-                fontSize: "10px",
-                fontWeight: 600,
-                cssClass: "apexcharts-yaxis-title",
-              },
-            },
           },
 
           xaxis: {
