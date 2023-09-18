@@ -9,6 +9,7 @@ import Hood from "../components/Hood";
 import axios from "axios";
 import useScrollReset from "../utils/useScrollReset";
 import PreferencePopup from "../components/LoginHome/PreferencePopUp";
+import React from "react";
 
 const Container = styled.div`
   display: flex;
@@ -132,6 +133,7 @@ export default function Signup() {
   const reset = useScrollReset();
   const [isLoading, setIsLoading] = useState(false);
   const [ssnResult, setSsnResult] = useState("");
+
   const {
     register,
     watch,
@@ -150,7 +152,6 @@ export default function Signup() {
       const response = await axios.post(`${BASE_URL}/user/register`, data);
       reset("/login");
     } catch (error) {}
-
     // console.log(errors);
   };
 

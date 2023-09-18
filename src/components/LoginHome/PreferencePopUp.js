@@ -33,7 +33,9 @@ function PreferencePopup({ onClose, onSelectPreference }) {
         <h3>취향을 선택하세요</h3>
         <button onClick={() => handlePreferenceSelect("부동산")}>부동산</button>
         <button onClick={() => handlePreferenceSelect("럭셔리")}>럭셔리</button>
-        <button onClick={() => handlePreferenceSelect("음악 저작권")}>음악 저작권</button>
+        <button onClick={() => handlePreferenceSelect("음악 저작권")}>
+          음악 저작권
+        </button>
       </PopupContent>
     </PopupContainer>
   );
