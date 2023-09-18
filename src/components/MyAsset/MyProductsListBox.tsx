@@ -37,7 +37,7 @@ interface LogProduct {
   endDate: string;
   extra: string | null;
   imageUrl: string;
-  left_royal: number;
+  leftRoyal: number;
   productCost: number;
   productId: number;
   productName: string;

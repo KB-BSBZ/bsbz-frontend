@@ -137,7 +137,7 @@ export interface IProductProps {
   endDate: string;
   extra: string | null;
   imageUrl: string;
-  left_royal: number;
+  leftRoyal: number;
   productCost: number;
   productId: number;
   productName: string;
@@ -154,7 +154,7 @@ export default function ProductBox({
   productCost,
   productId,
   productType,
-  left_royal,
+  leftRoyal,
   profileUrl,
   endDate,
 }: IProductProps) {
@@ -211,7 +211,7 @@ export default function ProductBox({
         });
 
         // 예를 들어, 50% 진행 상태로 업데이트
-        bar.animate((productCost - left_royal * 10000) / productCost);
+        bar.animate((productCost - leftRoyal * 10000) / productCost);
         // bar.animate(0.8);
 
         // 컴포넌트 언마운트 시 ProgressBar.js 해제
@@ -232,7 +232,7 @@ export default function ProductBox({
       <ImgBox url={profileUrl} isblur={isBlur}>
         <InnerBar>
           <LineInfo>
-            {left_royal < 1000 ? <DetailBox>마감임박</DetailBox> : null}
+            {leftRoyal < 1000 ? <DetailBox>마감임박</DetailBox> : null}
 
             <DetailBox color="white">
               {productType === "estate"
@@ -262,7 +262,7 @@ export default function ProductBox({
           {isBlur === "true" ? <DetailBox color="red">마 감</DetailBox> : null}
         </Line>
 
-        <p>{left_royal}</p>
+        <p>{leftRoyal}</p>
         <p>{productCost}</p>
       </TextBox>
     </Container>

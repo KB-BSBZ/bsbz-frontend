@@ -358,7 +358,7 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
             bar.setText(
               Math.floor(
                 ((parseFloat(String(data?.productCost)) / 10000 -
-                  parseFloat(String(data?.left_royal))) /
+                  parseFloat(String(data?.leftRoyal))) /
                   (parseFloat(String(data?.productCost)) / 10000)) *
                   100
               ) + " %"
@@ -467,7 +467,7 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
                     </Line>
                     <Line>
                       <p>남은 로얄</p>
-                      <p>{data?.left_royal} ROYAL</p>
+                      <p>{data?.leftRoyal} ROYAL</p>
                     </Line>
                   </Info>
                 </Box>
@@ -534,7 +534,7 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
                   </Line>
                   <Line>
                     <p>남은 로얄</p>
-                    <p>{data?.left_royal} ROYAL</p>
+                    <p>{data?.leftRoyal} ROYAL</p>
                   </Line>
                 </Info>
               </Box> */}

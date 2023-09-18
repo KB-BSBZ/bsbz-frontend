@@ -214,7 +214,7 @@ export default function Product() {
                   bonus={product.bonus}
                   endDate={product.endDate}
                   imageUrl={product.imageUrl}
-                  left_royal={product.left_royal}
+                  leftRoyal={product.leftRoyal}
                   registerDate={product.registerDate}
                   totalRoyal={product.totalRoyal}
                   views={product.views}
