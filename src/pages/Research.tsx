@@ -6,19 +6,20 @@ import Slider from "../components/Slider/Slider";
 import { useEffect, useState } from "react";
 
 import { imgList } from "../jsons/imgList";
-import { newsList } from "../jsons/newsList";
-import { chartList } from "../jsons/chartList";
 
 import Loading from "../components/Loading";
 import Chart from "../components/Research/Chart";
 import axios from "axios";
 import ScrollTop from "../components/ScrollTop";
 import NewsSlider from "../components/Research/NewsSlider";
+import ResearchSlider from "../components/Research/ResearchSlider";
+import { chartList } from "../jsons/chartList";
+import { IProductProps } from "../components/Product/ProductBox";
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
 `;
 
@@ -43,7 +44,7 @@ const Recommandation = styled.div`
 `;
 
 const NewsTap = styled.div`
-  height: 75vh;
+  height: 70vh;
   width: 100%;
 
   display: flex;
@@ -56,42 +57,6 @@ const NewsTap = styled.div`
   h1 {
     margin-bottom: 10vh;
   }
-`;
-
-const Charts = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: start;
-
-  background-color: white;
-`;
-
-const NewsList = styled.div`
-  background-color: white;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: center;
-  width: 100%;
-`;
-
-const Title = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-
-  font-size: 48px;
-`;
-
-const ChartTap = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: center;
-  height: 90%;
-  width: 44%;
 `;
 
 interface ISliderProps {
@@ -109,14 +74,92 @@ export interface INewsProps {
   description: string;
 }
 
+const SoaringTap = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+  width: 100%;
+
+  h1 {
+    margin-bottom: 2vh;
+  }
+`;
+
+const DeadlineTap = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+  width: 100%;
+
+  h1 {
+    margin-bottom: 2vh;
+  }
+`;
+
+const RecentTap = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+  width: 100%;
+
+  h1 {
+    margin-bottom: 2vh;
+  }
+`;
+
 export default function Research() {
   const [sliderData, setSliderData] = useState<ISliderProps[]>();
   const [isLoading, setIsLoading] = useState(false);
   const [news, setNews] = useState<INewsProps[]>([]);
-  useEffect(() => {
-    const url = "http://localhost:8000/pricelog/news/";
+  const [rank, setRank] = useState<IProductProps[]>([]);
+  const [deadline, setDeadline] = useState<IProductProps[]>([]);
+  const [recent, setRecent] = useState<IProductProps[]>([]);
 
-    const options = {
+  useEffect(() => {
+    const news_url = "http://localhost:8000/pricelog/news/";
+    const product_url = "http://localhost:9999/product/allproducts";
+    const allproduct_url = `${product_url}`;
+
+    const allproduct_options = {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      params: {
+        orderType: "",
+      },
+    };
+
+    const deadline_options = {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      params: {
+        orderType: "마감",
+      },
+    };
+
+    const recent_options = {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      params: {
+        orderType: "조회수",
+      },
+    };
+
+    const news_options = {
       method: "GET",
       headers: {
         // 'headers' 올바른 이름으로 수정
@@ -125,28 +168,42 @@ export default function Research() {
       },
     };
 
-    axios(url, options)
-      .then((response) => {
-        // setIsLoading(true);
-        // console.log("로딩 시작");
-        console.log(response.data);
-        setNews(response.data);
-      })
-      .catch((error) => console.error(error))
-      .finally(() => {
-        // if (data?.estate) {
-        //   const estate = data.estate;
-        //   const luxury = data.luxury;
-        //   const music = data.music;
-        // }
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+        const [
+          news_response,
+          allproduct_response,
+          deadline_response,
+          recent_response,
+        ] = await Promise.all([
+          axios(news_url, news_options),
+          axios(allproduct_url, allproduct_options),
+          axios(allproduct_url, deadline_options),
+          axios(allproduct_url, recent_options),
+        ]);
+
+        setNews(news_response.data);
+        setRank(allproduct_response.data);
+        setDeadline(deadline_response.data);
+        setRecent(recent_response.data);
+      } catch (error) {
+        console.error("에러 발생 : ", error);
+      } finally {
         setIsLoading(false);
-        // console.log("로딩 끝");
-      });
+      }
+    };
+
+    fetchData();
   }, []);
+
   console.log("here");
   news?.map(function (element) {
     console.log(element);
   });
+
+  // const nav = useNavigate();
+
   return (
     <>
       {isLoading && <Loading />}
@@ -161,6 +218,21 @@ export default function Research() {
           <h1>조각투자. 최신 소식을 알아보세요.</h1>
           <NewsSlider data={news} />
         </NewsTap>
+
+        <SoaringTap>
+          <h1>실시간 급상승 품목 📈</h1>
+          <ResearchSlider data={rank} />
+        </SoaringTap>
+
+        <DeadlineTap>
+          <h1>마감 임박 품목 ⌛</h1>
+          <ResearchSlider data={deadline} />
+        </DeadlineTap>
+
+        <RecentTap>
+          <h1>실시간 거래 품목 ⚡</h1>
+          <ResearchSlider data={recent} />
+        </RecentTap>
       </Container>
       <ScrollTop />
       <Footer />

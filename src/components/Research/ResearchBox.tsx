@@ -2,18 +2,24 @@ import { Link, useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import useScrollReset from "../../utils/useScrollReset";
 import { INewsProps } from "../../pages/Research";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { IProductProps } from "../Product/ProductBox";
 // import { ISliderData } from "./Slider";
 
-const Container = styled.span`
+const Container = styled.span<{ url: string }>`
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: start;
   align-items: flex-end;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), transparent),
-    url("https://img.freepik.com/free-vector/hanging-newspaper-concept_1284-5501.jpg?w=996&t=st=1695028888~exp=1695029488~hmac=3d1263739c23970565dd2361c298200fe5a0999a40c71523470a82a82cb7ca0c");
-
+  background-image: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.6),
+      rgba(0, 0, 0, 0)
+    ),
+    url(${(props) => props.url});
   background-position: center;
   background-size: cover;
   object-fit: cover;
@@ -78,34 +84,27 @@ const HeadLine = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: start;
+  width: 100%;
 
   p {
     margin-bottom: 32px;
   }
 `;
 
-export default function NewsBox({
-  title,
-  originallink,
-  link,
-  description,
-  pubDate,
-}: INewsProps) {
-  // const nav = useNavigate();
-  let reset = useScrollReset();
-
+export default function ResearchBox({
+  imageUrl,
+  productName,
+  productCost,
+  productId,
+  productType,
+  leftRoyal,
+  profileUrl,
+  endDate,
+}: IProductProps) {
+  console.log(profileUrl);
   return (
-    <Container id={title}>
-      <Link to={link}>
-        <TextBox>
-          <HeadLine>
-            <p>{pubDate.slice(0, 16)}</p>
-            <h2>{title}</h2>
-          </HeadLine>
-
-          <p>{description.slice(0, 36) + "..."}</p>
-        </TextBox>
-      </Link>
+    <Container url={profileUrl}>
+      <HeadLine></HeadLine>
     </Container>
   );
 }
