@@ -27,6 +27,9 @@ export default function PriceLogLineChart() {
             toolbar: {
               show: false,
             },
+            zoom: {
+              enabled: false,
+            },
             background: "transparent",
           },
 

@@ -51,6 +51,9 @@ export default function PredictedRangeChart() {
             toolbar: {
               show: false,
             },
+            zoom: {
+              enabled: false,
+            },
             defaultLocale: "kor",
             locales: [
               {
