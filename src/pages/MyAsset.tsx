@@ -9,6 +9,8 @@ import axios from "axios";
 import LineChart, { RoyalLog } from "../components/MyAsset/LineChart";
 import Ranking from "../components/MyAsset/Ranking";
 import ScrollTop from "../components/ScrollTop";
+import LogBoxDetail, { LogData } from "../components/MyAsset/LogBox";
+import MyProductsListBox from "../components/MyAsset/MyProductsListBox";
 
 const Container = styled.div`
   display: flex;
@@ -88,8 +90,8 @@ const Title2 = styled.div`
   align-items: center;
 `;
 const GraphBox = styled.div`
-  width: 50%;
-  height: 100%;
+  width: 40%;
+  height: 90%;
   border: 1px solid;
 `;
 const GraphBox2 = styled.div`
@@ -98,8 +100,8 @@ const GraphBox2 = styled.div`
   /* border: 1px solid; */
 `;
 const GraphBox3 = styled.div`
-  width: 50%;
-  height: 100%;
+  width: 40%;
+  height: 90%;
   border: 1px solid;
   display: flex;
   flex-direction: column;
@@ -112,16 +114,16 @@ const LogBox = styled.div`
   height: 30%;
   margin-bottom: 50px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 `;
 const AssetList = styled.div`
-  width: 50%;
-  height: 100%;
+  width: 100%;
+  height: 90%;
   border: 1px solid;
 `;
 const TradeLog = styled.div`
-  width: 50%;
-  height: 100%;
+  width: 100%;
+  height: 90%;
   border: 1px solid;
 `;
 const WordBox = styled.div`
@@ -249,6 +251,12 @@ export default function MyAsset() {
   const [LineChartData, setLineChartData] = useState<RoyalLog[]>([]);
   const [datesArray, setdatesArray] = useState<string[]>([]);
   const [royalsArray, setroyalsArray] = useState<number[]>([]);
+  const [ranking, setRanking] = useState<number>(0);
+  const [totalRoyal, setTotalRoyal] = useState<number>(0);
+  const [bonus, setBonus] = useState<number>(0);
+  const [logData, setLogData] = useState<LogData[]>([]);
+  const [assetData, setAssetData] = useState<LogData[]>([]);
+  // 그래프 데이터 (보유 로얄 수 추이)
   useEffect(() => {
     const fetchData = async () => {
       const url = "http://localhost:9999/user/ownproducts/totalroyalsDaily";
@@ -289,7 +297,156 @@ export default function MyAsset() {
     };
 
     fetchData(); // fetchData 함수를 호출하여 비동기 작업 수행
-  }, [setdatesArray, setroyalsArray]);
+  }, []);
+  // 유저 랭킹 가져오기
+  useEffect(() => {
+    const fetchData = async () => {
+      const url = "http://localhost:9999/user/ranking";
+      const options = {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        data: {
+          userId: "cyh",
+        },
+      };
+
+      try {
+        const response = await axios(url, options);
+
+        setLineChartData(response.data);
+
+        console.log("전체 데이터");
+        console.log(response.data);
+
+        setRanking(response.data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData(); // fetchData 함수를 호출하여 비동기 작업 수행
+  }, []);
+  // 총 로얄수 가져오기
+  useEffect(() => {
+    const fetchData = async () => {
+      const url = "http://localhost:9999/user/totalroyals";
+      const options = {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        data: {
+          userId: "cyh",
+        },
+      };
+
+      try {
+        const response = await axios(url, options);
+        console.log("전체 데이터");
+        console.log(response.data);
+        setTotalRoyal(response.data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData(); // fetchData 함수를 호출하여 비동기 작업 수행
+  }, []);
+  // 배당금 가져오기
+  useEffect(() => {
+    const fetchData = async () => {
+      const url = "http://localhost:9999/user/bonus";
+      const options = {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        data: {
+          userId: "cyh",
+        },
+      };
+
+      try {
+        const response = await axios(url, options);
+        console.log("전체 데이터");
+        console.log(response.data);
+        setBonus(response.data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData(); // fetchData 함수를 호출하여 비동기 작업 수행
+  }, []);
+  // 거래 로그 가져오기
+  useEffect(() => {
+    const fetchData = async () => {
+      const url = "http://localhost:9999/user/usertradeLog";
+      const options = {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        data: {
+          userId: "cyh",
+        },
+      };
+
+      try {
+        const response = await axios(url, options);
+        console.log("거래 로그 데이터");
+        console.log(response.data);
+        setLogData(response.data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData(); // fetchData 함수를 호출하여 비동기 작업 수행
+  }, []);
+  // 보유 항목 가져오기
+  useEffect(() => {
+    const fetchData = async () => {
+      const url = "http://localhost:9999/user/ownproducts";
+      const options = {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        data: {
+          userId: "cyh",
+        },
+      };
+
+      try {
+        const response = await axios(url, options);
+        console.log("보유항목 데이터");
+        console.log(response.data);
+        setAssetData(response.data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData(); // fetchData 함수를 호출하여 비동기 작업 수행
+  }, []);
 
   return (
     <>
@@ -312,7 +469,7 @@ export default function MyAsset() {
                   />
                 </BalanceImgBox>
                 <BalancePrintBox>
-                  <p>21,000,000 ROYAL</p>
+                  <p>{totalRoyal} ROYAL</p>
                 </BalancePrintBox>
               </Balance>
               <Bonus>
@@ -328,7 +485,7 @@ export default function MyAsset() {
                     <p className="word">예상 배당금</p>
                   </Box>
                   <Box>
-                    <p className="bonus">210,000 원</p>
+                    <p className="bonus">{bonus} 원</p>
                   </Box>
                 </BonusPrintBox>
               </Bonus>
@@ -347,14 +504,6 @@ export default function MyAsset() {
               <GraphBox>
                 <Title2>
                   <p>나의 자산 비중</p>
-                  <h1>23</h1>
-                  <h1>23</h1>
-                  <h1>23</h1>
-                  <h1>23</h1>
-                  <h1>23</h1>
-                  <h1>23</h1>
-                  <h1>23</h1>
-                  <h1>23</h1>
                 </Title2>
                 {data && (
                   <Donut
@@ -368,15 +517,43 @@ export default function MyAsset() {
                 <Title2>
                   <p>나의 벌부 랭킹</p>
                 </Title2>
-                <Ranking></Ranking>
+                <Ranking ranking={ranking}></Ranking>
               </GraphBox3>
             </MainGraphBox>
             <LogBox>
-              <AssetList>
+              <Title>
                 <p>보유중인 나의 자산 리스트 출력 칸</p>
+              </Title>
+              <AssetList>
+                {assetData?.map((log, index) => (
+                  <MyProductsListBox
+                    key={index}
+                    product={log.product}
+                    sumRoyal={log.sumRoyal}
+                    tradeDate={log.tradeDate}
+                    tradeRoyalCnt={log.tradeRoyalCnt}
+                    tradelogId={log.tradelogId}
+                    userId={log.userId}
+                  ></MyProductsListBox>
+                ))}
               </AssetList>
-              <TradeLog>
+            </LogBox>
+            <LogBox>
+              <Title>
                 <p>거래 로그 출력 칸</p>
+              </Title>
+              <TradeLog>
+                {logData?.map((log, index) => (
+                  <LogBoxDetail
+                    key={index}
+                    product={log.product}
+                    sumRoyal={log.sumRoyal}
+                    tradeDate={log.tradeDate}
+                    tradeRoyalCnt={log.tradeRoyalCnt}
+                    tradelogId={log.tradelogId}
+                    userId={log.userId}
+                  ></LogBoxDetail>
+                ))}
               </TradeLog>
             </LogBox>
           </Main>

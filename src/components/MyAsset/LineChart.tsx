@@ -7,8 +7,11 @@ import Loading from "../Loading";
 
 const Container = styled.div`
   /* border: 1px solid; */
+  background-image: url("https://png.pngtree.com/png-vector/20200423/ourmid/pngtree-cute-bee-cartoon-illustration-png-image_2191783.jpg"); // 배경 이미지 URL을 설정하세요.
+  background-size: cover;
+  background-position: center;
   width: 100%;
-  height: 100%;
+  height: 50%; // 그래프의 높이를 조정하세요.
 `;
 
 export interface RoyalLog {
@@ -28,6 +31,7 @@ export default function LineChart({
   const [chartData, setChartData] = useState([
     10, 41, 35, 51, 49, 62, 69, 91, 148, 11, 11,
   ]);
+  const [categories, setCategories] = useState(["1일"]);
   const [series, setSeries] = useState([
     {
       name: "ROYAL",
@@ -42,7 +46,20 @@ export default function LineChart({
         data: royals,
       },
     ]);
-    // console.log("aa");
+    const monthAndDayStrings = dates.map((dateString) => {
+      const dateObject = new Date(dateString);
+      const month = dateObject.getMonth() + 1;
+      const day = dateObject.getDate();
+      return `${month}/${day}`;
+    });
+
+    // 결과 출력
+    console.log("날짜 데이터 파싱");
+    console.log(monthAndDayStrings);
+    setCategories(monthAndDayStrings);
+    // console.log(processedDates[1]);
+
+    // console.log("로얄 수 확인");
     // console.log(royals);
   }, [dates]);
   return (
@@ -52,7 +69,8 @@ export default function LineChart({
         series={series}
         options={{
           chart: {
-            height: "100%",
+            width: 50,
+            height: 50,
             type: "line",
             zoom: {
               enabled: false,
@@ -70,50 +88,19 @@ export default function LineChart({
             align: "left",
           },
           grid: {
-            row: {
-              colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
-              opacity: 0.5,
-            },
+            // row: {
+            //   colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
+            //   opacity: 0.5,
+            // },
+            show: false,
           },
           xaxis: {
-            categories: [
-              "1일",
-              "2일",
-              "3일",
-              "4일",
-              "5일",
-              "6일",
-              "7일",
-              "8일",
-              "9일",
-              "10일",
-              "11일",
-              "12일",
-              "13일",
-              "14일",
-              "15일",
-              "16일",
-              "17일",
-              "18일",
-              "19일",
-              "20일",
-              "21일",
-              "22일",
-              "23일",
-              "24일",
-              "25일",
-              "26일",
-              "27일",
-              "28일",
-              "29일",
-              "30일",
-              "31일",
-            ],
+            categories: categories,
           },
           yaxis: {
             // 여기에 Y 축 설정을 추가합니다.
             min: 0, // Y 축의 최소 값 설정
-            max: 5000, // Y 축의 최대 값 설정
+            max: 2000, // Y 축의 최대 값 설정
             tickAmount: 10, // Y 축의 눈금 간격 설정
           },
         }}

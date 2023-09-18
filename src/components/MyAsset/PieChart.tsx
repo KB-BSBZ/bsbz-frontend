@@ -7,8 +7,8 @@ import Loading from "../Loading";
 
 const Container = styled.div`
   /* border: 1px solid; */
-  width: 90%;
-  height: 90%;
+  width: 100%;
+  height: 100%;
 `;
 
 export interface AllProductGraphProps {
@@ -33,8 +33,6 @@ export default function ApexChart({
         series={series}
         options={{
           chart: {
-            height: 300,
-            width: 300,
             toolbar: {
               show: false,
             },
@@ -45,9 +43,6 @@ export default function ApexChart({
             {
               breakpoint: 480,
               options: {
-                chart: {
-                  width: 200,
-                },
                 legend: {
                   position: "bottom",
                 },

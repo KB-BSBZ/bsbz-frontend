@@ -6,7 +6,10 @@ const Main = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  height: 100%;
   .wrap {
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -43,7 +46,7 @@ const Main = styled.div`
   }
 `;
 
-export default function Ranking() {
+export default function Ranking({ ranking }: { ranking: number }) {
   const divRef = useRef<HTMLDivElement>(null);
   const scrollToBottom = () => {
     divRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -54,7 +57,7 @@ export default function Ranking() {
         <motion.div
           ref={divRef}
           className="box"
-          initial={{ opacity: 0.2 }}
+          initial={{ opacity: 0.2, scale: 0.8 }}
           whileInView={{
             opacity: 1,
             rotate: [180, 360],
@@ -62,11 +65,11 @@ export default function Ranking() {
             transition: { delay: 0.05 },
           }}
           whileHover={{
-            scale: 1.2,
+            scale: 1.0,
             transition: { type: "spring", stiffness: 400, damping: 20 },
           }}
         >
-          🤟😎🤟
+          <p>상위 {ranking}%</p>
         </motion.div>
       </div>
     </Main>
