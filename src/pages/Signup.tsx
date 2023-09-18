@@ -148,9 +148,6 @@ export default function Signup() {
       data.ssn = ssnResult;
       console.log(data);
       const response = await axios.post(`${BASE_URL}/user/register`, data);
-      if (response.data !== "회원 가입 실패") {
-        localStorage.setItem("userData", JSON.stringify(response.data));
-      }
       reset("/login");
     } catch (error) {}
 

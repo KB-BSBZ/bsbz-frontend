@@ -6,7 +6,17 @@ import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
 import { IProductProps } from "../components/Product/ProductBox";
 import Button from "../components/Button";
-import PopupSlider from "../components/LoginHome/PopupSlider";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/effect-cube";
+import "swiper/css/pagination";
+
+// import required modules
+import { EffectCube, Pagination } from "swiper/modules";
+import useScrollReset from "../utils/useScrollReset";
 
 const X = styled.div`
   width: 100%;
@@ -89,10 +99,22 @@ const Header = styled.div`
   align-items: center;
 `;
 
+const ImgBox = styled.div`
+  width: 75%;
+  height: 75%;
+
+  object-fit: scale-down;
+  background-position: center;
+  border-radius: 3%;
+  position: absolute;
+  background-size: cover;
+`;
+
 export default function Popup() {
   // 팝업 상태 및 선택한 취향 상태 초기화
   const [popup, setPopup] = useRecoilState(popupState);
   const [selectedPreference, setSelectedPreference] = useState("");
+  const reset = useScrollReset();
 
   // 팝업 열기 함수
   const openPopup = () => {
@@ -103,10 +125,10 @@ export default function Popup() {
   const closePopup = () => {
     setPopup(false);
   };
-  const [data, setData] = useState<IProductProps[]>([]);
+  const [data, setData] = useState();
   const [orderType, setOrderType] = useState("");
   // 선택한 취향 처리 함수
-  const handlePreferenceSelect = (preference: SetStateAction<string>) => {
+  const handlePreferenceSelect = (preference) => {
     // 팝업을 닫지 않고 취향을 선택할 때 서버로 요청을 보냅니다.
 
     let url = "";
@@ -139,6 +161,11 @@ export default function Popup() {
 
     setSelectedPreference(preference);
   };
+
+  const onMove = (productId) => {
+    reset(`/product/detail/${productId}`);
+  };
+
   return (
     <>
       <Container>
@@ -154,8 +181,41 @@ export default function Popup() {
               </X>
               <h1>취향을 선택하세요</h1>
             </Header>
-
-            {data && <PopupSlider data={data} />}
+            {/* {data && data.map((resource) => <h1>{resource.productName}</h1>)} */}
+            {data && (
+              <Swiper
+                effect={"cube"}
+                grabCursor={true}
+                cubeEffect={{
+                  shadow: true,
+                  slideShadows: true,
+                  shadowOffset: 20,
+                  shadowScale: 0.94,
+                }}
+                pagination={true}
+                modules={[EffectCube, Pagination]}
+                className="mySwiper"
+              >
+                {data &&
+                  data.map((resource) => (
+                    <SwiperSlide
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <ImgBox
+                        style={{
+                          backgroundImage: `url(${resource.profileUrl})`,
+                        }}
+                        onClick={() => onMove(resource.productId)}
+                      />
+                    </SwiperSlide>
+                  ))}
+              </Swiper>
+            )}
 
             <ButtonBox>
               <Button
@@ -178,7 +238,9 @@ export default function Popup() {
                 height={"50%"}
                 hover={"mint"}
                 text={"음악 저작권"}
-                onclick={() => handlePreferenceSelect("음악 저작권")}
+                onclick={() => {
+                  handlePreferenceSelect("음악 저작권");
+                }}
               />
             </ButtonBox>
           </Forms>
