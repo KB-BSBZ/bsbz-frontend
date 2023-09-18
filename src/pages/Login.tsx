@@ -12,7 +12,7 @@ import Hood from "../components/Hood";
 import { useNavigate } from "react-router-dom";
 import { theme } from "../utils/theme";
 import { useRecoilState } from "recoil";
-import { userIdState, userNameState } from "../utils/atoms";
+import { popupState, userIdState, userNameState } from "../utils/atoms";
 
 const Container = styled.div`
   display: flex;
@@ -213,6 +213,8 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const [userId, setUserId] = useRecoilState(userIdState);
   const [userName, setUserName] = useRecoilState(userNameState);
+  const [popup, setPopup]= useRecoilState(popupState);
+
   const nav = useNavigate();
 
   const {
@@ -234,6 +236,7 @@ export default function Login() {
       }
       // console.log(response.data); // 서버 응답 데이터 출력
       nav("/");
+      setPopup(true);
     } catch (error) {
       console.error(error);
     } finally {

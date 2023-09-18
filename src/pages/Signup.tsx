@@ -6,9 +6,9 @@ import Footer from "../components/Footer/Footer";
 import { useForm } from "react-hook-form";
 import Pentagon from "../components/Pentagon";
 import Hood from "../components/Hood";
-import PreferencePopup from "../components/Signup/PreferencePopUp";
 import axios from "axios";
 import useScrollReset from "../utils/useScrollReset";
+import PreferencePopup from "../components/LoginHome/PreferencePopUp";
 
 const Container = styled.div`
   display: flex;

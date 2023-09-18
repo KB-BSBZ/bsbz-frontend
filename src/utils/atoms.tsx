@@ -16,3 +16,8 @@ export const userIdState = atom({
   key: "userId",
   default: "",
 });
+
+export const popupState = atom({
+  key: "popup",
+  default: false,
+})
