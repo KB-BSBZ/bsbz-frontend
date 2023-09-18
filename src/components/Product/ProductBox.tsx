@@ -24,9 +24,12 @@ const Container = styled.div`
 const ImgBox = styled.div<{ url: string; isblur: string }>`
   width: 100%;
   height: 48vh;
-  background-position: center;
-  object-fit: cover;
+  /* object-fit: cover; */
   background-repeat: no-repeat;
+  object-fit: scale-down;
+  background-position: center;
+  /* position: absolute; */
+  background-size: cover;
 
   filter: ${(props) =>
     props.isblur === "true"
