@@ -374,7 +374,7 @@ export default function ProductDetailInfo({ productid }: IDetailProps) {
         <TopBar>
           <LeftBox>
             <ImgBox url={data?.profileUrl} isblur={isBlur} />
-            {logData && <LineChart dates={datesArray} royals={royalsArray} />}
+            {/* {logData && <LineChart dates={datesArray} royals={royalsArray} />} */}
           </LeftBox>
           <TextBox>
             <b>

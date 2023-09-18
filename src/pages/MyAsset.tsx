@@ -8,6 +8,7 @@ import Donut, { AllProductGraphProps } from "../components/MyAsset/PieChart";
 import axios from "axios";
 import LineChart, { RoyalLog } from "../components/MyAsset/LineChart";
 import Ranking from "../components/MyAsset/Ranking";
+import ScrollTop from "../components/ScrollTop";
 
 const Container = styled.div`
   display: flex;
@@ -20,7 +21,6 @@ const Container = styled.div`
 
 const Body = styled.div`
   width: 100%;
-  height: 250vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -84,6 +84,7 @@ const Title2 = styled.div`
   /* border: 1px solid; */
   font-size: 18px;
   display: flex;
+  flex-direction: column;
   align-items: center;
 `;
 const GraphBox = styled.div`
@@ -92,8 +93,8 @@ const GraphBox = styled.div`
   border: 1px solid;
 `;
 const GraphBox2 = styled.div`
-  width: 100%;
-  height: 90%;
+  width: 60%;
+  height: 100%;
   /* border: 1px solid; */
 `;
 const GraphBox3 = styled.div`
@@ -346,6 +347,14 @@ export default function MyAsset() {
               <GraphBox>
                 <Title2>
                   <p>나의 자산 비중</p>
+                  <h1>23</h1>
+                  <h1>23</h1>
+                  <h1>23</h1>
+                  <h1>23</h1>
+                  <h1>23</h1>
+                  <h1>23</h1>
+                  <h1>23</h1>
+                  <h1>23</h1>
                 </Title2>
                 {data && (
                   <Donut
@@ -373,6 +382,7 @@ export default function MyAsset() {
           </Main>
         </Body>
       </Container>
+      <ScrollTop />
       <Footer />
     </>
   );

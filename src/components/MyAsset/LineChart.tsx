@@ -8,7 +8,7 @@ import Loading from "../Loading";
 const Container = styled.div`
   /* border: 1px solid; */
   width: 100%;
-  height: 100px;
+  height: 100%;
 `;
 
 export interface RoyalLog {
@@ -52,7 +52,7 @@ export default function LineChart({
         series={series}
         options={{
           chart: {
-            height: 100,
+            height: "100%",
             type: "line",
             zoom: {
               enabled: false,
