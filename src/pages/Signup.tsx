@@ -7,6 +7,8 @@ import { useForm } from "react-hook-form";
 import Pentagon from "../components/Pentagon";
 import Hood from "../components/Hood";
 import PreferencePopup from "../components/Signup/PreferencePopUp";
+import axios from "axios";
+import useScrollReset from "../utils/useScrollReset";
 
 const Container = styled.div`
   display: flex;
@@ -118,46 +120,53 @@ const InputBox = styled.div`
 `;
 
 interface IFormData {
-  user_id: string;
+  userId: string;
   password: string;
   email: string;
-  user_name: string;
+  userName: string;
   ssn: string;
-  phone_num: string;
+  phoneNum: string;
 }
 
 export default function Signup() {
+  const reset = useScrollReset();
   const [isLoading, setIsLoading] = useState(false);
-
+  const [ssnResult, setSsnResult] = useState("");
   const {
     register,
     watch,
     handleSubmit,
     formState: { errors },
   } = useForm<IFormData>();
+  const BASE_URL = "http://localhost:9999"; // 서버 주소 설정
+  const onValid = async (data: IFormData) => {
+    try {
+      setIsLoading(true);
+      console.log("회원 가입 폼");
+      // console.log(data);
+      // console.log(ssnResult);
+      data.ssn = ssnResult;
+      console.log(data);
+      const response = await axios.post(`${BASE_URL}/user/register`, data);
+      if (response.data !== "회원 가입 실패") {
+        localStorage.setItem("userData", JSON.stringify(response.data));
+      }
+      reset("/login");
+    } catch (error) {}
 
-  const onValid = (data: IFormData) => {
-    console.log(data);
     // console.log(errors);
   };
 
   const formatSSN = (ssn: string) => {
     // 입력값에서 숫자 이외의 문자를 제거
-    const numericSSN = ssn
+
+    let numericSSN = ssn;
+    setSsnResult(numericSSN);
+    numericSSN = ssn
       .replace(/\D/g, "")
       .replace(/(\d{6})(\d{1})(\d{6})/, "$1$2●●●●●●");
-
     // 주민등록번호 형식에 맞게 "-" 추가
     if (numericSSN.length >= 7) {
-      // 이 부분에 ssn 저장 후 마스킹 할 예정
-      // setValue(
-      //   "ssn",
-      //   watch("ssn")
-      //     .replace(/[^0-9]/g, "")
-      //     .replace(/^(\d{0,6})(\d{0,7})$/g, "$1-$2")
-      //     .replace(/-{1,2}$/g, "")
-      // );
-      // 마스킹 한 ssn리턴
       return `${numericSSN.slice(0, 6)}-${numericSSN.slice(6)}`;
     } else {
       return numericSSN;
@@ -180,24 +189,6 @@ export default function Signup() {
       return numericPhone;
     }
   };
-  // 팝업 상태 및 선택한 취향 상태 초기화
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [selectedPreference, setSelectedPreference] = useState("");
-
-  // 팝업 열기 함수
-  const openPopup = () => {
-    setIsPopupOpen(true);
-  };
-
-  // 팝업 닫기 함수
-  const closePopup = () => {
-    setIsPopupOpen(false);
-  };
-
-  // 선택한 취향 처리 함수
-  const handlePreferenceSelect = (preference: SetStateAction<string>) => {
-    setSelectedPreference(preference);
-  };
 
   return (
     <>
@@ -213,7 +204,7 @@ export default function Signup() {
               <form onSubmit={handleSubmit(onValid)}>
                 <InputBox>
                   <input
-                    {...register("user_id", {
+                    {...register("userId", {
                       required: "아이디를 입력하세요.",
                       minLength: {
                         value: 5,
@@ -263,7 +254,7 @@ export default function Signup() {
                 </InputBox>
                 <InputBox>
                   <input
-                    {...register("user_name", {
+                    {...register("userName", {
                       required: "이름을 입력하세요.",
                     })}
                     placeholder="이 름"
@@ -273,8 +264,12 @@ export default function Signup() {
                   <input
                     {...register("ssn", {
                       required: "주민등록번호를 입력하세요.",
+                      // pattern: {
+                      //   value: /^[0-9]{6}-[0-9]{7}$/,
+                      //   message: "주민등록번호 형식이 맞지 않습니다.",
+                      // },
                       pattern: {
-                        value: /^[0-9]{6}-[0-9]{7}$/,
+                        value: /^[0-9]{6}-[0-9]{1}[●]{6}$/,
                         message: "주민등록번호 형식이 맞지 않습니다.",
                       },
                       onChange: (
@@ -289,7 +284,7 @@ export default function Signup() {
                 </InputBox>
                 <InputBox>
                   <input
-                    {...register("phone_num", {
+                    {...register("phoneNum", {
                       required: "전화번호를 입력해 주세요.",
                       pattern: {
                         value: /^\d{3}-\d{4}-\d{4}$/,
@@ -306,33 +301,24 @@ export default function Signup() {
                   />
                 </InputBox>
                 <ButtonBox>
-                  <button onClick={openPopup}>가입 하기</button>
+                  <button>가입 하기</button>
                 </ButtonBox>
-                {/* 취향 선택 팝업 */}
-                {isPopupOpen && (
-                  <PreferencePopup
-                    onClose={closePopup}
-                    onSelectPreference={handlePreferenceSelect}
-                  />
-                )}
-                {/* 선택한 취향 출력 */}
-                선택한 취향: {selectedPreference}
               </form>
             </Forms>
 
             <span>
-              {errors?.user_id?.message
-                ? errors?.user_id?.message
+              {errors?.userId?.message
+                ? errors?.userId?.message
                 : errors?.password?.message
                 ? errors?.password?.message
                 : errors?.email?.message
                 ? errors?.email?.message
-                : errors?.user_name?.message
-                ? errors?.user_name?.message
+                : errors?.userName?.message
+                ? errors?.userName?.message
                 : errors?.ssn?.message
                 ? errors?.ssn?.message
-                : errors?.phone_num?.message
-                ? errors?.phone_num?.message
+                : errors?.phoneNum?.message
+                ? errors?.phoneNum?.message
                 : " "}
             </span>
           </TextBox>
