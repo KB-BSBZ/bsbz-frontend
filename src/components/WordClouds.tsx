@@ -4,6 +4,7 @@ import WordCloud from "react-d3-cloud";
 import { scaleOrdinal } from "d3-scale";
 import { schemeCategory10 } from "d3-scale-chromatic";
 import { wordData } from "../jsons/wordData";
+import "../css/WordClouds-styles.css";
 
 export default function WordClouds() {
   const fontSize = useCallback((word: any) => word.value / 8, []);
@@ -20,7 +21,7 @@ export default function WordClouds() {
         value: item.frequency,
       }))}
       width={500}
-      height={300}
+      height={500}
       font="Times"
       fontWeight="normal"
       fontSize={fontSize}

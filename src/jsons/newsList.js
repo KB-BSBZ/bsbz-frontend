@@ -1,48 +1,43 @@
 export const newsList = [
   {
-    title:
-      "[르포] 중국 <b>부동산</b>發 위기, 홍콩 금융<b>시장</b>엔 미풍… 경제 성장엔 부담",
+    title: "올 명품 시계 총거래액 650억 예상…거래액 1위는 롤렉스",
+    originallink: "https://www.mk.co.kr/article/10828812",
+    link: "https://n.news.naver.com/mnews/article/009/0005186159?sid=101",
+    description:
+      "올해 명품 시계 거래 시장이 예년에 비해 활발하지 않은 상황에서도 짧은 기간 동안 500억원의 누적 거래를 이뤘다는 점에 업체 측은 의의를 두고 있으며, 올 시즌 전체 명품 시계 거래 시장의 극심한 불황 속에서도... ",
+    pubDate: "Wed, 13 Sep 2023 16:12:00 +0900",
+  },
+  {
+    title: "하이엔드 시계거래 ‘바이버' 감정진단 서비스 제공",
+    originallink: "http://www.fashionbiz.co.kr/TN/?cate=2&recom=2&idx=202701",
+    link: "http://www.fashionbiz.co.kr/TN/?cate=2&recom=2&idx=202701",
+    description:
+      "바이버는 두나무의 자회사로서 최고의 기술력과 전문성으로 실물자산의 잠재된 가치를 찾아 새로운 시장을 개척하고자 설립됐다. 명품 시계 거래 플랫폼 바이버, 다양한 하이엔드 타임피스를 경험해 볼 수 있는... ",
+    pubDate: "Mon, 18 Sep 2023 10:22:00 +0900",
+  },
+  {
+    title: "송하예, 뮤직카우X에잇레코즈 ‘결심 프로젝트’ 합류",
     originallink:
-      "http://moneys.mt.co.kr/news/mwView.php?no=2023091514485230589",
-    link: "https://n.news.naver.com/mnews/article/417/0000949367?sid=101",
+      "http://sports.khan.co.kr/news/sk_index.html?art_id=202309081532003&sec_id=540301&pt=nv",
+    link: "https://n.news.naver.com/mnews/article/144/0000911868?sid=106",
     description:
-      "신은일 홍콩우리투자은행 이사는 &quot;홍콩은 국가보안법 시행, 제로 코로나 정책으로 인해 <b>부동산 시장</b>과 증시 등이 수 년 간 침체가 이어진 데다 중국 본토 내 기업들이 대부분을 차지하는 홍콩 주식<b>시장</b> 역시 베어마켓... ",
-    pubDate: "Mon, 18 Sep 2023 06:25:00 +0900",
+      "세계 최초의 음악 수익증권 플랫폼 ‘뮤직카우’와 세계를 아우르는 독보적 음악 콘텐츠를 제작하는 ‘에잇레코즈’의 합작 음악 프로젝트인 ‘결심 프로젝트’는 수많은 결심의 순간 속 내면의 고민과 갈등을 표현한... ",
+    pubDate: "Fri, 08 Sep 2023 15:33:00 +0900",
   },
   {
-    title:
-      "<b>부동산</b> PF 경색에 우려 커지는 건설업계...보릿고개 넘을 수 있나",
-    originallink: "https://economist.co.kr/article/view/ecn202309110036",
-    link: "https://n.news.naver.com/mnews/article/243/0000050345?sid=101",
+    title: "'국평' 43억 찍은 '아리팍'…부동산 불경기 무색한 반포 아파트",
+    originallink: "https://www.hankyung.com/article/202309186847i",
+    link: "https://n.news.naver.com/mnews/article/015/0004892966?sid=101",
     description:
-      "<b>부동산</b> PF <b>시장</b>은 대출 잔액과 연체율 증가로 인해 사실상 임시 휴업에 들어간 상태다. ‘돈맥경화’가 현실이 되자 일부 건설사들은 회생 절차를 밟고 있다. 일각에선 건설사들의 줄도산 우려가 나온다. <b>부동산</b>PF... ",
-    pubDate: "Mon, 18 Sep 2023 08:01:00 +0900",
+      "최근 대단지 입주가 시작되며 활기를 띠고 있는 서울 서초구 반포 부동산 시장이 신고가 행진에 들썩이고 있다. ‘국민 평형’으로 불리는 전용 84㎡의 가격이 40억원을 훌쩍 넘은 아크로리버파크를 비롯해 최근... ",
+    pubDate: "Mon, 18 Sep 2023 10:38:00 +0900",
   },
   {
-    title:
-      "다주택자에 쏠린 <b>부동산</b> 규제완화… “무주택자는 자금 창구 막혀”",
-    originallink:
-      "https://biz.chosun.com/real_estate/real_estate_general/2023/09/18/JKCMXTEBOZAGTAUFADBP4IB7WA/?utm_source=naver&utm_medium=original&utm_campaign=biz",
-    link: "https://n.news.naver.com/mnews/article/366/0000933009?sid=101",
+    title: "작년 명품 가방 수입액 8천억원 육박…4년 새 258% 늘어",
+    originallink: "https://www.yna.co.kr/view/AKR20230908150900002?input=1195m",
+    link: "https://n.news.naver.com/mnews/article/001/0014181486?sid=101",
     description:
-      "<b>부동산 시장</b>에서는 정부가 가계부채 관리를 위해 대출 문턱을 높이면서 일부 무주택자들에게는 자금 창구가 막힌 것이나 다름없다고 보고 있다. 지난 8일 기준 특례보금자리론 신청은 37조6000억원으로 올해 공급목표... ",
-    pubDate: "Mon, 18 Sep 2023 10:09:00 +0900",
-  },
-  {
-    title: "사라지는 中 <b>부동산</b> 관계자들…완다 이어 헝다 인사도 체포",
-    originallink: "http://news.mt.co.kr/mtview.php?no=2023091711324574641",
-    link: "https://n.news.naver.com/mnews/article/008/0004939285?sid=104",
-    description:
-      "블룸버그에 따르면 완다그룹은 중국 <b>부동산 시장</b> 둔화 속 역외 채권 <b>시장</b>에서 살아남은 몇 안 되는 개발업체 중 하나였다. 하지만 지난 7월 핵심 계열사인 다롄완다상업관리집단이 만기가 도래한 채권 4억달러를 갚지... ",
-    pubDate: "Sun, 17 Sep 2023 12:01:00 +0900",
-  },
-  {
-    title:
-      "美로 떠나는 韓금융투자단···“주식, <b>부동산</b>, 비트코인 다 볼 것”",
-    originallink: "http://www.fnnews.com/news/202309180944024856",
-    link: "https://n.news.naver.com/mnews/article/014/0005073961?sid=101",
-    description:
-      "투자은행의 인공지능(AI) 투자플랫폼 도입현황, 혹한기를 겪고 있는 상업<b>부동산 시장</b> 투자동향 점검과 나날이 커져가는 상장지수펀드(ETF) <b>시장</b>에서 차별화된 상품 모색을 위해 글로벌 투자은행인 ‘JP모건 체이스’... ",
-    pubDate: "Mon, 18 Sep 2023 09:58:00 +0900",
+      "코로나 거치며 빠르게 성장…엔데믹에도 안 꺾여 명품 시계 수입액도 약 2배로 늘어 9천억원 돌파... 양 의원은 고물가, 경기 둔화 상황에서도 고가의 명품 시장 성장세는 지속되는 등 양극화된 소비양상이... ",
+    pubDate: "Sat, 09 Sep 2023 06:10:00 +0900",
   },
 ];

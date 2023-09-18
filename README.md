@@ -49,6 +49,19 @@ npm install @mui/icons-material @mui/material @emotion/styled @emotion/react
 // 애니메이션 효과 관련 설치
 ```
 
++++
+
+```json
+  },
+  "devDependencies": {
+    "@types/d3-scale": "^4.0.4",
+    "@types/d3-scale-chromatic": "^3.0.0",
+    "@types/react-helmet": "^6.1.6"
+  }
+}
+// package.json 파일에 devDependencies 의 값을 등록 후 미설치 파일 설치
+```
+
 ## 메인화면 사진 자료
 
 // 롤렉스 공식 홈페이지

@@ -5,11 +5,12 @@ import axios from "axios";
 import Button from "../Button";
 import Hood from "../Hood";
 import Loading from "../Loading";
-import ReactApexChart from "react-apexcharts";
-import LineChart from "../MyAsset/LineChart";
 import Purchase from "./Purchase";
 import PredictedRangeChart from "../PredictedRangeChart";
 import PriceLogLineChart from "../PriceLogLineChart";
+
+import WordClouds from "../WordClouds";
+
 const ProgressBar = require("progressbar.js");
 
 const Container = styled.div`
@@ -119,7 +120,7 @@ const StatisticsBar = styled.div`
   justify-content: center;
   align-items: center;
 
-  padding: 0 10vh;
+  padding: 0 10vh 12vh 10vh;
 `;
 
 const Line = styled.div`
@@ -232,6 +233,20 @@ const Static = styled.div`
   /* background-position: center; */
   /* position: absolute; */
   background-size: cover;
+`;
+
+const CloudBar = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+
+  width: 100%;
+  height: 150vh;
+  svg {
+    width: 200%;
+    height: 200%;
+  }
 `;
 
 export default function ProductDetailInfo({ productid }: IDetailProps) {
@@ -541,6 +556,12 @@ export default function ProductDetailInfo({ productid }: IDetailProps) {
             </InfoBox>
           </TextBox>
         </TopBar>
+        {data?.productType === "music" ? (
+          <CloudBar>
+            <WordClouds />
+          </CloudBar>
+        ) : null}
+
         <StatisticsBar>
           <Static />
         </StatisticsBar>
