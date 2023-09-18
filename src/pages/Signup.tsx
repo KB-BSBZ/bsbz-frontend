@@ -143,9 +143,9 @@ export default function Signup() {
 
   const formatSSN = (ssn: string) => {
     // 입력값에서 숫자 이외의 문자를 제거
-    const numericSSN = ssn.replace(/\D/g, "");
-    // .replace(/(\d{6})(\d{1})(\d{6})/, "$1$2******");
-    // 0908.YH ssn masking
+    const numericSSN = ssn
+      .replace(/\D/g, "")
+      .replace(/(\d{6})(\d{1})(\d{6})/, "$1$2●●●●●●");
 
     // 주민등록번호 형식에 맞게 "-" 추가
     if (numericSSN.length >= 7) {
@@ -315,11 +315,8 @@ export default function Signup() {
                     onSelectPreference={handlePreferenceSelect}
                   />
                 )}
-
                 {/* 선택한 취향 출력 */}
-
                 선택한 취향: {selectedPreference}
-
               </form>
             </Forms>
 
@@ -327,16 +324,16 @@ export default function Signup() {
               {errors?.user_id?.message
                 ? errors?.user_id?.message
                 : errors?.password?.message
-                  ? errors?.password?.message
-                  : errors?.email?.message
-                    ? errors?.email?.message
-                    : errors?.user_name?.message
-                      ? errors?.user_name?.message
-                      : errors?.ssn?.message
-                        ? errors?.ssn?.message
-                        : errors?.phone_num?.message
-                          ? errors?.phone_num?.message
-                          : " "}
+                ? errors?.password?.message
+                : errors?.email?.message
+                ? errors?.email?.message
+                : errors?.user_name?.message
+                ? errors?.user_name?.message
+                : errors?.ssn?.message
+                ? errors?.ssn?.message
+                : errors?.phone_num?.message
+                ? errors?.phone_num?.message
+                : " "}
             </span>
           </TextBox>
 
