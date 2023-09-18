@@ -38,7 +38,7 @@ export interface INewsProps {
 
 export default function News({
   title,
-  pubDate, 
+  pubDate,
   originallink,
   link,
   description,

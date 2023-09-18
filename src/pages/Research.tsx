@@ -114,7 +114,6 @@ export default function Research() {
   const [isLoading, setIsLoading] = useState(false);
   const [news, setNews] = useState<INewsProps[]>([]);
   useEffect(() => {
-    setNews(newsList);
     const url = "http://localhost:8000/pricelog/news/";
 
     const options = {
@@ -131,7 +130,7 @@ export default function Research() {
         // setIsLoading(true);
         // console.log("로딩 시작");
         console.log(response.data);
-        // setNews(response.data);
+        setNews(response.data);
       })
       .catch((error) => console.error(error))
       .finally(() => {
@@ -146,7 +145,7 @@ export default function Research() {
   }, []);
   console.log("here");
   news?.map(function (element) {
-    console.log(element.title);
+    console.log(element);
   });
   return (
     <>
@@ -159,8 +158,8 @@ export default function Research() {
           <Slider data={imgList} />
         </Recommandation>
         <NewsTap>
-          <h1>지금. 이 투자상품을 만나보세요.</h1>
-          <NewsSlider data={newsList} />
+          <h1>조각투자. 최신 소식을 알아보세요.</h1>
+          <NewsSlider data={news} />
         </NewsTap>
       </Container>
       <ScrollTop />

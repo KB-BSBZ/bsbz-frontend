@@ -44,7 +44,7 @@ export default function NewsSlider({ data }) {
       >
         {data.map((product) => (
           <SwiperSlide
-            key={product.productId}
+            key={product.id}
             style={{
               display: "flex",
               justifyContent: "center",
@@ -58,11 +58,12 @@ export default function NewsSlider({ data }) {
             }}
           >
             <NewsBox
+              key={product.id}
               title={product.title}
-              //   originallink={}
-              //   link={}
-              //   description={}
-              //   pubDate={}
+              originallink={product.originallink}
+              link={product.link}
+              description={product.description}
+              pubDate={product.pubDate}
             />
           </SwiperSlide>
         ))}
