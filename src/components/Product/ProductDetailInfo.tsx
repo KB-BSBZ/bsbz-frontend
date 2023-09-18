@@ -9,6 +9,8 @@ import { PriceLogGraph } from "../PriceLogGraph";
 import ReactApexChart from "react-apexcharts";
 import LineChart from "../MyAsset/LineChart";
 import Purchase from "./Purchase";
+import PredictedRangeChart from "../PredictedRangeChart";
+import PriceLogLineChart from "../PriceLogLineChart";
 const ProgressBar = require("progressbar.js");
 
 const Container = styled.div`
@@ -375,6 +377,8 @@ export default function ProductDetailInfo({ productid }: IDetailProps) {
           <LeftBox>
             <ImgBox url={data?.profileUrl} isblur={isBlur} />
             {/* {logData && <LineChart dates={datesArray} royals={royalsArray} />} */}
+            <PriceLogLineChart />
+            <PredictedRangeChart />
           </LeftBox>
           <TextBox>
             <b>
