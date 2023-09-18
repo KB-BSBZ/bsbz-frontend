@@ -1,0 +1,12 @@
+:root {
+  --swiper-navigation-color: #ffd700ff !important;
+  --swiper-theme-color: #ffd700ff !important;
+}
+.swiper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 70%;
+  width: 80%;
+}

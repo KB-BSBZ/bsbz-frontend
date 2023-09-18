@@ -213,7 +213,7 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const [userId, setUserId] = useRecoilState(userIdState);
   const [userName, setUserName] = useRecoilState(userNameState);
-  const [popup, setPopup]= useRecoilState(popupState);
+  const [popup, setPopup] = useRecoilState(popupState);
 
   const nav = useNavigate();
 
@@ -234,7 +234,7 @@ export default function Login() {
       if (response.data !== "로그인 실패") {
         localStorage.setItem("userData", JSON.stringify(response.data));
       }
-      // console.log(response.data); // 서버 응답 데이터 출력
+      console.log(response.data); // 서버 응답 데이터 출력
       nav("/");
       setPopup(true);
     } catch (error) {

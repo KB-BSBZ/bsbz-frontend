@@ -5,7 +5,6 @@ import axios from "axios";
 import Button from "../Button";
 import Hood from "../Hood";
 import Loading from "../Loading";
-import { PriceLogGraph } from "../PriceLogGraph";
 import ReactApexChart from "react-apexcharts";
 import LineChart from "../MyAsset/LineChart";
 import Purchase from "./Purchase";
@@ -40,7 +39,13 @@ const ImgBox = styled.span<{ url: string | undefined; isblur: string }>`
   background-image: url(${(props) => props.url});
   background-position: center;
   background-repeat: no-repeat;
-  object-fit: cover;
+  /* object-fit: cover; */
+
+  /* object-fit: cover; */
+  object-fit: scale-down;
+  /* background-position: center; */
+  /* position: absolute; */
+  background-size: cover;
 
   filter: ${(props) =>
     props.isblur === "true"
@@ -105,9 +110,16 @@ const TextLines = styled.div`
 `;
 
 const StatisticsBar = styled.div`
-  width: 100%;
-  height: 100vh;
-  background-color: ${(props) => props.theme.highlightColor};
+  width: 90%;
+  height: 240vh;
+  background-color: ${(props) => props.theme.blurColor2};
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding: 0 10vh;
 `;
 
 const Line = styled.div`
@@ -204,6 +216,23 @@ export interface ILogProps {
   ymd: string;
   price: number;
 }
+
+const Static = styled.div`
+  background-image: url("../../../images/BSBZ_PREMIUM_LUXURY_.png");
+  width: 100%;
+  /* height: 100%; */
+  height: 240vh;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  /* object-fit: cover; */
+
+  /* object-fit: cover; */
+  object-fit: scale-down;
+  /* background-position: center; */
+  /* position: absolute; */
+  background-size: cover;
+`;
 
 export default function ProductDetailInfo({ productid }: IDetailProps) {
   const [remainingTime, setRemainingTime] = useState(0);
@@ -512,7 +541,9 @@ export default function ProductDetailInfo({ productid }: IDetailProps) {
             </InfoBox>
           </TextBox>
         </TopBar>
-        <StatisticsBar></StatisticsBar>
+        <StatisticsBar>
+          <Static />
+        </StatisticsBar>
       </Container>
     </>
   );

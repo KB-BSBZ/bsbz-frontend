@@ -9,11 +9,11 @@ import { imgList } from "../jsons/imgList";
 import { newsList } from "../jsons/newsList";
 import { chartList } from "../jsons/chartList";
 
-import News, { INewsProps } from "../components/Research/News";
 import Loading from "../components/Loading";
 import Chart from "../components/Research/Chart";
 import axios from "axios";
 import ScrollTop from "../components/ScrollTop";
+import NewsSlider from "../components/Research/NewsSlider";
 
 const Container = styled.div`
   display: flex;
@@ -42,26 +42,20 @@ const Recommandation = styled.div`
   }
 `;
 
-const BottomBar = styled.div`
-  background-color: ${(props) => props.theme.highlightColor2};
-
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: start;
-
-  margin-top: 12vh;
-  width: 90%;
-  gap: 6%;
-`;
-
 const NewsTap = styled.div`
+  height: 75vh;
+  width: 100%;
+
   display: flex;
   flex-direction: column;
-  align-items: start;
-  justify-content: start;
+  justify-content: center;
+  align-items: center;
 
-  width: 44%;
+  color: ${(props) => props.theme.textColor};
+
+  h1 {
+    margin-bottom: 10vh;
+  }
 `;
 
 const Charts = styled.div`
@@ -107,11 +101,20 @@ interface ISliderProps {
   productId: string;
 }
 
+export interface INewsProps {
+  title: string;
+  pubDate: string;
+  originallink: string;
+  link: string;
+  description: string;
+}
+
 export default function Research() {
   const [sliderData, setSliderData] = useState<ISliderProps[]>();
   const [isLoading, setIsLoading] = useState(false);
   const [news, setNews] = useState<INewsProps[]>([]);
   useEffect(() => {
+    setNews(newsList);
     const url = "http://localhost:8000/pricelog/news/";
 
     const options = {
@@ -128,7 +131,7 @@ export default function Research() {
         // setIsLoading(true);
         // console.log("로딩 시작");
         console.log(response.data);
-        setNews(response.data);
+        // setNews(response.data);
       })
       .catch((error) => console.error(error))
       .finally(() => {
@@ -155,31 +158,10 @@ export default function Research() {
           <h1>지금. 이 투자상품을 만나보세요.</h1>
           <Slider data={imgList} />
         </Recommandation>
-        <BottomBar>
-          <NewsTap>
-            <Title>Hello</Title>
-            <NewsList>
-              {news?.map((n, index) => (
-                <News
-                  title={n.title}
-                  pubDate={n.pubDate}
-                  originallink={n.originallink}
-                  link={n.link}
-                  description={n.description}
-                />
-              ))}
-            </NewsList>
-          </NewsTap>
-
-          <ChartTap>
-            <Title>HELLO</Title>
-            <Charts>
-              {/* {chartList.map((chart) => (
-                <Chart />
-              ))} */}
-            </Charts>
-          </ChartTap>
-        </BottomBar>
+        <NewsTap>
+          <h1>지금. 이 투자상품을 만나보세요.</h1>
+          <NewsSlider data={newsList} />
+        </NewsTap>
       </Container>
       <ScrollTop />
       <Footer />
