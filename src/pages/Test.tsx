@@ -4,6 +4,10 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { async } from "q";
 import axios from "axios";
+import DonutChart from "../components/MyAsset/DonutChart";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBuilding, faGem } from "@fortawesome/free-regular-svg-icons";
+import { faCompactDisc, faMusic } from "@fortawesome/free-solid-svg-icons";
 
 const Container = styled.div`
   padding-top: 20vh;
@@ -51,7 +55,7 @@ const InfoBox = styled.div`
 `;
 
 const UserHeader = styled.div`
-  margin-top: 10%;
+  margin-top: 5%;
 
   width: 100%;
   height: 20%;
@@ -105,7 +109,7 @@ const Assets = styled.div`
   height: 40%;
 `;
 
-const AssetPart = styled.div`
+const AssetPart = styled.div<{ bgcolor: string }>`
   width: 100%;
   border-radius: 48px;
   height: 28%;
@@ -115,16 +119,54 @@ const AssetPart = styled.div`
   align-items: center;
   justify-content: space-evenly;
 
-  background-color: red;
+  background-color: ${(props) =>
+    props.bgcolor === "yellow"
+      ? props.theme.testColor1
+      : props.bgcolor === "blue"
+      ? props.theme.testColor2
+      : props.bgcolor === "green"
+      ? props.theme.testColor3
+      : null};
+
+  font-size: 24px;
 `;
+
+const AssetHeader = styled.div`
+  height: 100%;
+  width: 50%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const TotalBox = styled.div`
+  margin-top: 5%;
+  height: 50%;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: start;
+`;
+
+interface IAssetsProps {
+  music: number;
+  estate: number;
+  luxury: number;
+}
 
 export default function Test() {
   const [username, setUsername] = useState("");
   const [total, setTotal] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [assets, setAssets] = useState<IAssetsProps>();
 
   useEffect(() => {
-    const total_url = "http://localhost:8000/user/totalroyals";
+    const userId = JSON.parse(localStorage.getItem("userData")!).userId;
+    const total_url = "http://localhost:9999/user/totalroyals?" + userId;
+    const assets_url = "http://localhost:9999/user/ownproducts/graph?" + userId;
 
     const total_options = {
       method: "GET",
@@ -133,7 +175,18 @@ export default function Test() {
         "Content-Type": "application/json",
       },
       params: {
-        orderType: "",
+        userId,
+      },
+    };
+
+    const asset_options = {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      params: {
+        userId,
       },
     };
 
@@ -141,13 +194,20 @@ export default function Test() {
       try {
         setIsLoading(true);
 
-        const [total_response] = await Promise.all([axios.get(total_url)]);
+        const [total_response, assets_response] = await Promise.all([
+          axios.get(total_url, total_options),
+          axios.get(assets_url, asset_options),
+        ]);
 
         setTotal(total_response.data);
+        setAssets(assets_response.data);
       } catch (error) {
         console.error(error);
       } finally {
         setIsLoading(false);
+
+        console.log(JSON.parse(localStorage.getItem("userData")!).userId);
+        console.log(assets);
       }
     };
 
@@ -171,17 +231,44 @@ export default function Test() {
                 <p>좋은 하루 되세요!</p>
               </UserName>
             </UserHeader>
-            <Total>
-              <h2>총 자산</h2>
-              <h2>{total} 원</h2>
-            </Total>
+            <TotalBox>
+              <Total>
+                <h2>총 자산</h2>
+                <h3>{total * 10000} 원</h3>
+              </Total>
+
+              <Total>
+                <h2>배당금</h2>
+                <h3>{total * 10000} 원</h3>
+              </Total>
+            </TotalBox>
 
             <Assets>
-              <AssetPart>
-                <h5>원</h5>
+              <AssetPart bgcolor={"yellow"}>
+                <AssetHeader>
+                  <FontAwesomeIcon icon={faGem} />
+                  <h5>쥬 얼 리</h5>
+                </AssetHeader>
+
+                <h5>{assets?.luxury ? assets.luxury : 0} ROYAL</h5>
               </AssetPart>
-              <AssetPart></AssetPart>
-              <AssetPart></AssetPart>
+
+              <AssetPart bgcolor={"green"}>
+                <AssetHeader>
+                  <FontAwesomeIcon icon={faBuilding} />
+                  <h5>부 동 산</h5>
+                </AssetHeader>
+
+                <h5>{assets?.estate ? assets.estate : 0} ROYAL</h5>
+              </AssetPart>
+
+              <AssetPart bgcolor={"blue"}>
+                <AssetHeader>
+                  <FontAwesomeIcon icon={faCompactDisc} />
+                  <h5>음악 저작권</h5>
+                </AssetHeader>
+                <h5>{assets?.music ? assets.music : 0} ROYAL</h5>
+              </AssetPart>
             </Assets>
           </UserBox>
           <InfoBox></InfoBox>

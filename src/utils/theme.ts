@@ -24,6 +24,10 @@ export const theme: DefaultTheme = {
   blurColor: "#343434CC",
   blurColor2: "#f2f4f6ff",
   blurColor3: "#f4f5efff",
+
+  testColor1: "#fceda5ff",
+  testColor2: "#c2f0fdff",
+  testColor3: "#cff0c1ff",
 };
 
 export const darkTheme: DefaultTheme = {
