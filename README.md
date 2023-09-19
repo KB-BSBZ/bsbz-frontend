@@ -39,7 +39,9 @@ npm install recoil-persist
 
 npm install react-redux
 
-npm install --save aos@next
+npm install --save-dev @types/aos
+
+npm install @mui/material @emotion/react @emotion/styled
 
 // router 설치
 // styled-components 설치

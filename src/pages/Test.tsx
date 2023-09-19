@@ -12,6 +12,8 @@ import AssetDoughnutChart from "../components/MyAsset/AssetDoughnutChart";
 import LineChart, { RoyalLog } from "../components/MyAsset/LineChart";
 import Ranking from "../components/MyAsset/Ranking";
 import { LogData } from "../components/MyAsset/LogBox";
+import LogListBox from "../components/MyAsset/LogListBox";
+import MyAssetListBox from "../components/MyAsset/MyAssetListBox";
 
 const Container = styled.div`
   padding-top: 20vh;
@@ -431,9 +433,13 @@ export default function Test() {
               {/* 그래프 옮기려면 여기 위에 코드 그대로 옮기면 됨 */}
             </InfoBox>
           ) : tab === "product" ? (
-            <InfoBox></InfoBox>
+            <InfoBox>
+              <LogListBox></LogListBox>
+            </InfoBox>
           ) : tab === "log" ? (
-            <InfoBox></InfoBox>
+            <InfoBox>
+              <MyAssetListBox></MyAssetListBox>
+            </InfoBox>
           ) : null}
         </Main>
         <Tabs>
