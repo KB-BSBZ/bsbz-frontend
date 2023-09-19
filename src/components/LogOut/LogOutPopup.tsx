@@ -41,8 +41,8 @@ const LogOutPopup = () => {
   return (
     <ModalBackground>
       <ModalContent>
-        <h2>로그 아웃</h2>
-        <p>로그 아웃 완료</p>
+        <h2>로그아웃</h2>
+        <p>로그아웃 완료</p>
         <Button
           width={"40%"}
           height={"12%"}
