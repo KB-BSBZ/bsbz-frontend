@@ -3,6 +3,8 @@ import styled from "styled-components";
 import useScrollReset from "../../utils/useScrollReset";
 import { useEffect, useRef, useState } from "react";
 import Loading from "../Loading";
+import { useRecoilState } from "recoil";
+// import { leftRoyalsState, prductCostState } from "../../utils/atoms";
 const ProgressBar = require("progressbar.js");
 
 const Container = styled.div`
@@ -167,7 +169,8 @@ export default function ProductBox({
   };
 
   const progressBarRef = useRef(null);
-
+  // const [leftRoyals, setLeftRoyals] = useRecoilState(leftRoyalsState);
+  // const [prductCost, setPrductCost] = useRecoilState(prductCostState);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -178,7 +181,9 @@ export default function ProductBox({
         if (currentDate >= targetDate) {
           setIsBlur("true");
         }
-
+        if (leftRoyal === 0) {
+          setIsBlur("true");
+        }
         const bar = new ProgressBar.Line(progressBarRef.current, {
           strokeWidth: 6,
           easing: "easeInOut",
@@ -232,7 +237,9 @@ export default function ProductBox({
       <ImgBox url={profileUrl} isblur={isBlur}>
         <InnerBar>
           <LineInfo>
-            {leftRoyal < 1000 ? <DetailBox>마감임박</DetailBox> : null}
+            {leftRoyal < 1000 && leftRoyal > 0 ? (
+              <DetailBox>마감임박</DetailBox>
+            ) : null}
 
             <DetailBox color="white">
               {productType === "estate"

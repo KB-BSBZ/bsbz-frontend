@@ -216,39 +216,6 @@ export default function MyAsset() {
   const [isLoading, setIsLoading] = useState(false);
 
   const [data, setData] = useState<AllProductGraphProps>();
-  useEffect(() => {
-    const fetchData = async () => {
-      const url = "http://localhost:9999/user/ownproducts/graph";
-
-      const options = {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        data: {
-          userId: "cyh",
-        },
-      };
-
-      try {
-        // setIsLoading(true);
-        // console.log("로딩 시작");
-
-        const response = await axios(url, options);
-        setData(response.data);
-        console.log(response.data);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsLoading(false);
-        // console.log("로딩 끝");
-      }
-    };
-
-    fetchData();
-  }, []);
-
   const [LineChartData, setLineChartData] = useState<RoyalLog[]>([]);
   const [datesArray, setdatesArray] = useState<string[]>([]);
   const [royalsArray, setroyalsArray] = useState<number[]>([]);
@@ -258,6 +225,9 @@ export default function MyAsset() {
   const [logData, setLogData] = useState<LogData[]>([]);
   const [assetData, setAssetData] = useState<LogData[]>([]);
   const [userId, setUserId] = useState("");
+  const [estate, setEstate] = useState("");
+  const [luxury, setLuxury] = useState("");
+  const [music, setMusic] = useState<string | undefined>("");
 
   useEffect(() => {
     const userDataString = localStorage.getItem("userData");
@@ -276,6 +246,43 @@ export default function MyAsset() {
       const userData: UserData = JSON.parse(userDataString);
       setUserId(userData.userId);
     }
+    console.log("아이디 유저");
+    console.log(userId);
+  }, [userId]);
+
+  // 비중 그래프
+  useEffect(() => {
+    const fetchData = async () => {
+      const url = "http://localhost:9999/user/ownproducts/graph";
+
+      const options = {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        data: {
+          userId: userId,
+        },
+      };
+
+      try {
+        // setIsLoading(true);
+        // console.log("로딩 시작");
+
+        const response = await axios(url, options);
+        setData(response.data);
+        console.log("비중 그래프 데이터");
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+        // console.log("로딩 끝");
+      }
+    };
+
+    fetchData();
   }, [userId]);
   // 그래프 데이터 (보유 로얄 수 추이)
   useEffect(() => {
@@ -297,7 +304,7 @@ export default function MyAsset() {
 
         setLineChartData(response.data);
 
-        console.log("전체 데이터");
+        console.log("그래프 보유 로얄 추이 데이터");
         console.log(response.data);
 
         const tempDatesArray: string[] = [];
@@ -339,7 +346,7 @@ export default function MyAsset() {
 
         setLineChartData(response.data);
 
-        console.log("전체 데이터");
+        console.log("랭킹 데이터");
         console.log(response.data);
 
         setRanking(response.data);
@@ -527,9 +534,10 @@ export default function MyAsset() {
                 </Title2>
                 {data && (
                   <Donut
-                    estate={data.estate}
-                    music={data.music}
-                    luxury={data.luxury}
+                    key={Date.now()} // 현재 시간을 키로 사용하여 강제로 컴포넌트를 리랜더링
+                    estate={data?.estate}
+                    music={data?.music}
+                    luxury={data?.luxury}
                   />
                 )}
               </GraphBox>
@@ -545,17 +553,19 @@ export default function MyAsset() {
                 <p>보유중인 나의 자산 리스트 출력 칸</p>
               </Title>
               <AssetList>
-                {assetData?.map((log, index) => (
-                  <MyProductsListBox
-                    key={index}
-                    product={log.product}
-                    sumRoyal={log.sumRoyal}
-                    tradeDate={log.tradeDate}
-                    tradeRoyalCnt={log.tradeRoyalCnt}
-                    tradelogId={log.tradelogId}
-                    userId={log.userId}
-                  ></MyProductsListBox>
-                ))}
+                {assetData
+                  ?.filter((log) => log.tradeRoyalCnt !== 0)
+                  .map((log, index) => (
+                    <MyProductsListBox
+                      key={index}
+                      product={log.product}
+                      sumRoyal={log.sumRoyal}
+                      tradeDate={log.tradeDate}
+                      tradeRoyalCnt={log.tradeRoyalCnt}
+                      tradelogId={log.tradelogId}
+                      userId={log.userId}
+                    ></MyProductsListBox>
+                  ))}
               </AssetList>
             </LogBox>
             <LogBox>

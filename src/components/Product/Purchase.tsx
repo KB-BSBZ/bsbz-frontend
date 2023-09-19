@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleMinus, faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import useScrollReset from "../../utils/useScrollReset";
 import axios from "axios";
+import { useSetRecoilState, useRecoilValue } from "recoil";
+import { productIdState } from "../../utils/atoms";
 
 const Container = styled.div`
   position: fixed;
@@ -37,7 +39,6 @@ const Content = styled.div`
 
 interface IPurchaseProps {
   onModal: () => void;
-  productId: number | undefined;
 }
 
 const ButtonBox = styled.div`
@@ -94,14 +95,12 @@ interface IPurchaseData {
   quantity: string;
 }
 
-export default function Purchase(
-  { onModal }: IPurchaseProps,
-  productId: number
-) {
+export default function Purchase({ onModal }: IPurchaseProps) {
   const [amount, setAmount] = useState(0);
   const [money, setMoney] = useState(0);
   const reset = useScrollReset();
-
+  const setProductId = useSetRecoilState(productIdState);
+  const productId = useRecoilValue(productIdState);
   const {
     register,
     watch,
@@ -149,12 +148,12 @@ export default function Purchase(
         data: {
           userId: userId,
           productId: productId,
-          tradeRoyalCnt: data,
+          tradeRoyalCnt: data.quantity,
         },
       };
       try {
         const response = await axios(url, options);
-
+        console.log("리턴 반응");
         console.log(response.data);
       } catch (error) {
         console.error(error);

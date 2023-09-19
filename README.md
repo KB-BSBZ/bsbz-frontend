@@ -35,6 +35,7 @@ npm i framer-motion
 
 npm install @mui/icons-material @mui/material @emotion/styled @emotion/react
 
+npm install recoil-persist
 
 // router 설치
 // styled-components 설치
@@ -47,6 +48,7 @@ npm install @mui/icons-material @mui/material @emotion/styled @emotion/react
 // recoil 설치
 // 파이 그래프 관련 설치 2줄
 // 애니메이션 효과 관련 설치
+// 리코일 새로고침 방지
 ```
 
 +++

@@ -5,11 +5,20 @@ import axios from "axios";
 import Button from "../Button";
 import Hood from "../Hood";
 import Loading from "../Loading";
-import Purchase from "./Purchase";
+
 import PredictedRangeChart from "../PredictedRangeChart";
 import PriceLogLineChart from "../PriceLogLineChart";
 
 import WordClouds from "../WordClouds";
+import { render } from "react-dom";
+import { useRecoilState } from "recoil";
+import {
+  // leftRoyalsState,
+  // prductCostState,
+  productIdState,
+} from "../../utils/atoms";
+import Purchase from "./Purchase";
+import { useSetRecoilState, useRecoilValue } from "recoil";
 
 const ProgressBar = require("progressbar.js");
 
@@ -261,12 +270,16 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
   const [royalsArray, setroyalsArray] = useState<number[]>([]);
   const [isModal, setIsModal] = useState(false);
 
+  const [buyProductId, setBuyProductId] = useRecoilState(productIdState);
+  // const setLeftRoyals = useSetRecoilState(leftRoyalsState);
+  // const leftRoyals = useRecoilValue(leftRoyalsState);
+  // const setPrductCost = useSetRecoilState(prductCostState);
+  // const prductCost = useRecoilValue(prductCostState);
   const progressBarRef = useRef(null);
 
   let bar: any = null;
 
   const [refresh, setRefresh] = useState(false);
-
   // 일정 시간(예: 10초) 후에 리랜더링
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -295,13 +308,15 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
         };
         const response = await axios(url, options);
         setData(response.data);
+        console.log("아이디이이이이이이ㅣ");
+        console.log(data?.productId);
+        setBuyProductId(data?.productId);
         // console.log(response.data);
       } catch (error) {
         console.error(error);
       } finally {
         let currentDate = new Date();
         let targetDate = new Date(data?.endDate!);
-
         if (currentDate > targetDate) {
           setIsBlur("true");
         } else {
@@ -413,7 +428,7 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
     };
 
     fetchData();
-  }, []);
+  }, [refresh]);
 
   const onModal = () => {
     setIsModal((current) => !current);
@@ -440,7 +455,7 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
                 <p>목표 시간이 이미 지났습니다.</p>
               )}
             </b>
-            <b>{data?.registerDate.slice(0, 10)}</b>
+            <b>{data?.endDate.slice(0, 10)}</b>
             <HeadInfo>
               {data?.productType === "estate" ? (
                 <DetailBox>부동산</DetailBox>
@@ -559,9 +574,7 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
                     onclick={onModal}
                   />
                 )}
-                {isModal && (
-                  <Purchase onModal={onModal} productId={data?.productId} />
-                )}
+                {isModal && <Purchase onModal={onModal} />}
               </ButtonBox>
             </InfoBox>
           </TextBox>
