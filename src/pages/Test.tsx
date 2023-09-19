@@ -8,6 +8,10 @@ import DonutChart from "../components/MyAsset/DonutChart";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBuilding, faGem } from "@fortawesome/free-regular-svg-icons";
 import { faCompactDisc, faMusic } from "@fortawesome/free-solid-svg-icons";
+import AssetDoughnutChart from "../components/MyAsset/AssetDoughnutChart";
+import LineChart, { RoyalLog } from "../components/MyAsset/LineChart";
+import Ranking from "../components/MyAsset/Ranking";
+import { LogData } from "../components/MyAsset/LogBox";
 
 const Container = styled.div`
   padding-top: 20vh;
@@ -162,11 +166,26 @@ export default function Test() {
   const [total, setTotal] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [assets, setAssets] = useState<IAssetsProps>();
+  const [bonus, setBonus] = useState(0);
+  const [LineChartData, setLineChartData] = useState<RoyalLog[]>([]);
+  const [datesArray, setdatesArray] = useState<string[]>([]);
+  const [royalsArray, setroyalsArray] = useState<number[]>([]);
+  const [ranking, setRanking] = useState(0);
+  const [logData, setLogData] = useState<LogData[]>([]);
+  const [assetData, setAssetData] = useState<LogData[]>([]);
 
   useEffect(() => {
     const userId = JSON.parse(localStorage.getItem("userData")!).userId;
     const total_url = "http://localhost:9999/user/totalroyals?" + userId;
     const assets_url = "http://localhost:9999/user/ownproducts/graph?" + userId;
+    const bonus_url = "http://localhost:9999/user/bonus?" + userId;
+    const totalroyalsDaily_url =
+      "http://localhost:9999/user/ownproducts/totalroyalsDaily?" + userId;
+
+    const ranking_url = "http://localhost:9999/user/ranking?" + userId;
+    const userTradeLog_url =
+      "http://localhost:9999/user/usertradeLog?" + userId;
+    const ownProducts_url = "http://localhost:9999/user/ownproducts?" + userId;
 
     const total_options = {
       method: "GET",
@@ -190,24 +209,113 @@ export default function Test() {
       },
     };
 
+    const bonus_options = {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      params: {
+        userId,
+      },
+    };
+
+    const totalroyalsDaily_options = {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      params: {
+        userId,
+      },
+    };
+    const ranking_options = {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      params: {
+        userId,
+      },
+    };
+    const userTradeLog_options = {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      params: {
+        userId,
+      },
+    };
+    const ownProducts_options = {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      params: {
+        userId,
+      },
+    };
+
     const fetchData = async () => {
       try {
         setIsLoading(true);
 
-        const [total_response, assets_response] = await Promise.all([
+        const [
+          total_response,
+          assets_response,
+          bonus_response,
+          totalroyalsDaily_response,
+          ranking_response,
+          userTradeLog_response,
+          ownProducts_response,
+        ] = await Promise.all([
           axios.get(total_url, total_options),
           axios.get(assets_url, asset_options),
+          axios.get(bonus_url, bonus_options),
+          axios.get(totalroyalsDaily_url, totalroyalsDaily_options),
+          axios.get(ranking_url, ranking_options),
+          axios.get(userTradeLog_url, userTradeLog_options),
+          axios.get(ownProducts_url, ownProducts_options),
         ]);
 
         setTotal(total_response.data);
         setAssets(assets_response.data);
+        setBonus(bonus_response.data);
+        setLineChartData(totalroyalsDaily_response.data);
+        setRanking(ranking_response.data);
+        setLogData(userTradeLog_response.data);
+        setAssetData(ownProducts_response.data);
+
+        const tempDatesArray: string[] = [];
+        const tempRoyalsArray: number[] = [];
+
+        totalroyalsDaily_response.data.forEach((lineData: any) => {
+          tempDatesArray.push(lineData.tradeDate);
+          tempRoyalsArray.push(lineData.sumRoyal);
+        });
+        setdatesArray(tempDatesArray);
+        setroyalsArray(tempRoyalsArray);
       } catch (error) {
         console.error(error);
       } finally {
         setIsLoading(false);
-
+        console.log("유저 아이디 ::");
         console.log(JSON.parse(localStorage.getItem("userData")!).userId);
-        console.log(assets);
+        console.log("총 로얄 수 :: ");
+        console.log(total);
+        console.log("자산 비중 :: ");
+        console.log(assets?.luxury);
+        console.log(assets?.estate);
+        console.log(assets?.music);
+        console.log("배당금 :: ");
+        console.log(bonus);
+        console.log("랭킹 :: ");
+        console.log(ranking);
       }
     };
 
@@ -239,10 +347,15 @@ export default function Test() {
 
               <Total>
                 <h2>배당금</h2>
-                <h3>{total * 10000} 원</h3>
+                <h3>{bonus} 원</h3>
               </Total>
             </TotalBox>
-
+            <Ranking ranking={ranking}></Ranking>
+            <AssetDoughnutChart
+              estate={assets?.estate}
+              luxury={assets?.luxury}
+              music={assets?.music}
+            ></AssetDoughnutChart>
             <Assets>
               <AssetPart bgcolor={"yellow"}>
                 <AssetHeader>
@@ -271,7 +384,12 @@ export default function Test() {
               </AssetPart>
             </Assets>
           </UserBox>
-          <InfoBox></InfoBox>
+          <InfoBox>
+            {LineChartData && (
+              <LineChart dates={datesArray} royals={royalsArray} />
+            )}
+            {/* 그래프 옮기려면 여기 위에 코드 그대로 옮기면 됨 */}
+          </InfoBox>
         </Main>
       </Container>
       <Footer />

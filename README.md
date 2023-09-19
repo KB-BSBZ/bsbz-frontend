@@ -37,6 +37,8 @@ npm install @mui/icons-material @mui/material @emotion/styled @emotion/react
 
 npm install recoil-persist
 
+npm install react-redux
+
 // router 설치
 // styled-components 설치
 // fontawesome 설치

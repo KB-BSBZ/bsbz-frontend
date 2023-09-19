@@ -545,7 +545,6 @@ export default function MyAsset() {
                 <Title2>
                   <p>나의 벌부 랭킹</p>
                 </Title2>
-                <Ranking ranking={ranking}></Ranking>
               </GraphBox3>
             </MainGraphBox>
             <LogBox>
