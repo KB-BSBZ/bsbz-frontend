@@ -17,7 +17,7 @@ const Container = styled.div`
   padding-top: 20vh;
 
   width: 100%;
-  height: 105vh;
+  height: 110vh;
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -32,6 +32,37 @@ const Main = styled.div`
   grid-template-columns: 1fr 2fr;
   gap: 3%;
   /* background-color: blue; */
+
+  position: relative;
+`;
+
+const Tabs = styled.div`
+  /* background-color: blue; */
+  height: 30%;
+  width: 8%;
+
+  position: absolute;
+
+  right: 1%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const Tab = styled.div`
+  background-color: ${(props) => props.theme.backgroundColor};
+  border-radius: 15px;
+  width: 100%;
+  height: 30%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  box-shadow: 0px 4px 13px 0px rgb(0, 0, 0, 0.3);
+
+  cursor: pointer;
 `;
 
 const UserBox = styled.div`
@@ -173,6 +204,8 @@ export default function Test() {
   const [ranking, setRanking] = useState(0);
   const [logData, setLogData] = useState<LogData[]>([]);
   const [assetData, setAssetData] = useState<LogData[]>([]);
+
+  const [tab, setTab] = useState("royal");
 
   useEffect(() => {
     const userId = JSON.parse(localStorage.getItem("userData")!).userId;
@@ -322,6 +355,12 @@ export default function Test() {
     fetchData();
   }, []);
 
+  const onTab = (event: React.MouseEvent<HTMLDivElement>) => {
+    console.log(event.currentTarget.id);
+    setTab(event.currentTarget.id);
+    // 값 전달
+  };
+
   return (
     <>
       <Navigation />
@@ -384,13 +423,30 @@ export default function Test() {
               </AssetPart>
             </Assets>
           </UserBox>
-          <InfoBox>
-            {LineChartData && (
-              <LineChart dates={datesArray} royals={royalsArray} />
-            )}
-            {/* 그래프 옮기려면 여기 위에 코드 그대로 옮기면 됨 */}
-          </InfoBox>
+          {tab === "royal" ? (
+            <InfoBox>
+              {LineChartData && (
+                <LineChart dates={datesArray} royals={royalsArray} />
+              )}
+              {/* 그래프 옮기려면 여기 위에 코드 그대로 옮기면 됨 */}
+            </InfoBox>
+          ) : tab === "product" ? (
+            <InfoBox></InfoBox>
+          ) : tab === "log" ? (
+            <InfoBox></InfoBox>
+          ) : null}
         </Main>
+        <Tabs>
+          <Tab onClick={onTab} id="royal">
+            <h4>보유 로얄</h4>
+          </Tab>
+          <Tab onClick={onTab} id="product">
+            <h4>보유 항목</h4>
+          </Tab>
+          <Tab onClick={onTab} id="log">
+            <h4>거래 로그</h4>
+          </Tab>
+        </Tabs>
       </Container>
       <Footer />
     </>
