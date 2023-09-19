@@ -19,16 +19,18 @@ const Container = styled.div`
   padding-top: 20vh;
 
   width: 100%;
-  height: 110vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: start;
   align-items: center;
+
+  color: ${(props) => props.theme.textColor};
 `;
 
 const Main = styled.div`
   height: 70%;
-  width: 80%;
+  width: 70%;
 
   display: grid;
   grid-template-columns: 1fr 2fr;
@@ -45,7 +47,7 @@ const Tabs = styled.div`
 
   position: absolute;
 
-  right: 1%;
+  right: 6%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -87,15 +89,19 @@ const InfoBox = styled.div`
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+
+  h2 {
+    padding-top: 5%;
+  }
 `;
 
 const UserHeader = styled.div`
   margin-top: 5%;
 
   width: 100%;
-  height: 20%;
+  height: 10%;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -143,7 +149,7 @@ const Assets = styled.div`
 
   gap: 3%;
 
-  height: 40%;
+  height: 80%;
 `;
 
 const AssetPart = styled.div<{ bgcolor: string }>`
@@ -165,7 +171,7 @@ const AssetPart = styled.div<{ bgcolor: string }>`
       ? props.theme.testColor3
       : null};
 
-  font-size: 24px;
+  font-size: 18px;
 `;
 
 const AssetHeader = styled.div`
@@ -180,7 +186,7 @@ const AssetHeader = styled.div`
 
 const TotalBox = styled.div`
   margin-top: 5%;
-  height: 50%;
+  height: 30%;
   width: 100%;
 
   display: flex;
@@ -391,7 +397,7 @@ export default function Test() {
                 <h3>{bonus} 원</h3>
               </Total>
             </TotalBox>
-            <Ranking ranking={ranking}></Ranking>
+            <Ranking ranking={ranking} />
             <AssetDoughnutChart
               estate={assets?.estate}
               luxury={assets?.luxury}
@@ -400,7 +406,7 @@ export default function Test() {
             <Assets>
               <AssetPart bgcolor={"yellow"}>
                 <AssetHeader>
-                  <FontAwesomeIcon icon={faGem} />
+                  💎
                   <h5>쥬 얼 리</h5>
                 </AssetHeader>
 
@@ -409,7 +415,7 @@ export default function Test() {
 
               <AssetPart bgcolor={"green"}>
                 <AssetHeader>
-                  <FontAwesomeIcon icon={faBuilding} />
+                  🏢
                   <h5>부 동 산</h5>
                 </AssetHeader>
 
@@ -418,7 +424,7 @@ export default function Test() {
 
               <AssetPart bgcolor={"blue"}>
                 <AssetHeader>
-                  <FontAwesomeIcon icon={faCompactDisc} />
+                  🎵
                   <h5>음악 저작권</h5>
                 </AssetHeader>
                 <h5>{assets?.music ? assets.music : 0} ROYAL</h5>
@@ -427,6 +433,7 @@ export default function Test() {
           </UserBox>
           {tab === "royal" ? (
             <InfoBox>
+              <h2>보유한 로얄 수</h2>
               {LineChartData && (
                 <LineChart dates={datesArray} royals={royalsArray} />
               )}
@@ -434,10 +441,12 @@ export default function Test() {
             </InfoBox>
           ) : tab === "product" ? (
             <InfoBox>
+              <h2>보유 항목</h2>
               <LogListBox></LogListBox>
             </InfoBox>
           ) : tab === "log" ? (
             <InfoBox>
+              <h2>거래 로그</h2>
               <MyAssetListBox></MyAssetListBox>
             </InfoBox>
           ) : null}

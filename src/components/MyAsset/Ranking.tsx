@@ -9,6 +9,9 @@ const Main = styled.div`
   justify-content: center;
   width: 100%;
   height: 100%;
+
+  color: ${(props) => props.theme.textColor};
+
   .wrap {
     height: 100%;
     display: flex;
@@ -22,7 +25,7 @@ const Main = styled.div`
     border: 2px solid #fff;
     background: none;
     color: #fff;
-    font-size: 3vmin;
+    font-size: 2vmin;
     font-weight: bold;
     cursor: pointer;
   }
@@ -39,9 +42,9 @@ const Main = styled.div`
     align-items: center;
     justify-content: center;
     background: #ffff33ff;
-    width: 40vmin;
-    height: 40vmin;
-    font-size: 5vmin;
+    width: 20vmin;
+    height: 20vmin;
+    font-size: 4vmin;
     font-weight: bold;
     box-shadow: 1px 10px 10px -4px rgba(0, 0, 0, 0.1);
   }

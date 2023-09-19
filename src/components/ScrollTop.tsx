@@ -20,12 +20,6 @@ const Container = styled.div<{ visible: string }>`
   cursor: pointer;
 
   color: ${(props) => props.theme.borderColor};
-
-  &:hover {
-    span {
-      margin-bottom: 12px;
-    }
-  }
 `;
 
 const Inner = styled.span`
@@ -33,6 +27,8 @@ const Inner = styled.span`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  margin-top: 30%;
 
   width: 100%;
   height: 100%;

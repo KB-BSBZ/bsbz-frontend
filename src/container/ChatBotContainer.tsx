@@ -32,13 +32,13 @@ const Container = styled.div`
   background-color: white;
   box-shadow: 0px 4px 13px 0px rgb(0, 0, 0, 0.1);
   border-radius: 12px;
-  width: 500px;
-  height: 700px;
+  width: 30vw;
+  height: 70vh;
   z-index: 99;
 
   position: absolute;
   right: 5rem;
-  bottom: 5rem;
+  bottom: 1%;
 `;
 
 const TitleBox = styled.div`

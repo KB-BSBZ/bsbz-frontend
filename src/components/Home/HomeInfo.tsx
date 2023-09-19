@@ -8,13 +8,22 @@ import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
+import {
+  Link,
+  Element,
+  Events,
+  animateScroll as scroll,
+  scrollSpy,
+  scroller,
+} from "react-scroll";
+
 const Container = styled.div`
   width: 100vw;
 
   flex-direction: row;
 `;
 
-const Box = styled.div<{ bgtype: string }>`
+const Box = styled.div<{ bgtype: string; url?: string }>`
   height: 100vh;
 
   background-color: ${(props) =>
@@ -22,7 +31,14 @@ const Box = styled.div<{ bgtype: string }>`
       ? props.theme.highlightColor
       : props.bgtype === "mint"
       ? props.theme.highlightColor2
-      : "#fbe9b7ff"};
+      : null};
+  //#fbe9b7ff
+
+  background-image: url(${(props) => props.url});
+
+  background-position: center;
+  background-size: cover;
+  object-fit: cover;
 
   display: flex;
   flex-direction: row;
@@ -86,26 +102,29 @@ const Line = styled.div`
 `;
 
 export default function HomeInfo() {
+  let options = {
+    anchors: ["sectionOne", "sectionTwo", "sectionThree"],
+  };
+
   useEffect(() => {
     AOS.init({
-      duration: 2000,
+      duration: 3000,
     });
   }, []);
   return (
     <>
       <Container>
-        <Box bgtype={"white"}>
-          <TextBox>
+        <Box bgtype={"null"} url={"../../images/background_03.png"}>
+          <TextBox data-aos="fade-right">
             <Header fontcolor={"default"}>
               <h3
                 style={{
                   color: "#40E0D0ff",
                 }}
-                data-aos="fade-down"
               >
                 조각투자 통합 플랫폼
               </h3>
-              <h2 data-aos="fade-down">
+              <h2>
                 벌써 부자
                 <FontAwesomeIcon
                   icon={faForumbee}
@@ -113,7 +132,6 @@ export default function HomeInfo() {
                     marginLeft: "12px",
                   }}
                   color={"#ffd700ff"}
-                  data-aos="fade-down"
                 />
               </h2>
             </Header>
@@ -121,7 +139,6 @@ export default function HomeInfo() {
               style={{
                 color: "darkGray",
               }}
-              data-aos="fade-down"
             >
               저희 벌써부자에서는 음원 저작권, 명품 그리고 부동산에 대한
               조각투자 서비스를 제공합니다.
@@ -136,20 +153,15 @@ export default function HomeInfo() {
           </TextBox>
           <ImgBox url={"../../images/phone.png"} />
         </Box>
-        <Pentagon reverse={"false"} color={"bg"} bgColor={"yellow"} />
 
+        {/* <Pentagon reverse={"false"} color={"bg"} bgColor={"yellow"} /> */}
         <Box bgtype={"yellow"}>
-          <ImgBox
-            data-aos="fade-down"
-            url={"../../images/resource_img_01.png"}
-          />
-          <TextBox>
+          <ImgBox url={"../../images/resource_img_01.png"} />
+          <TextBox data-aos="fade-left">
             <Header fontcolor={"black"}>
-              <h2 data-aos="fade-down">🎹 음원 투자</h2>
+              <h2>🎹 음원 투자</h2>
             </Header>
-            <p data-aos="fade-down">
-              음악 저작권료 참여 청구권을 조각투자형태로 발행해 거래합니다.
-            </p>
+            <p>음악 저작권료 참여 청구권을 조각투자형태로 발행해 거래합니다.</p>
             <p
               style={{
                 backgroundColor: "#ffe657",
@@ -157,7 +169,6 @@ export default function HomeInfo() {
                 fontSize: "16px",
                 border: "16px",
               }}
-              data-aos="fade-down"
             >
               👆 음악 저작권료 참여 청구권이란? <br />
               해당 음악의 저작권으로부터 발생하는 수익을 구매한 지분 비율로
@@ -174,16 +185,16 @@ export default function HomeInfo() {
             </Line>
           </TextBox>
         </Box>
-        <Pentagon reverse={"false"} color={"yellow"} bgColor={"bg"} />
+
+        {/* <Pentagon reverse={"false"} color={"yellow"} bgColor={"bg"} /> */}
 
         <Box bgtype={"white"}>
-          <TextBox>
+          <TextBox data-aos="fade-right">
             <Header fontcolor={"default"}>
               <h2
                 style={{
                   fontSize: "24px",
                 }}
-                data-aos="fade-right"
               >
                 이젠
                 <b
@@ -208,7 +219,6 @@ export default function HomeInfo() {
                 style={{
                   color: "black",
                 }}
-                data-aos="fade-right"
               >
                 👜 명품 시장
               </h3>
@@ -217,7 +227,6 @@ export default function HomeInfo() {
               style={{
                 color: "darkGray",
               }}
-              data-aos="fade-right"
             >
               고가의 명품을 자산으로 소유권을 분할 판매 할 수 있습니다. 롤렉스
               시계, 샤넬 가방 등 하이엔드 명품부터 고급 와인이나 위스키 등
@@ -240,12 +249,10 @@ export default function HomeInfo() {
               text={"HELLO"}
             /> */}
           </TextBox>
-          <ImgBox
-            url={"../../images/resource_img_01.png"}
-            data-aos="fade-left"
-          />
+          <ImgBox url={"../../images/resource_img_01.png"} />
         </Box>
-        <Pentagon reverse={"false"} color={"bg"} bgColor={"mint"} />
+
+        {/* <Pentagon reverse={"false"} color={"bg"} bgColor={"mint"} /> */}
 
         <Box bgtype={"mint"}>
           <TextBox>
@@ -305,9 +312,10 @@ export default function HomeInfo() {
           </TextBox>
           <ImgBox url={"../../images/resource_img_01.png"} />
         </Box>
-        <Pentagon reverse={"false"} color={"mint"} bgColor={"bg"} />
 
-        <Box bgtype={"white"}>
+        {/* <Pentagon reverse={"false"} color={"mint"} bgColor={"bg"} /> */}
+
+        <Box bgtype={"none"} url={"../../images/background_04.png"}>
           <TextBox>
             <Header fontcolor={"default"}>
               <h3
@@ -344,7 +352,6 @@ export default function HomeInfo() {
               text={"HELLO"}
             /> */}
           </TextBox>
-          <ImgBox url={"../../images/resource_img_01.png"} />
         </Box>
       </Container>
     </>

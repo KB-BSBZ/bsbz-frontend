@@ -7,11 +7,15 @@ import Loading from "../Loading";
 
 const Container = styled.div`
   /* border: 1px solid; */
-  background-image: url("https://png.pngtree.com/png-vector/20200423/ourmid/pngtree-cute-bee-cartoon-illustration-png-image_2191783.jpg"); // 배경 이미지 URL을 설정하세요.
+  /* background-image: url("https://png.pngtree.com/png-vector/20200423/ourmid/pngtree-cute-bee-cartoon-illustration-png-image_2191783.jpg"); // 배경 이미지 URL을 설정하세요. */
   background-size: cover;
   background-position: center;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   width: 100%;
-  height: 50%; // 그래프의 높이를 조정하세요.
+  height: 100%; // 그래프의 높이를 조정하세요.
 `;
 
 export interface RoyalLog {
@@ -100,7 +104,7 @@ export default function LineChart({
           yaxis: {
             // 여기에 Y 축 설정을 추가합니다.
             min: 0, // Y 축의 최소 값 설정
-            max: 2000, // Y 축의 최대 값 설정
+            max: 200, // Y 축의 최대 값 설정
             tickAmount: 10, // Y 축의 눈금 간격 설정
           },
         }}
