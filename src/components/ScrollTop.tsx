@@ -99,6 +99,7 @@ export default function ScrollTop() {
           {chatbotClick && <Chatbot handleChatbotFalse={handleChatbotFalse} />}
         </Inner>
       </Container>
+      {/* {chatbotClick && <Chatbot handleChatbotFalse={handleChatbotFalse} />} */}
     </>
   );
 }

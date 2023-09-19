@@ -31,7 +31,7 @@ const Container = styled.div`
   align-items: center;
   background-color: white;
   box-shadow: 0px 4px 13px 0px rgb(0, 0, 0, 0.1);
-
+  border-radius: 12px;
   width: 500px;
   height: 700px;
   z-index: 99;
@@ -43,39 +43,46 @@ const Container = styled.div`
 
 const TitleBox = styled.div`
   width: 100%;
-  height: 100px;
+  height: 15%;
   display: flex;
-  justify-content: center;
   align-items: center;
   /* border-bottom: 1px solid #dedede; */
-  position: relative;
 `;
 
 const Title = styled.div`
+  width: 80%;
+  height: 100%;
   font-size: 40px;
   font-weight: 700;
   color: #ffce0b;
+  display: flex;
+  align-items: center;
+  padding-left: 5%;
 `;
 
 const CloseButton = styled.div`
-  cursor: pointer;
-
   background-position: center;
   background-size: 100% 100%;
   background-repeat: no-repeat;
 
-  width: 4rem;
-  height: 4rem;
+  width: 20%;
+  height: 100%;
+  display: flex;
+  justify-content: end;
 
-  position: absolute;
-  left: 5rem;
+  img {
+    margin: 5%;
+    cursor: pointer;
+    width: 40%;
+    height: 30%;
+  }
 `;
 
 const ChatContainer = styled.div`
   border-bottom: 1px solid #dedede;
   border-top: 1px solid #dedede;
 
-  height: 300px;
+  height: 80%;
   width: 94%;
   overflow-y: scroll;
   padding: 10px;
@@ -93,13 +100,16 @@ const StartBox = styled.div`
 
 const StartImg = styled.div`
   background-position: center;
-  background-size: 100% 100%;
   background-repeat: no-repeat;
+  /* border: 1px solid; */
 
-  margin-right: 2rem;
+  width: 20%;
+  height: 15%;
 
-  width: 8rem;
-  height: 8rem;
+  img {
+    width: 100%; // img의 너비를 부모 요소의 너비와 같게 만듭니다.
+    height: 100%; // 높이는 자동으로 설정하여 비율을 유지합니다.
+  }
 `;
 
 const StartTextBox = styled.div`
@@ -161,37 +171,47 @@ const Message = styled.div<MessageProps>`
 
 const InputBox = styled.div`
   width: 100%;
-
-  margin-top: 20px;
-  margin-bottom: 20px;
+  height: 12%;
 
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
 `;
 
 const UserInput = styled.input`
   border: none;
-  width: 50%;
-
-  padding: 1rem;
+  width: 85%;
+  height: 80%;
+  font-size: 18px;
+  margin-right: 1%;
+  &::placeholder {
+    text-align: center; // 오른쪽 정렬
+  }
 `;
 
 const SendImg = styled.div`
   cursor: pointer;
-
+  background-image: url("../images/honey.png");
   background-position: center;
-  background-size: 100% 100%;
+  background-size: 70% 70%;
   background-repeat: no-repeat;
 
-  width: 6px;
-  height: 6px;
+  width: 15%;
+  height: 100%;
 
-  transition: 0.3s;
-
+  transition: 1s;
+  margin-right: 1%;
   &:hover {
-    filter: brightness(0.7) hue-rotate(180deg);
+    /* filter: brightness(1); */
   }
+`;
+const Input = styled.div`
+  width: 90%;
+  height: 80%;
+  /* border: 1px solid; */
+  display: flex;
+  justify-content: end;
+  align-items: center;
 `;
 
 // const Button = styled.button`
@@ -254,16 +274,18 @@ const Chatbot = ({ handleChatbotFalse }: ChatbotProps) => {
   return (
     <Container>
       <TitleBox>
-        <CloseButton onClick={handleChatbotFalse}>
-          <FontAwesomeIcon icon={faXmark} />
-        </CloseButton>
         <Title>BSBZ</Title>
+        <CloseButton>
+          <img src="../x-mark.png" onClick={handleChatbotFalse}></img>
+        </CloseButton>
       </TitleBox>
       <ChatContainer ref={chatContainerRef}>
         <StartBox>
-          <StartImg />
           <StartTextBox>
-            <StartTitle>BSBZ</StartTitle>
+            {/* <StartTitle>BSBZ</StartTitle> */}
+            <StartImg>
+              <img src="../images/bee.png"></img>
+            </StartImg>
             <StartContents>
               안녕하세요!
               {/* <span>{userName}</span>
@@ -278,33 +300,38 @@ const Chatbot = ({ handleChatbotFalse }: ChatbotProps) => {
               <br />
               아래와 같은 질문이 가능해요!
               <span>조각 투자는 뭔가요?</span>
-              <span>회원 탈퇴는 어디서 하나요?</span>
+              <span>ROYAL이 뭔가요?</span>
             </StartContents>
           </StartTextBox>
         </StartBox>
         {messages.map((message, index) => (
-          <Message key={index} isUser={message.isUser}>
-            {message.isUser ? message.content : `MADE: ${message.content}`}
-          </Message>
+          <div key={index}>
+            <StartImg>
+              <img src="../images/bee.png" alt="Bee" />
+            </StartImg>
+            <Message isUser={message.isUser}>
+              {message.isUser ? message.content : `MADE: ${message.content}`}
+            </Message>
+          </div>
         ))}
       </ChatContainer>
       <InputBox>
-        <UserInput
-          type="text"
-          value={userInput}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setUserInput(e.target.value)
-          }
-          onKeyPress={(e: React.KeyboardEvent) => {
-            if (e.key === "Enter") {
-              sendMessage();
+        <Input>
+          <UserInput
+            type="text"
+            value={userInput}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setUserInput(e.target.value)
             }
-          }}
-          placeholder="MONEYMADE Copilot에게 메시지 보내기."
-        />
-        <SendImg onClick={sendMessage}>
-          <FontAwesomeIcon icon={faPaperPlane} />
-        </SendImg>
+            onKeyPress={(e: React.KeyboardEvent) => {
+              if (e.key === "Enter") {
+                sendMessage();
+              }
+            }}
+            placeholder="꿀벌이에게 메시지 보내기."
+          />
+        </Input>
+        <SendImg onClick={sendMessage} />
       </InputBox>
     </Container>
   );
