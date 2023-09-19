@@ -118,6 +118,10 @@ const InputBox = styled.div`
   border: 2px solid ${(props) => props.theme.borderColor};
   overflow: hidden;
   padding: 0 1px 6px 1px;
+
+  input[readonly] {
+    background-color: #ccc; /* 회색 배경색 설정 */
+  }
 `;
 
 interface IFormData {
@@ -133,7 +137,7 @@ export default function MyPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [checker, setChecker] = useState(false);
   const [ssnResult, setSsnResult] = useState("");
-  let cookie = null;
+  let cookie: any = null;
   let userDataString = null;
 
   const {
@@ -141,6 +145,7 @@ export default function MyPage() {
     watch,
     handleSubmit,
     setValue,
+    getValues,
     formState: { errors },
   } = useForm<IFormData>();
 
@@ -153,7 +158,7 @@ export default function MyPage() {
       setIsLoading(true);
       console.log("회원 가입 폼");
       console.log(data);
-      const response = await axios.put(`${BASE_URL}/user/register`, data);
+      const response = await axios.put(`${BASE_URL}/user/update`, data);
     } catch (error) {}
   };
 
@@ -181,7 +186,7 @@ export default function MyPage() {
     setSsnResult(numericSSN);
     numericSSN = ssn
       .replace(/\D/g, "")
-      .replace(/(\d{6})(\d{1})(\d{6})/, "$1$2●●●●●●");
+      .replace(/(\d{6})(\d{1})(\d{6})/, "$1$2******");
     // 주민등록번호 형식에 맞게 "-" 추가
     if (numericSSN.length >= 7) {
       return `${numericSSN.slice(0, 6)}-${numericSSN.slice(6)}`;
@@ -201,6 +206,8 @@ export default function MyPage() {
       setValue("userName", cookie.userName);
       setValue("ssn", cookie.ssn);
       setValue("phoneNum", cookie.phoneNum);
+
+      getValues();
     }
   }, [cookie]);
 
@@ -228,6 +235,7 @@ export default function MyPage() {
                     type="text"
                     placeholder="아이디"
                     autoComplete="username"
+                    readOnly
                   />
                 </InputBox>
                 <InputBox>
@@ -282,10 +290,7 @@ export default function MyPage() {
                       //   value: /^[0-9]{6}-[0-9]{7}$/,
                       //   message: "주민등록번호 형식이 맞지 않습니다.",
                       // },
-                      pattern: {
-                        value: /^[0-9]{6}-[0-9]{1}[●]{6}$/,
-                        message: "주민등록번호 형식이 맞지 않습니다.",
-                      },
+
                       onChange: (
                         event: React.ChangeEvent<HTMLInputElement>
                       ) => {

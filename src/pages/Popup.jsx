@@ -187,11 +187,10 @@ export default function Popup() {
                 effect={"cube"}
                 grabCursor={true}
                 cubeEffect={{
-                  shadow: true,
-                  slideShadows: true,
-                  shadowOffset: 20,
-                  shadowScale: 0.94,
+                  shadow: false,
+                  slideShadows: false,
                 }}
+                loop={true}
                 pagination={true}
                 modules={[EffectCube, Pagination]}
                 className="mySwiper"

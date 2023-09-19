@@ -3,13 +3,7 @@ import { styled } from "styled-components";
 import useScrollReset from "../utils/useScrollReset";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import {
-  logOutState,
-  loginState,
-  userIdState,
-  userNameState,
-} from "../utils/atoms";
-import LogOutPopup from "./LogOut/LogOutPopup";
+import { loginState, userIdState, userNameState } from "../utils/atoms";
 
 const Container = styled.div`
   background-color: ${(props) => props.theme.navColor};
@@ -87,7 +81,6 @@ const UserTap = styled.span`
 `;
 
 export default function Navigation() {
-  const [isLogOutSuccess, setIsLogOutSuccess] = useRecoilState(logOutState);
   const nav = useNavigate();
   let reset = useScrollReset();
   let cookie = localStorage.getItem("userData");
@@ -117,7 +110,7 @@ export default function Navigation() {
     setUserName("");
     setUserId("");
     localStorage.removeItem("userData");
-    setIsLogOutSuccess(true);
+    reset("/");
   };
 
   // const test = (event: React.MouseEvent<HTMLSpanElement>) => {
@@ -131,66 +124,55 @@ export default function Navigation() {
   };
 
   return (
-    <>
-      {isLogOutSuccess && <LogOutPopup />}
-      <Container>
-        <Logo>
-          <img
-            onClick={onMove}
-            id="home"
-            src="../../images/bsbz-icon.png"
-            alt="logo"
-          />
-        </Logo>
-        <NavBar>
-          <span onClick={onMove} id="home">
-            홈
-          </span>
-          <span onClick={onMove} id="product/allproducts">
-            투자 상품
-          </span>
-          <span onClick={onMove} id="research">
-            리 서 치
-          </span>
+    <Container>
+      <Logo>
+        <img
+          onClick={onMove}
+          id="home"
+          src="../../images/bsbz-icon.png"
+          alt="logo"
+        />
+      </Logo>
+      <NavBar>
+        <span onClick={onMove} id="home">
+          홈
+        </span>
+        <span onClick={onMove} id="product/allproducts">
+          투자 상품
+        </span>
+        <span onClick={onMove} id="research">
+          리 서 치
+        </span>
 
-          <span
-            onClick={() => {
-              localStorage.setItem("userData", "123");
-            }}
-          >
-            TEST
-          </span>
-
-          <span onClick={onMove} id="myasset">
-            나의 자산
-          </span>
-          {/* <span onClick={test} id="test">
+        <span onClick={onMove} id="myasset">
+          나의 자산
+        </span>
+        {/* <span onClick={test} id="test">
           test
         </span> */}
-          <span onClick={onMove} id="banking">
-            뱅 킹
+        <span onClick={onMove} id="banking">
+          뱅 킹
+        </span>
+        {isLogin ? (
+          <span onClick={onMove} id="mypage">
+            마이 페이지
           </span>
-          {isLogin ? (
-            <span onClick={onMove} id="mypage">
-              마이 페이지
-            </span>
-          ) : (
-            <span onClick={onMove} id="login">
-              로 그 인
-            </span>
-          )}
-        </NavBar>
-        {cookie !== null ? (
-          <UserTap>
-            <b>{JSON.parse(localStorage.getItem("userData")!).userName} 님,</b>
-            <p onClick={onLogout} id="logout">
-              로그아웃
-            </p>
-          </UserTap>
         ) : (
-          <UserTap></UserTap>
+          <span onClick={onMove} id="login">
+            로 그 인
+          </span>
         )}
-      </Container>
-    </>
+      </NavBar>
+      {cookie !== null ? (
+        <UserTap>
+          <b>{JSON.parse(localStorage.getItem("userData")!).userName} 님,</b>
+          <p onClick={onLogout} id="logout">
+            로그아웃
+          </p>
+        </UserTap>
+      ) : (
+        <UserTap></UserTap>
+      )}
+    </Container>
   );
 }

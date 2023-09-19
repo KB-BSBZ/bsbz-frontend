@@ -169,7 +169,7 @@ export default function Signup() {
     setSsnResult(numericSSN);
     numericSSN = ssn
       .replace(/\D/g, "")
-      .replace(/(\d{6})(\d{1})(\d{6})/, "$1$2●●●●●●");
+      .replace(/(\d{6})(\d{1})(\d{6})/, "$1$2******");
     // 주민등록번호 형식에 맞게 "-" 추가
     if (numericSSN.length >= 7) {
       return `${numericSSN.slice(0, 6)}-${numericSSN.slice(6)}`;

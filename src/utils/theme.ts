@@ -23,6 +23,7 @@ export const theme: DefaultTheme = {
   // 에러 메세지 색상 - 빨강색
   blurColor: "#343434CC",
   blurColor2: "#f2f4f6ff",
+  blurColor3: "#f4f5efff",
 };
 
 export const darkTheme: DefaultTheme = {

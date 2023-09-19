@@ -190,19 +190,30 @@ export default function Purchase({ onModal }: IPurchaseProps) {
       setUserId(userData.userId);
     }
 
+    let url = "";
     const fetchData = async () => {
-      try {
-        const response = await axios.post(
-          "http://localhost:9999/account/balance",
-          {
-            userId: userId,
-          }
-        );
+      url = "http://localhost:9999/account/balance?" + userId;
 
+      const options = {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        params: {
+          userId,
+        },
+      };
+
+      try {
+        const response = await axios(url, options);
+        console.log("리턴 반응");
         console.log(response.data);
+
         setMoney(response.data);
       } catch (error) {
         console.error(error);
+      } finally {
       }
     };
 
