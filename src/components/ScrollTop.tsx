@@ -1,7 +1,9 @@
-import { faSquareCaretUp } from "@fortawesome/free-solid-svg-icons";
+import { faComments, faSquareCaretUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import styled from "styled-components";
+import Chatbot from "../container/ChatBotContainer";
+import { faCommentDots } from "@fortawesome/free-regular-svg-icons";
 
 const Container = styled.div<{ visible: string }>`
   border-radius: 18px;
@@ -27,13 +29,40 @@ const Container = styled.div<{ visible: string }>`
 `;
 
 const Inner = styled.span`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
   width: 100%;
   height: 100%;
   transition: margin-bottom ease-in-out 0.3s;
 `;
 
+const ChatbotIcon = styled.div`
+  cursor: pointer;
+  background-image: url("../../public/images/bsbz-icon.png");
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  margin-right: 2rem;
+  width: 48px;
+  height: 48px;
+  position: absolute;
+  right: 20rem;
+  bottom: 20rem;
+`;
+
 export default function ScrollTop() {
   const [isVisible, setIsVisible] = useState("false");
+  const [chatbotClick, setChatbotClick] = useState(false);
+
+  const handleChatbotTrue = () => {
+    setChatbotClick(true);
+  };
+  const handleChatbotFalse = () => {
+    setChatbotClick(false);
+  };
 
   const handleScroll = () => {
     if (window.scrollY > 100) {
@@ -53,12 +82,22 @@ export default function ScrollTop() {
 
   return (
     <>
-      <Container visible={isVisible} onClick={scrollToTop}>
+      <Container visible={isVisible}>
+        <FontAwesomeIcon
+          icon={faComments}
+          fontSize={48}
+          onClick={handleChatbotTrue}
+        />
         <Inner>
-          <FontAwesomeIcon icon={faSquareCaretUp} fontSize={48} />
-        </Inner>
+          <FontAwesomeIcon
+            icon={faSquareCaretUp}
+            fontSize={48}
+            onClick={scrollToTop}
+          />
+          <h4>TOP</h4>
 
-        <h4>TOP</h4>
+          {chatbotClick && <Chatbot handleChatbotFalse={handleChatbotFalse} />}
+        </Inner>
       </Container>
     </>
   );
