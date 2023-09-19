@@ -19,7 +19,13 @@ const Box = styled.div<{ bgtype: string }>`
       ? props.theme.highlightColor
       : props.bgtype === "mint"
       ? props.theme.highlightColor2
-      : props.theme.backgroundColor};
+      : null};
+
+  background-image: url("../../images/background_03.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  object-fit: scale-down;
+  background-size: cover;
 
   display: flex;
   flex-direction: row;
@@ -123,7 +129,7 @@ export default function HomeInfo() {
               text={"HELLO"}
             /> */}
           </TextBox>
-          <ImgBox url={"../../images/resource_img_01.png"} />
+          <ImgBox url={""} />
         </Box>
         <Pentagon reverse={"false"} color={"bg"} bgColor={"yellow"} />
 
