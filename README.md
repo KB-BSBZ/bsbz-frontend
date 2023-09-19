@@ -39,6 +39,8 @@ npm install recoil-persist
 
 npm install react-redux
 
+npm install --save aos@next
+
 // router 설치
 // styled-components 설치
 // fontawesome 설치
