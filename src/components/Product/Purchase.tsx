@@ -6,8 +6,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleMinus, faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import useScrollReset from "../../utils/useScrollReset";
 import axios from "axios";
-import { useSetRecoilState, useRecoilValue } from "recoil";
-import { productIdState } from "../../utils/atoms";
+import { useSetRecoilState, useRecoilValue, useRecoilState } from "recoil";
+import { PurchasePopupState, productIdState } from "../../utils/atoms";
+import PurchasePopup from "./PurchasePopup";
 
 const Container = styled.div`
   position: fixed;
@@ -101,6 +102,10 @@ export default function Purchase({ onModal }: IPurchaseProps) {
   const reset = useScrollReset();
   const setProductId = useSetRecoilState(productIdState);
   const productId = useRecoilValue(productIdState);
+
+  const [purchasePopupState, setPurchasePopupState] =
+    useRecoilState(PurchasePopupState);
+
   const {
     register,
     watch,
@@ -162,6 +167,7 @@ export default function Purchase({ onModal }: IPurchaseProps) {
       console.log(productId);
       console.log("거래 수량:" + data.quantity);
       onModal();
+      setPurchasePopupState(true);
     }
   };
   // 현재 잔액 가져오기
@@ -204,54 +210,56 @@ export default function Purchase({ onModal }: IPurchaseProps) {
   }, [userId]);
 
   return (
-    <Container>
-      <Content>
-        <h3>구매하기</h3>
-        <WriteField>
-          <h3>계좌 잔액</h3>
-          <h1>{money} &#8361;</h1>
+    <>
+      <Container>
+        <Content>
+          <h3>구매하기</h3>
+          <WriteField>
+            <h3>계좌 잔액</h3>
+            <h1>{money} &#8361;</h1>
 
-          <h3>구매 수량</h3>
-          <form onSubmit={handleSubmit(onValid)}>
-            <Line>
-              <PurchaseButton onClick={onMinus}>
-                <FontAwesomeIcon icon={faCircleMinus} fontSize={48} />
-              </PurchaseButton>
-              <input
-                {...register("quantity")}
-                type="text"
-                value={amount}
-                readOnly
-              />
+            <h3>구매 수량</h3>
+            <form onSubmit={handleSubmit(onValid)}>
+              <Line>
+                <PurchaseButton onClick={onMinus}>
+                  <FontAwesomeIcon icon={faCircleMinus} fontSize={48} />
+                </PurchaseButton>
+                <input
+                  {...register("quantity")}
+                  type="text"
+                  value={amount}
+                  readOnly
+                />
 
-              <PurchaseButton onClick={onPlus}>
-                <FontAwesomeIcon icon={faCirclePlus} fontSize={48} />
-              </PurchaseButton>
-            </Line>
-          </form>
-        </WriteField>
-        <ButtonBox>
-          <Button
-            width={"40%"}
-            height={"75%"}
-            hover={"red"}
-            color={"red"}
-            text={"취 소"}
-            border={"15px"}
-            onclick={onModal}
-          />
+                <PurchaseButton onClick={onPlus}>
+                  <FontAwesomeIcon icon={faCirclePlus} fontSize={48} />
+                </PurchaseButton>
+              </Line>
+            </form>
+          </WriteField>
+          <ButtonBox>
+            <Button
+              width={"40%"}
+              height={"75%"}
+              hover={"red"}
+              color={"red"}
+              text={"취 소"}
+              border={"15px"}
+              onclick={onModal}
+            />
 
-          <Button
-            width={"40%"}
-            height={"75%"}
-            hover={"yellow"}
-            color={"yellow"}
-            text={"구 매"}
-            border={"15px"}
-            onclick={handleSubmit(onValid)}
-          />
-        </ButtonBox>
-      </Content>
-    </Container>
+            <Button
+              width={"40%"}
+              height={"75%"}
+              hover={"yellow"}
+              color={"yellow"}
+              text={"구 매"}
+              border={"15px"}
+              onclick={handleSubmit(onValid)}
+            />
+          </ButtonBox>
+        </Content>
+      </Container>
+    </>
   );
 }

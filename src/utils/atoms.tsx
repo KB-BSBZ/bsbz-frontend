@@ -29,15 +29,14 @@ export const productIdState = atom({
   default: 0,
   effects_UNSTABLE: [persistAtom],
 });
+export const logOutState = atom({
+  key: "logOutState",
+  default: false,
+  effects_UNSTABLE: [persistAtom],
+});
 
-// export const leftRoyalsState = atom({
-//   key: "leftRoyals",
-//   default: 0,
-//   effects_UNSTABLE: [persistAtom],
-// });
-
-// export const prductCostState = atom({
-//   key: "prductCost",
-//   default: 0,
-//   effects_UNSTABLE: [persistAtom],
-// });
+export const PurchasePopupState = atom({
+  key: "PurchasePopupState",
+  default: false,
+  effects_UNSTABLE: [persistAtom],
+});

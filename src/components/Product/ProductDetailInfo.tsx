@@ -13,12 +13,14 @@ import WordClouds from "../WordClouds";
 import { render } from "react-dom";
 import { useRecoilState } from "recoil";
 import {
+  PurchasePopupState,
   // leftRoyalsState,
   // prductCostState,
   productIdState,
 } from "../../utils/atoms";
 import Purchase from "./Purchase";
 import { useSetRecoilState, useRecoilValue } from "recoil";
+import PurchasePopup from "./PurchasePopup";
 
 const ProgressBar = require("progressbar.js");
 
@@ -277,6 +279,9 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
   // const prductCost = useRecoilValue(prductCostState);
   const progressBarRef = useRef(null);
 
+  const [purchasePopupState, setPurchasePopupState] =
+    useRecoilState(PurchasePopupState);
+
   let bar: any = null;
 
   const [refresh, setRefresh] = useState(false);
@@ -370,20 +375,22 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
           to: { color: "#ED6A5A" },
           step: (state: any, bar: any) => {
             // bar.setText(Math.floor(bar.value() * 100) + " %");
-            bar.setText(
-              Math.floor(
-                ((parseFloat(String(data?.productCost)) / 10000 -
-                  parseFloat(String(data?.leftRoyal))) /
-                  (parseFloat(String(data?.productCost)) / 10000)) *
-                  100
-              ) + " %"
-            );
+            if (data) {
+              bar.setText(
+                Math.floor(
+                  ((parseFloat(String(data?.productCost)) / 10000 -
+                    parseFloat(String(data?.leftRoyal))) /
+                    (parseFloat(String(data?.productCost)) / 10000)) *
+                    100
+                ) + " %"
+              );
+            }
           },
         });
 
         if (data) {
           bar.animate(
-            Math.floor(1)
+            (data?.productCost - data?.leftRoyal * 10000) / data?.productCost
             // 0.2
           );
         }
@@ -437,6 +444,7 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
   return (
     <>
       {isLoading && <Loading />}
+      {purchasePopupState && <PurchasePopup />}
       <Container>
         <Hood title={data?.productName || ""} />
 
