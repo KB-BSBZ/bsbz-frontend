@@ -183,6 +183,7 @@ export default function HomeInfo() {
                 style={{
                   fontSize: "24px",
                 }}
+                data-aos="fade-right"
               >
                 이젠
                 <b
@@ -207,6 +208,7 @@ export default function HomeInfo() {
                 style={{
                   color: "black",
                 }}
+                data-aos="fade-right"
               >
                 👜 명품 시장
               </h3>
@@ -215,6 +217,7 @@ export default function HomeInfo() {
               style={{
                 color: "darkGray",
               }}
+              data-aos="fade-right"
             >
               고가의 명품을 자산으로 소유권을 분할 판매 할 수 있습니다. 롤렉스
               시계, 샤넬 가방 등 하이엔드 명품부터 고급 와인이나 위스키 등
@@ -237,7 +240,10 @@ export default function HomeInfo() {
               text={"HELLO"}
             /> */}
           </TextBox>
-          <ImgBox url={"../../images/resource_img_01.png"} />
+          <ImgBox
+            url={"../../images/resource_img_01.png"}
+            data-aos="fade-left"
+          />
         </Box>
         <Pentagon reverse={"false"} color={"bg"} bgColor={"mint"} />
 

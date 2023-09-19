@@ -125,18 +125,19 @@ const InputBox = styled.div`
 `;
 
 interface IFormData {
-  userId: string;
-  password: string;
-  email: string;
-  userName: string;
-  ssn: string;
-  phoneNum: string;
+  userId: string | undefined;
+  password: string | undefined;
+  email: string | undefined;
+  userName: string | undefined;
+  ssn: string | undefined;
+  phoneNum: string | undefined;
 }
 
 export default function MyPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [checker, setChecker] = useState(false);
   const [ssnResult, setSsnResult] = useState("");
+  const [userInfo, setUserInfo] = useState<IFormData>();
   let cookie: any = null;
   let userDataString = null;
 
@@ -159,6 +160,7 @@ export default function MyPage() {
       console.log("회원 가입 폼");
       console.log(data);
       const response = await axios.put(`${BASE_URL}/user/update`, data);
+      setIsLoading(false);
     } catch (error) {}
   };
 
@@ -196,20 +198,46 @@ export default function MyPage() {
   };
 
   useEffect(() => {
-    userDataString = localStorage.getItem("userData");
-    cookie = userDataString ? JSON.parse(userDataString) : null;
+    const userId = JSON.parse(localStorage.getItem("userData")!).userId;
 
-    if (cookie) {
-      setValue("userId", cookie.userId);
-      setValue("password", cookie.password);
-      setValue("email", cookie.email);
-      setValue("userName", cookie.userName);
-      setValue("ssn", cookie.ssn);
-      setValue("phoneNum", cookie.phoneNum);
+    const userInfo_url = "http://localhost:9999/user/userInfo?" + userId;
+    const userInfo_options = {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      params: {
+        userId,
+      },
+    };
+    const fetchData = async () => {
+      try {
+        const [userInfo_response] = await Promise.all([
+          axios.get(userInfo_url, userInfo_options),
+        ]);
+        setUserInfo(userInfo_response.data);
+        console.log("유저 아이디");
+        console.log(userInfo?.userId);
+      } catch (error) {
+      } finally {
+        userDataString = localStorage.getItem("userData");
+        cookie = userDataString ? JSON.parse(userDataString) : null;
 
-      getValues();
-    }
-  }, [cookie]);
+        if (cookie) {
+          setValue("userId", userInfo?.userId);
+          setValue("password", userInfo?.password);
+          setValue("email", userInfo?.email);
+          setValue("userName", userInfo?.userName);
+          setValue("ssn", userInfo?.ssn);
+          setValue("phoneNum", userInfo?.phoneNum);
+
+          // getValues();
+        }
+      }
+    };
+    fetchData();
+  }, [isLoading]);
 
   return (
     <>

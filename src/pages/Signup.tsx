@@ -275,7 +275,7 @@ export default function Signup() {
                       //   message: "주민등록번호 형식이 맞지 않습니다.",
                       // },
                       pattern: {
-                        value: /^[0-9]{6}-[0-9]{1}[●]{6}$/,
+                        value: /^[0-9]{6}-[0-9]{1}[*]{6}$/,
                         message: "주민등록번호 형식이 맞지 않습니다.",
                       },
                       onChange: (
