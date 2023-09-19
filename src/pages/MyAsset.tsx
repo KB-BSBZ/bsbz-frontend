@@ -1,594 +1,468 @@
-import { useEffect, useState } from "react";
-import Loading from "../components/Loading";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer/Footer";
 import styled from "styled-components";
-import Hood from "../components/Hood";
-import Donut, { AllProductGraphProps } from "../components/MyAsset/PieChart";
+import { useEffect, useState } from "react";
+import { async } from "q";
 import axios from "axios";
+import DonutChart from "../components/MyAsset/DonutChart";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBuilding, faGem } from "@fortawesome/free-regular-svg-icons";
+import { faCompactDisc, faMusic } from "@fortawesome/free-solid-svg-icons";
+import AssetDoughnutChart from "../components/MyAsset/AssetDoughnutChart";
 import LineChart, { RoyalLog } from "../components/MyAsset/LineChart";
 import Ranking from "../components/MyAsset/Ranking";
-import ScrollTop from "../components/ScrollTop";
-import LogBoxDetail, { LogData } from "../components/MyAsset/LogBox";
-import MyProductsListBox from "../components/MyAsset/MyProductsListBox";
-import UseCountNum from "../components/MyAsset/UseCountUp";
+import { LogData } from "../components/MyAsset/LogBox";
+import LogListBox from "../components/MyAsset/LogListBox";
+import MyAssetListBox from "../components/MyAsset/MyAssetListBox";
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  padding-top: 20vh;
 
   width: 100%;
-`;
-
-const Body = styled.div`
-  width: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
-  padding: 5%;
+
+  color: ${(props) => props.theme.textColor};
 `;
 
 const Main = styled.div`
+  height: 70%;
   width: 70%;
-  height: 90%;
-  border-top: 3px solid;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 1%;
+
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 3%;
+  /* background-color: blue; */
+
+  position: relative;
 `;
 
-const BalanceBox = styled.div`
-  /* border: 1px solid; */
-  width: 100%;
-  height: 25%;
-  margin-bottom: 50px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  margin-top: 2%;
-`;
-const MainGraphBox2 = styled.div`
-  border: 1px solid;
-  width: 100%;
+const Tabs = styled.div`
+  /* background-color: blue; */
   height: 30%;
+  width: 8%;
+
+  position: absolute;
+
+  right: 6%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  margin-bottom: 50px;
 `;
-const MainGraphBox = styled.div`
-  border: 1px solid;
+
+const Tab = styled.div`
+  background-color: ${(props) => props.theme.backgroundColor};
+  border-radius: 15px;
   width: 100%;
   height: 30%;
+
   display: flex;
-  flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-bottom: 50px;
+
+  box-shadow: 0px 4px 13px 0px rgb(0, 0, 0, 0.3);
+
+  cursor: pointer;
 `;
-const Title = styled.div`
-  /* border: 1px solid; */
+
+const UserBox = styled.div`
+  height: 100%;
+  background-color: ${(props) => props.theme.blurColor3};
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  border-radius: 3%;
+  padding: 0 5%;
+`;
+
+const InfoBox = styled.div`
+  height: 100%;
+  background-color: ${(props) => props.theme.backgroundColor};
+  box-shadow: 0px 4px 13px 0px rgb(0, 0, 0, 0.1);
+  border-radius: 3%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  h2 {
+    padding-top: 5%;
+  }
+`;
+
+const UserHeader = styled.div`
+  margin-top: 5%;
+
   width: 100%;
   height: 10%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: row;
+
+  background-color: white;
+`;
+
+const ProfileImg = styled.div<{ url: string }>`
+  background: url(${(props) => props.url});
+  background-size: 100% 100%;
+  background-position: center;
+  object-fit: scale-down;
+
+  width: 100%;
+  height: 100%;
+`;
+
+const UserImg = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+`;
+
+const UserName = styled.div``;
+
+const Total = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Assets = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  gap: 3%;
+
+  height: 80%;
+`;
+
+const AssetPart = styled.div<{ bgcolor: string }>`
+  width: 100%;
+  border-radius: 48px;
+  height: 28%;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+
+  background-color: ${(props) =>
+    props.bgcolor === "yellow"
+      ? props.theme.testColor1
+      : props.bgcolor === "blue"
+      ? props.theme.testColor2
+      : props.bgcolor === "green"
+      ? props.theme.testColor3
+      : null};
+
   font-size: 18px;
-  display: flex;
-  align-items: center;
 `;
 
-const Title2 = styled.div`
-  width: 100%;
-  height: 10%;
-  /* border: 1px solid; */
-  font-size: 18px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-const GraphBox = styled.div`
-  width: 40%;
-  height: 90%;
-  border: 1px solid;
-`;
-const GraphBox2 = styled.div`
-  width: 60%;
+const AssetHeader = styled.div`
   height: 100%;
-  /* border: 1px solid; */
-`;
-const GraphBox3 = styled.div`
-  width: 40%;
-  height: 90%;
-  border: 1px solid;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const LogBox = styled.div`
-  border: 1px solid;
-  width: 100%;
-  height: 30%;
-  margin-bottom: 50px;
-  display: flex;
-  flex-direction: column;
-`;
-const AssetList = styled.div`
-  width: 100%;
-  height: 90%;
-  border: 1px solid;
-`;
-const TradeLog = styled.div`
-  width: 100%;
-  height: 90%;
-  border: 1px solid;
-`;
-const WordBox = styled.div`
-  width: 70%;
-  height: 5%;
-  /* border: 1px solid; */
-  font-size: 32px;
-`;
-const Balance = styled.div`
   width: 50%;
-  height: 100%;
-  /* border: 1px solid; */
+
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
 `;
 
-const Bonus = styled.div`
-  width: 50%;
-  height: 100%;
-  /* border: 1px solid; */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const BalanceImgBox = styled.div`
-  width: 90%;
-  height: 70%;
-  /* border: 1px solid; */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  .Balance {
-    width: 45%;
-    height: 100%;
-  }
-`;
-const BalancePrintBox = styled.div`
-  width: 90%;
+const TotalBox = styled.div`
+  margin-top: 5%;
   height: 30%;
-  /* border: 1px solid; */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-`;
-
-const BonusImgBox = styled.div`
-  width: 90%;
-  height: 70%;
-  /* border: 1px solid; */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  .Bonus {
-    width: 45%;
-    height: 100%;
-  }
-`;
-
-const BonusPrintBox = styled.div`
-  width: 90%;
-  height: 30%;
-  /* border: 1px solid; */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  .bonus {
-    font-size: 24px;
-  }
-  .word {
-    font-size: 16px;
-  }
-`;
-
-const Box = styled.div`
   width: 100%;
-  height: 50%;
+
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: start;
 `;
+
+interface IAssetsProps {
+  music: number;
+  estate: number;
+  luxury: number;
+}
 
 export default function MyAsset() {
+  const [username, setUsername] = useState("");
+  const [total, setTotal] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-
-  const [data, setData] = useState<AllProductGraphProps>();
+  const [assets, setAssets] = useState<IAssetsProps>();
+  const [bonus, setBonus] = useState(0);
   const [LineChartData, setLineChartData] = useState<RoyalLog[]>([]);
   const [datesArray, setdatesArray] = useState<string[]>([]);
   const [royalsArray, setroyalsArray] = useState<number[]>([]);
-  const [ranking, setRanking] = useState<number>(0);
-  const [totalRoyal, setTotalRoyal] = useState<number>(0);
-  const [bonus, setBonus] = useState<number>(0);
+  const [ranking, setRanking] = useState(0);
   const [logData, setLogData] = useState<LogData[]>([]);
   const [assetData, setAssetData] = useState<LogData[]>([]);
-  const [userId, setUserId] = useState("");
-  const [estate, setEstate] = useState("");
-  const [luxury, setLuxury] = useState("");
-  const [music, setMusic] = useState<string | undefined>("");
+
+  const [tab, setTab] = useState("royal");
 
   useEffect(() => {
-    const userDataString = localStorage.getItem("userData");
+    const userId = JSON.parse(localStorage.getItem("userData")!).userId;
+    const total_url = "http://localhost:9999/user/totalroyals?" + userId;
+    const assets_url = "http://localhost:9999/user/ownproducts/graph?" + userId;
+    const bonus_url = "http://localhost:9999/user/bonus?" + userId;
+    const totalroyalsDaily_url =
+      "http://localhost:9999/user/ownproducts/totalroyalsDaily?" + userId;
 
-    interface UserData {
-      userId: string;
-      password: string;
-      email: string;
-      userName: string;
-      ssn: string;
-      phoneNum: string;
-      tradeCnt: number;
-    }
+    const ranking_url = "http://localhost:9999/user/ranking?" + userId;
+    const userTradeLog_url =
+      "http://localhost:9999/user/usertradeLog?" + userId;
+    const ownProducts_url = "http://localhost:9999/user/ownproducts?" + userId;
 
-    if (userDataString) {
-      const userData: UserData = JSON.parse(userDataString);
-      setUserId(userData.userId);
-    }
-    console.log("아이디 유저");
-    console.log(userId);
-  }, [userId]);
-
-  // 비중 그래프
-  useEffect(() => {
-    const fetchData = async () => {
-      const url = "http://localhost:9999/user/ownproducts/graph";
-
-      const options = {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        data: {
-          userId: userId,
-        },
-      };
-
-      try {
-        // setIsLoading(true);
-        // console.log("로딩 시작");
-
-        const response = await axios(url, options);
-        setData(response.data);
-        console.log("비중 그래프 데이터");
-        console.log(response.data);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsLoading(false);
-        // console.log("로딩 끝");
-      }
+    const total_options = {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      params: {
+        userId,
+      },
     };
 
-    fetchData();
-  }, [userId]);
-  // 그래프 데이터 (보유 로얄 수 추이)
-  useEffect(() => {
+    const asset_options = {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      params: {
+        userId,
+      },
+    };
+
+    const bonus_options = {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      params: {
+        userId,
+      },
+    };
+
+    const totalroyalsDaily_options = {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      params: {
+        userId,
+      },
+    };
+    const ranking_options = {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      params: {
+        userId,
+      },
+    };
+    const userTradeLog_options = {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      params: {
+        userId,
+      },
+    };
+    const ownProducts_options = {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      params: {
+        userId,
+      },
+    };
+
     const fetchData = async () => {
-      const url = "http://localhost:9999/user/ownproducts/totalroyalsDaily";
-      const options = {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        data: {
-          userId: userId,
-        },
-      };
-
       try {
-        const response = await axios(url, options);
+        setIsLoading(true);
 
-        setLineChartData(response.data);
+        const [
+          total_response,
+          assets_response,
+          bonus_response,
+          totalroyalsDaily_response,
+          ranking_response,
+          userTradeLog_response,
+          ownProducts_response,
+        ] = await Promise.all([
+          axios.get(total_url, total_options),
+          axios.get(assets_url, asset_options),
+          axios.get(bonus_url, bonus_options),
+          axios.get(totalroyalsDaily_url, totalroyalsDaily_options),
+          axios.get(ranking_url, ranking_options),
+          axios.get(userTradeLog_url, userTradeLog_options),
+          axios.get(ownProducts_url, ownProducts_options),
+        ]);
 
-        console.log("그래프 보유 로얄 추이 데이터");
-        console.log(response.data);
+        setTotal(total_response.data);
+        setAssets(assets_response.data);
+        setBonus(bonus_response.data);
+        setLineChartData(totalroyalsDaily_response.data);
+        setRanking(ranking_response.data);
+        setLogData(userTradeLog_response.data);
+        setAssetData(ownProducts_response.data);
 
         const tempDatesArray: string[] = [];
         const tempRoyalsArray: number[] = [];
 
-        response.data.forEach((lineData: any) => {
+        totalroyalsDaily_response.data.forEach((lineData: any) => {
           tempDatesArray.push(lineData.tradeDate);
           tempRoyalsArray.push(lineData.sumRoyal);
         });
-
         setdatesArray(tempDatesArray);
         setroyalsArray(tempRoyalsArray);
       } catch (error) {
         console.error(error);
       } finally {
         setIsLoading(false);
+        console.log("유저 아이디 ::");
+        console.log(JSON.parse(localStorage.getItem("userData")!).userId);
+        console.log("총 로얄 수 :: ");
+        console.log(total);
+        console.log("자산 비중 :: ");
+        console.log(assets?.luxury);
+        console.log(assets?.estate);
+        console.log(assets?.music);
+        console.log("배당금 :: ");
+        console.log(bonus);
+        console.log("랭킹 :: ");
+        console.log(ranking);
       }
     };
 
-    fetchData(); // fetchData 함수를 호출하여 비동기 작업 수행
-  }, [userId]);
-  // 유저 랭킹 가져오기
-  useEffect(() => {
-    const fetchData = async () => {
-      const url = "http://localhost:9999/user/ranking";
-      const options = {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        data: {
-          userId: userId,
-        },
-      };
-
-      try {
-        const response = await axios(url, options);
-
-        setLineChartData(response.data);
-
-        console.log("랭킹 데이터");
-        console.log(response.data);
-
-        setRanking(response.data);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData(); // fetchData 함수를 호출하여 비동기 작업 수행
-  }, [userId]);
-  // 총 로얄수 가져오기
-  useEffect(() => {
-    const fetchData = async () => {
-      const url = "http://localhost:9999/user/totalroyals";
-      const options = {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        data: {
-          userId: userId,
-        },
-      };
-
-      try {
-        const response = await axios(url, options);
-        console.log("전체 데이터");
-        console.log(response.data);
-        setTotalRoyal(response.data);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData(); // fetchData 함수를 호출하여 비동기 작업 수행
-  }, [userId]);
-  // 배당금 가져오기
-  useEffect(() => {
-    const fetchData = async () => {
-      const url = "http://localhost:9999/user/bonus";
-      const options = {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        data: {
-          userId: userId,
-        },
-      };
-
-      try {
-        const response = await axios(url, options);
-        console.log("전체 데이터");
-        console.log(response.data);
-        setBonus(response.data);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData(); // fetchData 함수를 호출하여 비동기 작업 수행
-  }, [userId]);
-  // 거래 로그 가져오기
-  useEffect(() => {
-    const fetchData = async () => {
-      const url = "http://localhost:9999/user/usertradeLog";
-      const options = {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        data: {
-          userId: userId,
-        },
-      };
-
-      try {
-        const response = await axios(url, options);
-        console.log("거래 로그 데이터");
-        console.log(response.data);
-        setLogData(response.data);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData(); // fetchData 함수를 호출하여 비동기 작업 수행
-  }, [userId]);
-  // 보유 항목 가져오기
-  useEffect(() => {
-    const fetchData = async () => {
-      const url = "http://localhost:9999/user/ownproducts";
-      const options = {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        data: {
-          userId: userId,
-        },
-      };
-
-      try {
-        const response = await axios(url, options);
-        console.log("보유항목 데이터");
-        console.log(response.data);
-        setAssetData(response.data);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
     fetchData();
-  }, [userId]);
+  }, []);
+
+  const onTab = (event: React.MouseEvent<HTMLDivElement>) => {
+    console.log(event.currentTarget.id);
+    setTab(event.currentTarget.id);
+    // 값 전달
+  };
 
   return (
     <>
-      {isLoading && <Loading />}
-      <Hood title={"나의 자산"} />
       <Navigation />
       <Container>
-        <Body>
-          <WordBox>
-            <p>보유 자산 전체</p>
-          </WordBox>
-          <Main>
-            <BalanceBox>
-              <Balance>
-                <BalanceImgBox>
-                  <img
-                    className="Balance"
-                    alt="Balance"
-                    src="../../images/honeycomb.png"
-                  />
-                </BalanceImgBox>
-                <BalancePrintBox>
-                  <p>{totalRoyal} ROYAL</p>
-                </BalancePrintBox>
-              </Balance>
-              <Bonus>
-                <BonusImgBox>
-                  <img
-                    className="Bonus"
-                    alt="Bonus"
-                    src="../../images/money-bag.png"
-                  />
-                </BonusImgBox>
-                <BonusPrintBox>
-                  <Box>
-                    <p className="word">예상 배당금</p>
-                  </Box>
-                  <Box>
-                    <p className="bonus">{bonus} 원</p>
-                  </Box>
-                </BonusPrintBox>
-              </Bonus>
-            </BalanceBox>
-            <MainGraphBox2>
-              <Title>
-                <p>나의 자산 추이</p>
-              </Title>
-              <GraphBox2>
-                {LineChartData && (
-                  <LineChart dates={datesArray} royals={royalsArray} />
-                )}
-              </GraphBox2>
-            </MainGraphBox2>
-            <MainGraphBox>
-              <GraphBox>
-                <Title2>
-                  <p>나의 자산 비중</p>
-                </Title2>
-                {data && (
-                  <Donut
-                    key={Date.now()} // 현재 시간을 키로 사용하여 강제로 컴포넌트를 리랜더링
-                    estate={data?.estate}
-                    music={data?.music}
-                    luxury={data?.luxury}
-                  />
-                )}
-              </GraphBox>
-              <GraphBox3>
-                <Title2>
-                  <p>나의 벌부 랭킹</p>
-                </Title2>
-              </GraphBox3>
-            </MainGraphBox>
-            <LogBox>
-              <Title>
-                <p>보유중인 나의 자산 리스트 출력 칸</p>
-              </Title>
-              <AssetList>
-                {assetData
-                  ?.filter((log) => log.tradeRoyalCnt !== 0)
-                  .map((log, index) => (
-                    <MyProductsListBox
-                      key={index}
-                      product={log.product}
-                      sumRoyal={log.sumRoyal}
-                      tradeDate={log.tradeDate}
-                      tradeRoyalCnt={log.tradeRoyalCnt}
-                      tradelogId={log.tradelogId}
-                      userId={log.userId}
-                    ></MyProductsListBox>
-                  ))}
-              </AssetList>
-            </LogBox>
-            <LogBox>
-              <Title>
-                <p>거래 로그 출력 칸</p>
-              </Title>
-              <TradeLog>
-                {logData?.map((log, index) => (
-                  <LogBoxDetail
-                    key={index}
-                    product={log.product}
-                    sumRoyal={log.sumRoyal}
-                    tradeDate={log.tradeDate}
-                    tradeRoyalCnt={log.tradeRoyalCnt}
-                    tradelogId={log.tradelogId}
-                    userId={log.userId}
-                  ></LogBoxDetail>
-                ))}
-              </TradeLog>
-            </LogBox>
-          </Main>
-        </Body>
+        <Main>
+          <UserBox>
+            <UserHeader>
+              <UserImg>
+                <ProfileImg url={"../../images/bsbz-icon.png"} />
+              </UserImg>
+              <UserName>
+                <b>
+                  {JSON.parse(localStorage.getItem("userData")!).userName} 님,
+                </b>
+                <p>좋은 하루 되세요!</p>
+              </UserName>
+            </UserHeader>
+            <TotalBox>
+              <Total>
+                <h2>총 자산</h2>
+                <h3>{total * 10000} 원</h3>
+              </Total>
+
+              <Total>
+                <h2>배당금</h2>
+                <h3>{bonus} 원</h3>
+              </Total>
+            </TotalBox>
+            <Ranking ranking={ranking} />
+            <AssetDoughnutChart
+              estate={assets?.estate}
+              luxury={assets?.luxury}
+              music={assets?.music}
+            ></AssetDoughnutChart>
+            <Assets>
+              <AssetPart bgcolor={"yellow"}>
+                <AssetHeader>
+                  💎
+                  <h5>쥬 얼 리</h5>
+                </AssetHeader>
+
+                <h5>{assets?.luxury ? assets.luxury : 0} ROYAL</h5>
+              </AssetPart>
+
+              <AssetPart bgcolor={"green"}>
+                <AssetHeader>
+                  🏢
+                  <h5>부 동 산</h5>
+                </AssetHeader>
+
+                <h5>{assets?.estate ? assets.estate : 0} ROYAL</h5>
+              </AssetPart>
+
+              <AssetPart bgcolor={"blue"}>
+                <AssetHeader>
+                  🎵
+                  <h5>음악 저작권</h5>
+                </AssetHeader>
+                <h5>{assets?.music ? assets.music : 0} ROYAL</h5>
+              </AssetPart>
+            </Assets>
+          </UserBox>
+          {tab === "royal" ? (
+            <InfoBox>
+              <h2>보유한 로얄 수</h2>
+              {LineChartData && (
+                <LineChart dates={datesArray} royals={royalsArray} />
+              )}
+              {/* 그래프 옮기려면 여기 위에 코드 그대로 옮기면 됨 */}
+            </InfoBox>
+          ) : tab === "product" ? (
+            <InfoBox>
+              <h2>보유 항목</h2>
+              <LogListBox></LogListBox>
+            </InfoBox>
+          ) : tab === "log" ? (
+            <InfoBox>
+              <h2>거래 로그</h2>
+              <MyAssetListBox></MyAssetListBox>
+            </InfoBox>
+          ) : null}
+        </Main>
+        <Tabs>
+          <Tab onClick={onTab} id="royal">
+            <h4>보유 로얄</h4>
+          </Tab>
+          <Tab onClick={onTab} id="product">
+            <h4>보유 항목</h4>
+          </Tab>
+          <Tab onClick={onTab} id="log">
+            <h4>거래 로그</h4>
+          </Tab>
+        </Tabs>
       </Container>
-      <ScrollTop />
       <Footer />
     </>
   );

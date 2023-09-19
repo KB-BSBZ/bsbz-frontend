@@ -255,7 +255,9 @@ export default function HomeInfo() {
         {/* <Pentagon reverse={"false"} color={"bg"} bgColor={"mint"} /> */}
 
         <Box bgtype={"mint"}>
-          <TextBox>
+          <ImgBox url={"../../images/resource_img_01.png"} />
+
+          <TextBox data-aos="fade-left">
             <Header fontcolor={"white"}>
               <h2
                 style={{
@@ -269,7 +271,8 @@ export default function HomeInfo() {
                     marginLeft: "12px",
                   }}
                 >
-                  조각투자 시장
+                  조각투자
+                  <br /> 시장
                 </b>
                 도 안정적인
                 <b
@@ -283,22 +286,22 @@ export default function HomeInfo() {
               </h2>
               <h3>🏢 부동산</h3>
             </Header>
-            <p>
+            {/* <p>
               Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem
-            </p>
+            </p> */}
 
             <p
               style={{
                 backgroundColor: "#93f1e8",
                 padding: "20px 12px",
                 fontSize: "16px",
-                border: "16px",
+                borderRadius: "16px",
               }}
             >
               👆 부동산 조각투자란? <br />
               부동산은 다른 금융 상품 대비 변동성이 적고, 기대 수익이 높아 가장
-              매력적인 투자 상품으로 꼽히는데요. 소액으로도 고가의 건물에 투자할
-              수 있어 부동산 투자에 관심 있는 고객에게 호응을 받고 있습니다.
+              매력적인 투자 상품으로 꼽히며, 소액으로도 고가의 건물에 투자할 수
+              있어 부동산 투자에 관심 있는 고객에게 호응을 받고 있습니다.
             </p>
 
             <Line>
@@ -310,7 +313,6 @@ export default function HomeInfo() {
               />
             </Line>
           </TextBox>
-          <ImgBox url={"../../images/resource_img_01.png"} />
         </Box>
 
         {/* <Pentagon reverse={"false"} color={"mint"} bgColor={"bg"} /> */}

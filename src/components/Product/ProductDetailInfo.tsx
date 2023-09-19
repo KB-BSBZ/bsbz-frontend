@@ -122,6 +122,7 @@ const TextLines = styled.div`
 `;
 
 const StatisticsBar = styled.div`
+  margin-top: 10vh;
   width: 90%;
   height: 240vh;
   background-color: ${(props) => props.theme.blurColor2};
@@ -452,7 +453,10 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
           <LeftBox>
             <ImgBox url={data?.profileUrl} isblur={isBlur} />
             {/* {logData && <LineChart dates={datesArray} royals={royalsArray} />} */}
+            <h4>가격 변동 추이</h4>
             <PriceLogLineChart />
+
+            <h4>예측 가격</h4>
             <PredictedRangeChart />
           </LeftBox>
           <TextBox>

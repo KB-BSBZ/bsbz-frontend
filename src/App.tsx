@@ -9,7 +9,7 @@ import Banking from "./pages/Banking";
 import Research from "./pages/Research";
 import Product from "./pages/Product/Product";
 import MyPage from "./pages/MyPage";
-import MyAsset from "./pages/MyAsset";
+// import MyAsset from "./pages/MyAsset-dummy";
 import ProductEstate from "./pages/Product/ProductEstate/ProductEstate";
 import ProductLuxuries from "./pages/Product/ProductLuxuries/ProductLuxuries";
 import ProductMusic from "./pages/Product/ProductMusic/ProductMusic";
@@ -22,7 +22,7 @@ import ProductMusicViews from "./pages/Product/ProductMusic/ProductMusicViews";
 import ProductMusicDeadline from "./pages/Product/ProductMusic/ProductMusicDeadline";
 import ProductDeadline from "./pages/Product/ProductDeadline";
 import ProductViews from "./pages/Product/ProductViews";
-import Test from "./pages/Test";
+import MyAsset from "./pages/MyAsset";
 
 export default function App() {
   return (
@@ -69,7 +69,7 @@ export default function App() {
       <Route path="/product/detail/:productId" element={<ProductDetail />} />
       <Route path="/mypage" element={<MyPage />} />
       <Route path="/myasset" element={<MyAsset />} />
-      <Route path="/test" element={<Test />} />
+      {/* <Route path="/test" element={<Test />} /> */}
     </Routes>
   );
 }
