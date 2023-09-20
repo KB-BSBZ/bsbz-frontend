@@ -152,19 +152,19 @@ export default function Navigation() {
           리 서 치
         </span>
 
-        <span onClick={onMove} id="myasset">
-          나의 자산
-        </span>
-        {/* <span onClick={test} id="test">
-          test
-        </span> */}
-        <span onClick={onMove} id="banking">
-          뱅 킹
-        </span>
         {isLogin ? (
-          <span onClick={onMove} id="mypage">
-            마이 페이지
-          </span>
+          <>
+            <span onClick={onMove} id="myasset">
+              나의 자산
+            </span>
+
+            <span onClick={onMove} id="banking">
+              뱅 킹
+            </span>
+            <span onClick={onMove} id="mypage">
+              마이 페이지
+            </span>
+          </>
         ) : (
           <span onClick={onMove} id="login">
             로 그 인

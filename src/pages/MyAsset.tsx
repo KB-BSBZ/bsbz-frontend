@@ -58,7 +58,7 @@ const Tabs = styled.div`
 
 const Tab = styled.div`
   background-color: ${(props) => props.theme.backgroundColor};
-  border-radius: 15px;
+  border-radius: 56px;
   width: 100%;
   height: 30%;
 
@@ -66,9 +66,15 @@ const Tab = styled.div`
   justify-content: center;
   align-items: center;
 
-  box-shadow: 0px 4px 13px 0px rgb(0, 0, 0, 0.3);
+  box-shadow: 0px 4px 13px 0px rgb(0, 0, 0, 0.2);
+  transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
 
   cursor: pointer;
+
+  &:hover {
+    color: ${(props) => props.theme.textColor2};
+    background-color: ${(props) => props.theme.highlightColor};
+  }
 `;
 
 const UserBox = styled.div`
