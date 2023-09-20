@@ -3,7 +3,13 @@ import { styled } from "styled-components";
 import useScrollReset from "../utils/useScrollReset";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { loginState, userIdState, userNameState } from "../utils/atoms";
+import {
+  logOutState,
+  loginState,
+  userIdState,
+  userNameState,
+} from "../utils/atoms";
+import LogOutPopup from "./LogOut/LogOutPopup";
 
 const Container = styled.div`
   background-color: ${(props) => props.theme.navColor};
@@ -89,7 +95,7 @@ export default function Navigation() {
   // recoil 의 loginState 가져오기
   const [userName, setUserName] = useRecoilState(userNameState);
   const [userId, setUserId] = useRecoilState(userIdState);
-
+  const [isLogOut, setIsLogOut] = useRecoilState(logOutState);
   useEffect(() => {
     if (cookie !== null) {
       setIsLogin(true);
@@ -109,6 +115,7 @@ export default function Navigation() {
     setIsLogin(false);
     setUserName("");
     setUserId("");
+    setIsLogOut(true);
     localStorage.removeItem("userData");
     reset("/");
   };
@@ -125,6 +132,7 @@ export default function Navigation() {
 
   return (
     <Container>
+      {isLogOut && <LogOutPopup></LogOutPopup>}
       <Logo>
         <img
           onClick={onMove}
