@@ -445,10 +445,9 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
   return (
     <>
       {isLoading && <Loading />}
-      {purchasePopupState && <PurchasePopup />}
+      {purchasePopupState && <PurchasePopup productId={data?.productId} />}
       <Container>
         <Hood title={data?.productName || ""} />
-
         <TopBar>
           <LeftBox>
             <ImgBox url={data?.profileUrl} isblur={isBlur} />

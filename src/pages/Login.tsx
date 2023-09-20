@@ -12,7 +12,13 @@ import Hood from "../components/Hood";
 import { useNavigate } from "react-router-dom";
 import { theme } from "../utils/theme";
 import { useRecoilState } from "recoil";
-import { popupState, userIdState, userNameState } from "../utils/atoms";
+import {
+  logInFailState,
+  popupState,
+  userIdState,
+  userNameState,
+} from "../utils/atoms";
+import LogInFailPopup from "../components/LogOut/LogInFailPopup";
 
 const Container = styled.div`
   display: flex;
@@ -219,7 +225,7 @@ export default function Login() {
   const [userId, setUserId] = useRecoilState(userIdState);
   const [userName, setUserName] = useRecoilState(userNameState);
   const [popup, setPopup] = useRecoilState(popupState);
-
+  const [logInFail, setlogInFailState] = useRecoilState(logInFailState);
   const nav = useNavigate();
 
   const {
@@ -238,10 +244,12 @@ export default function Login() {
       const response = await axios.post(`${BASE_URL}/user/login`, data);
       if (response.data !== "로그인 실패") {
         localStorage.setItem("userData", JSON.stringify(response.data));
+        console.log(response.data); // 서버 응답 데이터 출력
+        nav("/");
+        setPopup(true);
+      } else {
+        setlogInFailState(true);
       }
-      console.log(response.data); // 서버 응답 데이터 출력
-      nav("/");
-      setPopup(true);
     } catch (error) {
       console.error(error);
     } finally {
@@ -259,9 +267,9 @@ export default function Login() {
   return (
     <>
       {isLoading && <Loading />}
+      {logInFail && <LogInFailPopup />}
       <Navigation />
       <Hood title={"로그인"} />
-
       <Container>
         <Main>
           <LoginBox>

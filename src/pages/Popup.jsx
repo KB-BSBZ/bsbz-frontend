@@ -38,6 +38,8 @@ const Container = styled.div`
   align-items: center;
 
   flex-direction: column;
+  position: fixed; /* or absolute */
+  z-index: 1000;
 `;
 
 const Content = styled.div`

@@ -203,6 +203,15 @@ interface IAssetsProps {
 }
 
 export default function MyAsset() {
+  const isLogin = localStorage.getItem("userData") ? true : false;
+  const reset = useScrollReset();
+  useEffect(() => {
+    const isLogin = localStorage.getItem("userData") ? true : false;
+    if (!isLogin) {
+      reset("/login");
+    }
+  }, [isLogin]);
+
   const [username, setUsername] = useState("");
   const [total, setTotal] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -216,11 +225,6 @@ export default function MyAsset() {
   const [assetData, setAssetData] = useState<LogData[]>([]);
 
   const [tab, setTab] = useState("royal");
-  const isLogin = localStorage.getItem("userData") ? true : false;
-  const reset = useScrollReset();
-  if (!isLogin) {
-    reset("/login");
-  }
 
   useEffect(() => {
     const userId = JSON.parse(localStorage.getItem("userData")!).userId;
@@ -443,7 +447,7 @@ export default function MyAsset() {
           </UserBox>
           {tab === "royal" ? (
             <InfoBox>
-              <h2>보유한 로얄 수</h2>
+              <h2>보유 ROYAL 추이</h2>
               {LineChartData && (
                 <LineChart dates={datesArray} royals={royalsArray} />
               )}
@@ -463,7 +467,7 @@ export default function MyAsset() {
         </Main>
         <Tabs>
           <Tab onClick={onTab} id="royal">
-            <h4>보유 로얄</h4>
+            <h4>보유 ROYAL</h4>
           </Tab>
           <Tab onClick={onTab} id="product">
             <h4>보유 항목</h4>

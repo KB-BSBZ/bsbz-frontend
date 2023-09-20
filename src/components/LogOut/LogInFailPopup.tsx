@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import useScrollReset from "../../utils/useScrollReset";
 import Button from "../Button";
-import { useSetRecoilState, useRecoilValue } from "recoil";
-import { PurchasePopupState } from "../../utils/atoms";
+import { useSetRecoilState, useRecoilValue, useRecoilState } from "recoil";
+import { logInFailState } from "../../utils/atoms";
 
 const ModalBackground = styled.div`
   position: fixed;
@@ -30,22 +30,18 @@ const ModalContent = styled.div`
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 `;
-interface id {
-  productId: number | undefined;
-}
 
-const PurchasePopup = ({ productId }: id) => {
-  const setPurchasePopup = useSetRecoilState(PurchasePopupState);
+const LogInFailPopup = () => {
+  const [logInFail, setlogInFailState] = useRecoilState(logInFailState);
   const reset = useScrollReset();
   const home = () => {
-    setPurchasePopup(false);
-    window.location.reload();
+    setlogInFailState(false);
   };
   return (
     <ModalBackground>
       <ModalContent>
-        <h2>구매 완료</h2>
-        <p>이용해 주셔서 감사합니다!</p>
+        <h2>로그인 실패</h2>
+        <p>ID 또는 PASSWORD를 다시 확인해 주세요</p>
         <Button
           width={"40%"}
           height={"12%"}
@@ -58,4 +54,4 @@ const PurchasePopup = ({ productId }: id) => {
   );
 };
 
-export default PurchasePopup;
+export default LogInFailPopup;

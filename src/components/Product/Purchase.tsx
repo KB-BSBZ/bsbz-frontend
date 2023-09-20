@@ -36,6 +36,14 @@ const Content = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: start;
+  img {
+    cursor: pointer;
+    position: absolute;
+    width: 1.5%;
+    height: 2%;
+    right: 29%;
+    top: 18.5%;
+  }
 `;
 
 interface IPurchaseProps {
@@ -90,6 +98,7 @@ const PurchaseButton = styled.span`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 `;
 
 interface IPurchaseData {
@@ -125,7 +134,7 @@ export default function Purchase({ onModal }: IPurchaseProps) {
   };
 
   const onPlus = () => {
-    if (amount * 10000 < money) {
+    if ((amount + 1) * 10000 <= money) {
       // 구매량이 잔액을 초과하지 않을 때
       setAmount((current) => {
         const temp = current + 1;
@@ -207,7 +216,7 @@ export default function Purchase({ onModal }: IPurchaseProps) {
 
       try {
         const response = await axios(url, options);
-        console.log("리턴 반응");
+        console.log("현재 잔액");
         console.log(response.data);
 
         setMoney(response.data);
@@ -224,6 +233,7 @@ export default function Purchase({ onModal }: IPurchaseProps) {
     <>
       <Container>
         <Content>
+          <img src="../../x-mark.png" onClick={onModal}></img>
           <h3>구매하기</h3>
           <WriteField>
             <h3>계좌 잔액</h3>

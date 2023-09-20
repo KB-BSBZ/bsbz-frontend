@@ -138,6 +138,7 @@ export default function MyPage() {
   const [checker, setChecker] = useState(false);
   const [ssnResult, setSsnResult] = useState("");
   const [userInfo, setUserInfo] = useState<IFormData>();
+  const [ready, setReady] = useState(false);
   let cookie: any = null;
   let userDataString = null;
 
@@ -161,6 +162,8 @@ export default function MyPage() {
       console.log(data);
       const response = await axios.put(`${BASE_URL}/user/update`, data);
       setIsLoading(false);
+      setReady(false);
+      window.location.reload();
     } catch (error) {}
   };
 
@@ -213,14 +216,18 @@ export default function MyPage() {
     };
     const fetchData = async () => {
       try {
+        setIsLoading(true);
+
         const [userInfo_response] = await Promise.all([
           axios.get(userInfo_url, userInfo_options),
         ]);
-        setUserInfo(userInfo_response.data);
+        if (userInfo_response.data) {
+          console.log("가져온 데이터");
+          console.log(userInfo_response.data);
+          setUserInfo(userInfo_response.data);
+        }
         console.log("유저 아이디");
         console.log(userInfo?.userId);
-      } catch (error) {
-      } finally {
         userDataString = localStorage.getItem("userData");
         cookie = userDataString ? JSON.parse(userDataString) : null;
 
@@ -231,13 +238,16 @@ export default function MyPage() {
           setValue("userName", userInfo?.userName);
           setValue("ssn", userInfo?.ssn);
           setValue("phoneNum", userInfo?.phoneNum);
-
+          setIsLoading(false);
           // getValues();
         }
+      } catch (error) {
+      } finally {
+        setReady(true);
       }
     };
     fetchData();
-  }, [isLoading]);
+  }, [ready]);
 
   return (
     <>
@@ -249,109 +259,110 @@ export default function MyPage() {
           <TextBox>
             <Forms>
               <h2>회원정보 수정</h2>
+              {userInfo && (
+                <form onSubmit={handleSubmit(onValid)}>
+                  <InputBox>
+                    <input
+                      {...register("userId", {
+                        required: "아이디를 입력하세요.",
+                        minLength: {
+                          value: 5,
+                          message: "아이디가 너무 짧습니다.",
+                        },
+                      })}
+                      type="text"
+                      placeholder="아이디"
+                      autoComplete="username"
+                      readOnly
+                    />
+                  </InputBox>
+                  <InputBox>
+                    <input
+                      {...register("password", {
+                        required: "비밀번호를 입력하세요.",
+                        minLength: {
+                          value: 8,
+                          message: "비밀번호가 너무 짧습니다.",
+                        },
+                        maxLength: {
+                          value: 16,
+                          message: "비밀번호가 너무 깁니다.",
+                        },
+                        pattern: {
+                          value: /^(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,16}$/,
+                          message:
+                            "비밀번호는 숫자, 특수문자가 각각 최소 1개이상이어야 합니다.",
+                        },
+                      })}
+                      type="password"
+                      autoComplete="current-password"
+                      placeholder="비밀번호"
+                    />
+                  </InputBox>
+                  <InputBox>
+                    <input
+                      {...register("email", {
+                        required: "이메일을 입력하세요.",
+                        pattern: {
+                          value:
+                            /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/,
+                          message: "이메일 형식만 가능합니다.",
+                        },
+                      })}
+                      placeholder="이메일"
+                    />
+                  </InputBox>
+                  <InputBox>
+                    <input
+                      {...register("userName", {
+                        required: "이름을 입력하세요.",
+                      })}
+                      placeholder="이 름"
+                    />
+                  </InputBox>
+                  <InputBox>
+                    <input
+                      {...register("ssn", {
+                        required: "주민등록번호를 입력하세요.",
+                        // pattern: {
+                        //   value: /^[0-9]{6}-[0-9]{7}$/,
+                        //   message: "주민등록번호 형식이 맞지 않습니다.",
+                        // },
 
-              <form onSubmit={handleSubmit(onValid)}>
-                <InputBox>
-                  <input
-                    {...register("userId", {
-                      required: "아이디를 입력하세요.",
-                      minLength: {
-                        value: 5,
-                        message: "아이디가 너무 짧습니다.",
-                      },
-                    })}
-                    type="text"
-                    placeholder="아이디"
-                    autoComplete="username"
-                    readOnly
-                  />
-                </InputBox>
-                <InputBox>
-                  <input
-                    {...register("password", {
-                      required: "비밀번호를 입력하세요.",
-                      minLength: {
-                        value: 8,
-                        message: "비밀번호가 너무 짧습니다.",
-                      },
-                      maxLength: {
-                        value: 16,
-                        message: "비밀번호가 너무 깁니다.",
-                      },
-                      pattern: {
-                        value: /^(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,16}$/,
-                        message:
-                          "비밀번호는 숫자, 특수문자가 각각 최소 1개이상이어야 합니다.",
-                      },
-                    })}
-                    type="password"
-                    autoComplete="current-password"
-                    placeholder="비밀번호"
-                  />
-                </InputBox>
-                <InputBox>
-                  <input
-                    {...register("email", {
-                      required: "이메일을 입력하세요.",
-                      pattern: {
-                        value:
-                          /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/,
-                        message: "이메일 형식만 가능합니다.",
-                      },
-                    })}
-                    placeholder="이메일"
-                  />
-                </InputBox>
-                <InputBox>
-                  <input
-                    {...register("userName", {
-                      required: "이름을 입력하세요.",
-                    })}
-                    placeholder="이 름"
-                  />
-                </InputBox>
-                <InputBox>
-                  <input
-                    {...register("ssn", {
-                      required: "주민등록번호를 입력하세요.",
-                      // pattern: {
-                      //   value: /^[0-9]{6}-[0-9]{7}$/,
-                      //   message: "주민등록번호 형식이 맞지 않습니다.",
-                      // },
-
-                      onChange: (
-                        event: React.ChangeEvent<HTMLInputElement>
-                      ) => {
-                        event.target.value = formatSSN(event.target.value);
-                      },
-                    })}
-                    placeholder="주민등록번호"
-                    maxLength={14}
-                    readOnly
-                  />
-                </InputBox>
-                <InputBox>
-                  <input
-                    {...register("phoneNum", {
-                      required: "전화번호를 입력해 주세요.",
-                      pattern: {
-                        value: /^\d{3}-\d{4}-\d{4}$/,
-                        message: "전화번호 형식이 맞지 않습니다.",
-                      },
-                      onChange: (
-                        event: React.ChangeEvent<HTMLInputElement>
-                      ) => {
-                        event.target.value = formatPhone(event.target.value);
-                      },
-                    })}
-                    placeholder="전화번호"
-                    maxLength={13}
-                  />
-                </InputBox>
-                <ButtonBox>
-                  <button>수정 하기</button>
-                </ButtonBox>
-              </form>
+                        onChange: (
+                          event: React.ChangeEvent<HTMLInputElement>
+                        ) => {
+                          event.target.value = formatSSN(event.target.value);
+                        },
+                      })}
+                      placeholder="주민등록번호"
+                      maxLength={14}
+                      readOnly
+                    />
+                  </InputBox>
+                  <InputBox>
+                    <input
+                      {...register("phoneNum", {
+                        required: "전화번호를 입력해 주세요.",
+                        pattern: {
+                          value: /^\d{3}-\d{4}-\d{4}$/,
+                          message: "전화번호 형식이 맞지 않습니다.",
+                        },
+                        onChange: (
+                          event: React.ChangeEvent<HTMLInputElement>
+                        ) => {
+                          event.target.value = formatPhone(event.target.value);
+                        },
+                      })}
+                      placeholder="전화번호"
+                      maxLength={13}
+                    />
+                  </InputBox>
+                  <ButtonBox>
+                    <button>수정 하기</button>
+                  </ButtonBox>
+                </form>
+              )}
             </Forms>
 
             <span>

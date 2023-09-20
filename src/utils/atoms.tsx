@@ -40,3 +40,8 @@ export const PurchasePopupState = atom({
   default: false,
   effects_UNSTABLE: [persistAtom],
 });
+export const logInFailState = atom({
+  key: "logInFail",
+  default: false,
+  effects_UNSTABLE: [persistAtom],
+});
