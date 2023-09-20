@@ -136,7 +136,7 @@ export default function MyAssetListBox() {
             ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : rows
           ).map((row) => (
-            <TableRow key={row.name}>
+            <TableRow key={row.name} style={{ height: "100px" }}>
               <TableCell component="th" scope="row">
                 {row.name}
               </TableCell>
@@ -157,17 +157,21 @@ export default function MyAssetListBox() {
         <TableFooter>
           <TableRow>
             <TablePagination
-              rowsPerPageOptions={[10, 25, { label: "All", value: -1 }]}
+              rowsPerPageOptions={[5]}
               colSpan={3}
               count={rows.length}
               rowsPerPage={rowsPerPage}
               page={page}
               SelectProps={{
                 inputProps: {
-                  "aria-label": "페이지",
+                  "aria-label": "rows per page",
                 },
                 native: true,
               }}
+              labelDisplayedRows={({ from, to, count }) =>
+                `${from} ~ ${to} 총 ${count} 개`
+              }
+              labelRowsPerPage="다음 페이지"
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
               ActionsComponent={TablePaginationActions}

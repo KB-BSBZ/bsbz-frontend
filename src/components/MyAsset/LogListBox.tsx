@@ -145,7 +145,7 @@ export default function LogListBox() {
             ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : rows
           ).map((row) => (
-            <TableRow key={row.name}>
+            <TableRow key={row.name} style={{ height: "100px" }}>
               <TableCell component="th" scope="row">
                 {row.name}
               </TableCell>
@@ -166,7 +166,7 @@ export default function LogListBox() {
         <TableFooter>
           <TableRow>
             <TablePagination
-              rowsPerPageOptions={[10, 25, { label: "All", value: -1 }]}
+              rowsPerPageOptions={[5]}
               colSpan={3}
               count={rows.length}
               rowsPerPage={rowsPerPage}
@@ -177,6 +177,10 @@ export default function LogListBox() {
                 },
                 native: true,
               }}
+              labelDisplayedRows={({ from, to, count }) =>
+                `${from} ~ ${to} 총 ${count} 개`
+              }
+              labelRowsPerPage="다음 페이지"
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
               ActionsComponent={TablePaginationActions}
