@@ -103,7 +103,7 @@ export default function NewsBox({
             <h2>{title}</h2>
           </HeadLine>
 
-          <p>{description.slice(0, 36) + "..."}</p>
+          {/* <p>{description.slice(0, 36) + "..."}</p> */}
         </TextBox>
       </Link>
     </Container>

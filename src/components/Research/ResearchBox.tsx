@@ -101,9 +101,15 @@ export default function ResearchBox({
   profileUrl,
   endDate,
 }: IProductProps) {
-  console.log(profileUrl);
+  const reset = useScrollReset();
+
+  const onMove = () => {
+    reset(`/product/detail/${productId}`);
+  };
+
+  // console.log(profileUrl);
   return (
-    <Container url={profileUrl}>
+    <Container url={profileUrl} onClick={onMove}>
       <HeadLine></HeadLine>
     </Container>
   );

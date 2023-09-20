@@ -33,7 +33,7 @@ const Container = styled.div`
   box-shadow: 0px 4px 13px 0px rgb(0, 0, 0, 0.1);
   border-radius: 12px;
   width: 30vw;
-  height: 70vh;
+  height: 75vh;
   z-index: 99;
 
   position: absolute;
@@ -138,7 +138,7 @@ const StartContents = styled.div`
   font-size: 20px;
   font-weight: 400;
 
-  padding: 20px;
+  padding: 8px;
   border-radius: 10px;
 
   background-color: #ebebeb;
@@ -151,7 +151,7 @@ const StartContents = styled.div`
     font-weight: 400;
 
     margin-top: 10px;
-    padding: 10px;
+    padding: 8px;
     border-radius: 10px;
     text-align: center;
   }
@@ -287,18 +287,12 @@ const Chatbot = ({ handleChatbotFalse }: ChatbotProps) => {
               <img src="../images/bee.png"></img>
             </StartImg>
             <StartContents>
-              안녕하세요!
+              <p>안녕하세요!</p>
               {/* <span>{userName}</span>
               님! */}
-              <br />
-              <br />
-              'BSBZ'에 관해 궁금한 것은
-              <br />
-              <br />
-              무엇이든 저에게 물어보세요!
-              <br />
-              <br />
-              아래와 같은 질문이 가능해요!
+              <p>'BSBZ'에 관해 궁금한 것은</p>
+              <p>무엇이든 저에게 물어보세요!</p>
+              <p>아래와 같은 질문이 가능해요!</p>
               <span>조각 투자는 뭔가요?</span>
               <span>ROYAL이 뭔가요?</span>
             </StartContents>

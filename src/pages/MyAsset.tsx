@@ -14,6 +14,8 @@ import Ranking from "../components/MyAsset/Ranking";
 import { LogData } from "../components/MyAsset/LogBox";
 import LogListBox from "../components/MyAsset/LogListBox";
 import MyAssetListBox from "../components/MyAsset/MyAssetListBox";
+import Loading from "../components/Loading";
+import useScrollReset from "../utils/useScrollReset";
 
 const Container = styled.div`
   padding-top: 20vh;
@@ -214,6 +216,11 @@ export default function MyAsset() {
   const [assetData, setAssetData] = useState<LogData[]>([]);
 
   const [tab, setTab] = useState("royal");
+  const isLogin = localStorage.getItem("userData") ? true : false;
+  const reset = useScrollReset();
+  if (!isLogin) {
+    reset("/login");
+  }
 
   useEffect(() => {
     const userId = JSON.parse(localStorage.getItem("userData")!).userId;
@@ -372,6 +379,7 @@ export default function MyAsset() {
   return (
     <>
       <Navigation />
+      {isLoading && <Loading />}
       <Container>
         <Main>
           <UserBox>
@@ -381,7 +389,9 @@ export default function MyAsset() {
               </UserImg>
               <UserName>
                 <b>
-                  {JSON.parse(localStorage.getItem("userData")!).userName} 님,
+                  {localStorage.getItem("userData") &&
+                    JSON.parse(localStorage.getItem("userData")!).userName}{" "}
+                  님,
                 </b>
                 <p>좋은 하루 되세요!</p>
               </UserName>

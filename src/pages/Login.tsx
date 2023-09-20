@@ -21,7 +21,12 @@ const Container = styled.div`
   align-items: center;
 
   padding-top: 12vh;
-  background-color: ${(props) => props.theme.backgroundColor};
+  width: 100%;
+  /* background-color: ${(props) => props.theme.backgroundColor}; */
+  background-image: url("../../images/background_05.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 `;
 
 const Main = styled.div`
@@ -318,7 +323,7 @@ export default function Login() {
             </TextBox>
           </LoginBox>
 
-          <Pentagon reverse={"true"} color={"border"} bgColor={"bg"} />
+          {/* <Pentagon reverse={"true"} color={"border"} bgColor={"bg"} /> */}
         </Main>
       </Container>
       <Footer />
