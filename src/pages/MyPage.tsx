@@ -124,6 +124,36 @@ const InputBox = styled.div`
   }
 `;
 
+const Withdrawal = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+
+  border-radius: 8px;
+  border: 2px solid ${(props) => props.theme.borderColor};
+
+  overflow: hidden;
+  background-color: ${(props) => props.theme.borderColor};
+  padding: 0 1px 6px 1px;
+
+  transition: background-color ease 0.3s;
+
+  &:hover {
+    cursor: pointer;
+    button {
+      color: ${(props) => props.theme.borderColor};
+      background-color: ${(props) => props.theme.highlightColor};
+      cursor: pointer;
+    }
+  }
+`;
+const Btn = styled.div`
+  background-color: ${(props) => props.theme.backgroundColor};
+  transition: color ease 0.3s, background-color ease 0.3s;
+  font-weight: bold;
+`;
+
 interface IFormData {
   userId: string | undefined;
   password: string | undefined;
@@ -249,6 +279,25 @@ export default function MyPage() {
     fetchData();
   }, [ready]);
 
+  const deletUser = async () => {
+    const deletUser_url = "http://localhost:9999/user/delete";
+    const deletUser_options = {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      data: {
+        userId: userInfo?.userId,
+      },
+    };
+
+    const [deletUser_response] = await Promise.all([
+      axios(deletUser_url, deletUser_options),
+    ]);
+    localStorage.clear();
+    reset("/");
+  };
   return (
     <>
       {isLoading && <Loading />}
@@ -363,6 +412,9 @@ export default function MyPage() {
                   </ButtonBox>
                 </form>
               )}
+              <Withdrawal>
+                <Btn onClick={deletUser}>회원 탈퇴</Btn>
+              </Withdrawal>
             </Forms>
 
             <span>
