@@ -14,6 +14,7 @@ import { theme } from "../utils/theme";
 import { useRecoilState } from "recoil";
 import {
   logInFailState,
+  loginState,
   popupState,
   userIdState,
   userNameState,
@@ -226,6 +227,7 @@ export default function Login() {
   const [userName, setUserName] = useRecoilState(userNameState);
   const [popup, setPopup] = useRecoilState(popupState);
   const [logInFail, setlogInFailState] = useRecoilState(logInFailState);
+
   const nav = useNavigate();
 
   const {

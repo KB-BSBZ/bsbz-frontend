@@ -6,6 +6,8 @@ const { persistAtom } = recoilPersist();
 export const loginState = atom({
   key: "isLogin",
   default: false,
+  effects_UNSTABLE: [persistAtom],
+
   //   default: localStorage.getItem("isLoggedIn") === "true", // localStorage에서 상태를 가져옴
 });
 
@@ -44,4 +46,14 @@ export const logInFailState = atom({
   key: "logInFail",
   default: false,
   effects_UNSTABLE: [persistAtom],
+});
+
+export const addCardModalState = atom({
+  key: "addCardModalState",
+  default: false,
+});
+
+export const cardIndexState = atom({
+  key: "cardIndexState",
+  default: "",
 });
