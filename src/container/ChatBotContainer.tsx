@@ -35,6 +35,7 @@ const Container = styled.div`
   border-radius: 12px;
   width: 330px; /* 변경할 너비 설정 */
   height: 500px; /* 변경할 높이 설정 */
+  overflow: hidden;
   z-index: 99;
   margin: 10px; /* 간격 추가 */
   position: absolute;
@@ -43,23 +44,26 @@ const Container = styled.div`
 `;
 
 const TitleBox = styled.div`
-  width: 100%;
+  width: 80%;
   height: 15%;
+  padding: 0 10%;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   border-top-left-radius: 12px; /* 상단 좌측 테두리만 둥글게 */
   border-top-right-radius: 12px; /* 상단 우측 테두리만 둥글게 */
-  background-color: #e2dfdf; /* 배경색 변경 */
-  border: 1px solid #ccc; /* 테두리 추가 */
+  background-color: ${(props) => props.theme.highlightColor}; /* 배경색 변경 */
+
+  z-index: 50;
+  box-shadow: 0px 6px 2px rgba(0, 0, 0, 0.1); /* 그림자 스타일 설정 */
+
   /* border-bottom: 1px solid #dedede; */
 `;
 
 const Title = styled.div`
-  width: 80%;
-  height: 100%;
   font-size: 40px;
   font-weight: 700;
-  color: #ebd407;
+  color: ${(props) => props.theme.textColor};
   display: flex;
   align-items: center;
   padding-left: 5%;
@@ -81,9 +85,6 @@ const CloseButton = styled.div`
     width: 40%;
     height: 30%;
   } */
-  width: 20px; /* 변경할 너비 설정 */
-  height: 20px; /* 변경할 높이 설정 */
-  margin: 25px;
   cursor: pointer;
 `;
 
@@ -101,11 +102,17 @@ const ChatContainer = styled.div`
   flex-grow: 1; /* 컨테이너가 화면을 꽉 채우도록 설정 */
   overflow-y: auto; /* 스크롤이 필요한 경우 스크롤 바를 표시합니다. */
   padding: 10px;
+
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: start;
 `;
 
 const StartBox = styled.div`
   width: 100%;
   display: flex;
+  flex-direction: column;
 
   margin-bottom: 20px;
 `;
@@ -125,9 +132,11 @@ const StartImg = styled.div`
 `;
 
 const StartTextBox = styled.div`
+  width: 60%;
   display: flex;
   flex-direction: column;
   align-items: left;
+  margin-left: 10%;
 `;
 
 const StartTitle = styled.div`
@@ -150,60 +159,54 @@ const StartContents = styled.div`
   font-size: 15px;
   font-weight: 400;
 
-  padding: 5px;
+  padding: 15px;
   border-radius: 5px;
 
-  background-color: #e2dfdf;
+  background-color: ${(props) => props.theme.blurColor2};
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2); /* 그림자 스타일 설정 */
 
   span {
     display: block;
-    background-color: #cccccc;
+    background-color: ${(props) => props.theme.backgroundColor};
     border-radius: 5px;
+
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2); /* 그림자 스타일 설정 */
 
     font-size: 15px;
     font-weight: 400;
 
-    margin-top: 5px;
+    margin-top: 8px;
 
     text-align: center;
   }
 `;
 
 const Message = styled.div<MessageProps>`
-  /* background-color: ${(props) => (props.isUser ? "#FFCE0B" : "#ebebeb")};
-  padding: 8px;
-  border-radius: 5px;
-  margin-bottom: 5px;
-  display: inline-block;
-  text-align: ${(props) => (props.isUser ? "right" : "left")};
-  align-self: ${(props) => (props.isUser ? "flex-end" : "flex-start")};
+  min-width: 5%;
+  max-width: 70%;
 
-  font-size: 18px; */
   font-size: 15px;
   background-color: ${(props) =>
-    props.isUser
-      ? "#007bff"
-      : "#e2dfdf"}; /* 사용자와 봇 메시지에 다른 배경색 적용 */
+    props.isUser ? props.theme.highlightColor : props.theme.blurColor2};
   color: ${(props) =>
-    props.isUser ? "white" : "black"}; /* 텍스트 색상 변경 */
+    props.isUser ? props.theme.textColor : props.theme.textColor};
   padding: 8px;
-  border-radius: 5px;
+  border-radius: ${(props) =>
+    props.isUser ? "12px 0px 12px 12px" : "0px 12px 12px 12px"};
   margin: 5px;
-  max-width: 70%; /* 최대 너비 설정 */
-  text-align: ${(props) => (props.isUser ? "right" : "left")};
-  align-self: ${(props) => (props.isUser ? "flex-end" : "flex-start")};
+  display: flex;
+  justify-content: center;
+  align-items: end;
+
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2); /* 그림자 스타일 설정 */
 `;
 
 const InputBox = styled.div`
-  /* width: 100%;
-  height: 12%;
-
-  display: flex;
-  justify-content: center;
-  align-items: center; */
+  padding: 0 5%;
   width: 90%;
   display: flex;
   align-items: center;
+  justify-content: center;
   padding: 5px;
   margin: 5px;
   background-color: #ffffff; /* 입력 상자 배경색 설정 */
@@ -213,23 +216,27 @@ const InputBox = styled.div`
 
 const UserInput = styled.input`
   border: none;
-  width: 85%;
+  width: 80%;
   height: 80%;
   font-size: 18px;
   margin-right: 1%;
   &::placeholder {
     text-align: center; // 오른쪽 정렬
   }
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 const SendImg = styled.div`
   cursor: pointer;
-  background-image: url("../images/honey.png");
+  background-image: url("../../images/honey.png");
   background-position: center;
   background-size: 100% 100%;
   background-repeat: no-repeat;
 
-  width: 15%;
+  width: 10%;
   height: 100%;
 
   transition: 1s;
@@ -250,6 +257,13 @@ const Input = styled.div`
 // const Button = styled.button`
 //   margin-top: 10px;
 // `;
+
+const Line = styled.div<{ position: string }>`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: ${(props) => (props.position === "end" ? "end" : "start")};
+`;
 
 const Chatbot = ({ handleChatbotFalse }: ChatbotProps) => {
   const [messages, setMessages] = useState<MessageType[]>([]);
@@ -299,7 +313,7 @@ const Chatbot = ({ handleChatbotFalse }: ChatbotProps) => {
         botResponse = "1:1 고객센터 전화번호는 123-456-7890 입니다.";
       } else {
         botResponse =
-          "제가 대답하기에 어려운 질문이에요🥹 보기에 있는 질문을 해주세요! ㅎㅎ";
+          "제가 대답하기에 어려운 질문이에요🥹 보기에 있는 질문을 해주세요!";
       }
 
       // 역할(role)을 포함한 메시지 생성
@@ -313,45 +327,55 @@ const Chatbot = ({ handleChatbotFalse }: ChatbotProps) => {
     }
   };
 
+  const onPut = (event: React.MouseEvent<HTMLSpanElement>) => {
+    let target = event.currentTarget.innerText;
+    setUserInput(target);
+  };
+
   return (
     <Container>
       <TitleBox>
+        <Title>BSBZ</Title>
+
         <CloseButton onClick={handleChatbotFalse}>
           <FontAwesomeIcon icon={faXmark} />
         </CloseButton>
-        <Title>BSBZ</Title>
       </TitleBox>
       <ChatContainer ref={chatContainerRef}>
         <StartBox>
-          <StartImg />
+          <StartImg>
+            <img src="../images/bee.png" />
+          </StartImg>
           <StartTextBox>
             <StartContents>
-              안녕하세요!
-              <br />
-              <br />
-              'BSBZ'에 관해 궁금한 것은
-              <br />
-              <br />
-              무엇이든 저에게 물어보세요!
-              <br />
-              <br />
-              아래와 같은 질문이 가능해요!
-              <span>조각 투자란?</span>
-              <span>회원 관련 문의</span>
-              <span>상품 관련 문의</span>
-              <span>구매/환불 관련 문의</span>
-              <span>1:1 고객센터 전화번호</span>
+              <p
+                style={{
+                  marginBottom: "12px",
+                }}
+              >
+                안녕하세요!
+              </p>
+              <p>'BSBZ'에 관해 궁금한 것은</p>
+              <p>무엇이든 저에게 물어보세요!</p>
+              <p>아래와 같은 질문이 가능해요!</p>
+              <span onClick={onPut}>조각 투자란?</span>
+              <span onClick={onPut}>회원 관련 문의</span>
+              <span onClick={onPut}>상품 관련 문의</span>
+              <span onClick={onPut}>구매/환불 관련 문의</span>
+              <span onClick={onPut}>1:1 고객센터 전화번호</span>
             </StartContents>
           </StartTextBox>
         </StartBox>
         {messages.map((message, index) => (
-          <Message
-            key={index}
-            isUser={message.isUser}
-            role={message.role} // 역할(role) 추가
-          >
-            {message.isUser ? message.content : `${message.content}`}
-          </Message>
+          <Line position={message.isUser ? "end" : "start"}>
+            <Message
+              key={index}
+              isUser={message.isUser}
+              role={message.role} // 역할(role) 추가
+            >
+              {message.isUser ? message.content : `${message.content}`}
+            </Message>
+          </Line>
         ))}
       </ChatContainer>
       <InputBox>
