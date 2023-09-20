@@ -98,10 +98,6 @@ const Line = styled.div`
 `;
 
 export default function HomeInfo() {
-  let options = {
-    anchors: ["sectionOne", "sectionTwo", "sectionThree"],
-  };
-
   useEffect(() => {
     AOS.init({
       duration: 3000,
@@ -110,7 +106,7 @@ export default function HomeInfo() {
   return (
     <>
       <Container>
-        <Box bgtype={"null"} url={"../../images/background_03.png"}>
+        <Box bgtype={"null"} url={"../../images/background_07.png"}>
           <TextBox data-aos="fade-right">
             <Header fontcolor={"default"}>
               <h3
@@ -151,7 +147,7 @@ export default function HomeInfo() {
         </Box>
 
         {/* <Pentagon reverse={"false"} color={"bg"} bgColor={"yellow"} /> */}
-        <Box bgtype={"yellow"}>
+        <Box bgtype={"none"} url={"../../images/background_06.png"}>
           <ImgBox url={"../../images/resource_img_01.png"} />
           <TextBox data-aos="fade-left">
             <Header fontcolor={"black"}>
@@ -184,7 +180,7 @@ export default function HomeInfo() {
 
         {/* <Pentagon reverse={"false"} color={"yellow"} bgColor={"bg"} /> */}
 
-        <Box bgtype={"white"}>
+        <Box bgtype={"none"} url={"../../images/background_08.png"}>
           <TextBox data-aos="fade-right">
             <Header fontcolor={"default"}>
               <h2
@@ -250,7 +246,7 @@ export default function HomeInfo() {
 
         {/* <Pentagon reverse={"false"} color={"bg"} bgColor={"mint"} /> */}
 
-        <Box bgtype={"mint"}>
+        <Box bgtype={"none"} url={"../../images/background_02.png"}>
           <ImgBox url={"../../images/resource_img_01.png"} />
 
           <TextBox data-aos="fade-left">

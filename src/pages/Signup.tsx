@@ -19,6 +19,11 @@ const Container = styled.div`
 
   padding-top: 12vh;
   background-color: ${(props) => props.theme.backgroundColor};
+
+  background-image: url("../../images/background_05.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 `;
 
 const Main = styled.div`
@@ -329,7 +334,7 @@ export default function Signup() {
             </span>
           </TextBox>
 
-          <Pentagon reverse={"true"} color={"border"} bgColor={"bg"} />
+          {/* <Pentagon reverse={"true"} color={"border"} bgColor={"bg"} /> */}
         </Main>
       </Container>
       <Footer />

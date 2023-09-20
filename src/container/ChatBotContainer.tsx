@@ -52,7 +52,7 @@ const TitleBox = styled.div`
   align-items: center;
   border-top-left-radius: 12px; /* 상단 좌측 테두리만 둥글게 */
   border-top-right-radius: 12px; /* 상단 우측 테두리만 둥글게 */
-  background-color: ${(props) => props.theme.highlightColor}; /* 배경색 변경 */
+  background-color: ${(props) => props.theme.backgroundColor}; /* 배경색 변경 */
 
   z-index: 50;
   box-shadow: 0px 6px 2px rgba(0, 0, 0, 0.1); /* 그림자 스타일 설정 */
@@ -63,7 +63,7 @@ const TitleBox = styled.div`
 const Title = styled.div`
   font-size: 40px;
   font-weight: 700;
-  color: ${(props) => props.theme.textColor};
+  color: ${(props) => props.theme.highlightColor};
   display: flex;
   align-items: center;
   padding-left: 5%;
