@@ -302,9 +302,7 @@ export default function Banking() {
     <>
       <Navigation />
       {isLoading && <Loading />}
-      {addCardModal && (
-        <AddCardModal userId={id} externalAccountId={cardIndex} />
-      )}
+      {addCardModal && <AddCardModal userId={id} />}
       <Container>
         <Hood title={"입출금"} />
         <Main>

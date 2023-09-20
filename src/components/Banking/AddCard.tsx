@@ -27,13 +27,13 @@ const Container = styled.div`
 
 const InputBox = styled.div``;
 
-export default function AddCard({ userId, externalAccountId }: ICardProps) {
+export default function AddCard({ userId }: ICardProps) {
   const [addCardModal, setAddCardModal] = useRecoilState(addCardModalState);
   const [cardIndex, setCardIndex] = useRecoilState(cardIndexState);
 
   const setCard = () => {
     setAddCardModal(true);
-    setCardIndex(externalAccountId);
+    // setCardIndex(exAccount);
   };
 
   return (

@@ -120,7 +120,6 @@ const InputBox = styled.div`
 
 interface ICardProps {
   userId: string;
-  externalAccountId: string;
 }
 
 interface IAccountData {
@@ -128,12 +127,10 @@ interface IAccountData {
   accountNumber: string;
 }
 
-export default function AddCardModal({
-  userId,
-  externalAccountId,
-}: ICardProps) {
+export default function AddCardModal({ userId }: ICardProps) {
   const [addCardModal, setAddCardModal] = useRecoilState(addCardModalState);
   const [cardIndex, setCardIndex] = useRecoilState(cardIndexState);
+
   const {
     register,
     watch,
@@ -142,21 +139,23 @@ export default function AddCardModal({
   } = useForm<IAccountData>();
 
   const onAddCard = async (account: string) => {
-    const add_url = "http://localhost:9999/user/update/account/add?";
+    const add_url = "http://localhost:9999/user/update/account/add";
     const add_options = {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: {
+      data: {
         exAccount: account,
-        userId,
+        userId: userId,
       },
     };
 
     const [add_response] = await Promise.all([axios(add_url, add_options)]);
     console.log(add_response);
+    setAddCardModal(false);
+    window.location.reload();
   };
 
   const onValid = (data: IAccountData) => {
