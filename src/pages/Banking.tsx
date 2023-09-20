@@ -105,7 +105,7 @@ const InfoBox = styled.div`
 
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: start;
   align-items: center;
 
   h2 {
@@ -211,7 +211,7 @@ const TotalBox = styled.div`
 `;
 
 const Cards = styled.div`
-  margin-top: 10%;
+  margin-top: 5%;
   width: 100%;
   height: 42%;
 `;
@@ -327,12 +327,22 @@ export default function Banking() {
               </Total>
             </TotalBox>
           </UserBox>
-          <InfoBox>
-            <Cards>
-              <CardSlider userId={id} />
-            </Cards>
-            <h1>{cardIndex}</h1>
-          </InfoBox>
+          {tab === "deposit" ? (
+            <InfoBox>
+              <h2>입 금</h2>
+              <Cards>
+                <CardSlider userId={id} />
+              </Cards>
+            </InfoBox>
+          ) : tab === "withdraw" ? (
+            <InfoBox>
+              <h2>출 금</h2>
+
+              <Cards>
+                <CardSlider userId={id} />
+              </Cards>
+            </InfoBox>
+          ) : null}
         </Main>
         <Tabs>
           <Tab onClick={onTab} id="deposit">
