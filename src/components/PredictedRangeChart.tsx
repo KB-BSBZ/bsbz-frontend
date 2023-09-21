@@ -87,7 +87,6 @@ export default function PredictedRangeChart() {
                     "11월",
                     "12월",
                   ],
-                  days: ["1일", "31일"],
                 },
               },
             ],
