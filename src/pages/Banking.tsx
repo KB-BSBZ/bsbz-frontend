@@ -157,6 +157,7 @@ const UserImg = styled.div`
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
+  padding: 5%;
 `;
 
 const UserName = styled.div``;
@@ -367,7 +368,7 @@ export default function Banking() {
           <UserBox>
             <UserHeader>
               <UserImg>
-                <ProfileImg url={"../../images/bsbz-icon.png"} />
+                <ProfileImg url={"../../images/profile.png"} />
               </UserImg>
               <UserName>
                 <b>

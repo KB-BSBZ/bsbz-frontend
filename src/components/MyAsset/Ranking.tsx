@@ -40,7 +40,7 @@ const Main = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image: url("../../images/rate_image2.png");
+    background-image: url("../../images/rate-image.png");
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
@@ -51,7 +51,7 @@ const Main = styled.div`
     /* box-shadow: 1px 10px 10px -4px rgba(0, 0, 0, 0.1); */
 
     p {
-      margin-bottom: 20%;
+      margin-bottom: 5%;
     }
   }
 `;

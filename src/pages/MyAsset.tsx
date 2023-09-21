@@ -137,6 +137,7 @@ const UserImg = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 5%;
 
   width: 3rem;
   height: 3rem;
@@ -195,6 +196,23 @@ const AssetHeader = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+`;
+
+const AssetImg = styled.div<{ url: string }>`
+  background: url(${(props) => props.url});
+  background-size: 100% 100%;
+  background-position: center;
+  object-fit: scale-down;
+
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5%;
+
+  width: 1rem;
+  height: 1rem;
 `;
 
 const TotalBox = styled.div`
@@ -400,7 +418,7 @@ export default function MyAsset() {
           <UserBox>
             <UserHeader>
               <UserImg>
-                <ProfileImg url={"../../images/bsbz-icon.png"} />
+                <ProfileImg url={"../../images/profile.png"} />
               </UserImg>
               <UserName>
                 <b>
@@ -431,7 +449,7 @@ export default function MyAsset() {
             <Assets>
               <AssetPart bgcolor={"yellow"}>
                 <AssetHeader>
-                  💎
+                  <AssetImg url={"../../images/luxury-icon2.png"} />
                   <h5>쥬 얼 리</h5>
                 </AssetHeader>
 
@@ -440,7 +458,7 @@ export default function MyAsset() {
 
               <AssetPart bgcolor={"green"}>
                 <AssetHeader>
-                  🏢
+                  <AssetImg url={"../../images/estate-icon.png"} />
                   <h5>부 동 산</h5>
                 </AssetHeader>
 
@@ -449,7 +467,7 @@ export default function MyAsset() {
 
               <AssetPart bgcolor={"blue"}>
                 <AssetHeader>
-                  🎵
+                  <AssetImg url={"../../images/music-icon.png"} />
                   <h5>음악 저작권</h5>
                 </AssetHeader>
                 <h5>{assets?.music ? assets.music : 0} ROYAL</h5>
