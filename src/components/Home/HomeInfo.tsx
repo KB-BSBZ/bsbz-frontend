@@ -52,7 +52,6 @@ const TextBox = styled.span`
   align-items: start;
 
   p {
-    font-weight: bold;
     color: ${(props) => props.theme.textColor};
     font-size: 20px;
   }
@@ -75,6 +74,10 @@ const Header = styled.div<{ fontcolor: string }>`
 
   h3 {
     font-size: 36px;
+  }
+
+  p {
+    font-size: 56px;
   }
 `;
 
@@ -99,7 +102,7 @@ const Line = styled.div`
 export default function HomeInfo() {
   useEffect(() => {
     AOS.init({
-      duration: 3000,
+      duration: 5000,
     });
   }, []);
   return (
@@ -112,28 +115,22 @@ export default function HomeInfo() {
                 style={{
                   color: "#40E0D0ff",
                 }}
-              >
-                조각투자 통합 플랫폼
-              </h3>
-              <h2>
-                벌써 부자
-                <FontAwesomeIcon
-                  icon={faForumbee}
-                  style={{
-                    marginLeft: "12px",
-                  }}
-                  color={"#ffd700ff"}
-                />
-              </h2>
+              ></h3>
+              <p>
+                <b>모든 사람</b>을 위한
+              </p>
+              <p>
+                <b>손쉽게</b> 경험하는
+              </p>
+              <p>
+                <b>조각투자의 시작, 벌써부자</b>
+              </p>
             </Header>
             <p
               style={{
                 color: "darkGray",
               }}
-            >
-              저희 벌써부자에서는 음원 저작권, 명품 그리고 부동산에 대한
-              조각투자 서비스를 제공합니다.
-            </p>
+            ></p>
 
             {/* <Button
               width={"180px"}
@@ -146,34 +143,80 @@ export default function HomeInfo() {
         </Box>
 
         {/* <Pentagon reverse={"false"} color={"bg"} bgColor={"yellow"} /> */}
-        <Box bgtype={"none"} url={`${section2}`}>
-          <ImgBox url={"../../images/resource_img_01.png"} />
+        <Box bgtype={"white"} /*url={`${section2}`}*/>
           <TextBox data-aos="fade-left">
-            <Header fontcolor={"black"}>
-              <h2>🎹 음원 투자</h2>
-            </Header>
-            <p>음악 저작권료 참여 청구권을 조각투자형태로 발행해 거래합니다.</p>
-            <p
+            <Header
+              fontcolor={"black"}
               style={{
-                backgroundColor: "#ffe657",
-                padding: "20px 12px",
-                fontSize: "16px",
-                border: "16px",
+                width: "50vw",
+                marginLeft: "20vw",
               }}
             >
-              👆 음악 저작권료 참여 청구권이란? <br />
-              해당 음악의 저작권으로부터 발생하는 수익을 구매한 지분 비율로
-              지급받을 수 있는 권리를 의미합니다.
-            </p>
+              <h2
+                style={{
+                  fontSize: "36px",
+                  marginBottom: "12px",
+                }}
+              >
+                벌써부자는 . . .
+              </h2>
+              <p
+                style={{
+                  fontSize: "36px",
+                  marginBottom: "12px",
+                }}
+              >
+                <b
+                  style={{
+                    marginRight: "36px",
+                  }}
+                >
+                  Story
+                </b>
+                여러분의 투자 스토리를 기록
+              </p>
 
-            <Line>
+              <p
+                style={{
+                  fontSize: "36px",
+                  marginBottom: "12px",
+                }}
+              >
+                <b
+                  style={{
+                    marginRight: "36px",
+                  }}
+                >
+                  Share
+                </b>
+                하나의 상품을 나눠서 소유
+              </p>
+
+              <p
+                style={{
+                  fontSize: "36px",
+                  marginBottom: "12px",
+                }}
+              >
+                <b
+                  style={{
+                    marginRight: "36px",
+                  }}
+                >
+                  Speciality
+                </b>
+                빅데이터와 AI를 기반으로 한 전문성
+              </p>
+            </Header>
+
+            {/* <Line>
               <Button
                 width={"180px"}
                 height={"42px"}
                 hover={"mint"}
                 text={"음악 저작권 보러가기  ▶"}
               />
-            </Line>
+            </Line> */}
           </TextBox>
         </Box>
 
