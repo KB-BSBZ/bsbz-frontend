@@ -137,7 +137,7 @@ export default function Navigation() {
         <img
           onClick={onMove}
           id="home"
-          src="../../images/logo_04.png"
+          src="../../images/main-logo.png"
           alt="logo"
         />
       </Logo>
