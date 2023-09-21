@@ -1,18 +1,18 @@
 import styled from "styled-components";
 
 const OuterBox = styled.div<IBoxProps>`
-  background-color: ${(props) => props.theme.borderColor};
-  margin-bottom: 2vh;
-  border-radius: ${(props) => (props.border ? props.border : "8px")};
-  border: 2px solid ${(props) => props.theme.borderColor};
+  background-color: ${(props) => props.theme.backgroundColor};
+  border-radius: ${(props) => (props.border ? props.border : "15px")};
   overflow: hidden;
-  padding: 0 1px 1px 1px;
 
+  box-shadow: 0px 4px 13px 0px rgba(0, 0, 0, 0.3);
   width: ${(props) => props.width};
   height: ${(props) => props.height};
 
   cursor: pointer;
   user-select: none;
+
+  margin-bottom: 12px;
 `;
 
 const InnerBox = styled.div<IBoxProps>`
@@ -22,16 +22,14 @@ const InnerBox = styled.div<IBoxProps>`
       : props.color === "yellow"
       ? props.theme.highlightColor
       : props.theme.backgroundColor};
-  border-radius: ${(props) => (props.border ? props.border : "0 0 6px 6px")};
   width: 100%;
-  height: 90%;
-
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  transition: background-color ease 0.3s;
+  transition: background-color ease 0.3s, color ease 0.3s;
 
   h2 {
     font-size: 100%;
@@ -46,6 +44,8 @@ const InnerBox = styled.div<IBoxProps>`
         : props.hover === "white"
         ? props.theme.backgroundColor
         : null};
+
+    color: ${(props) => props.theme.backgroundColor};
   }
 `;
 

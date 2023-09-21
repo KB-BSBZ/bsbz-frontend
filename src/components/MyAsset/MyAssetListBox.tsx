@@ -159,20 +159,6 @@ export default function MyAssetListBox({
 }: {
   AssetLogDataArray: LogData[];
 }) {
-  function createData(name: string, calories: number, fat: number) {
-    return { name, calories, fat };
-  }
-
-  const rows = [
-    createData("Cupcake", 305, 3.7),
-    createData("Donut", 452, 25.0),
-    createData("Cupcake", 305, 3.7),
-    createData("Donut", 452, 25.0),
-    createData("Cupcake", 305, 3.7),
-    createData("Donut", 452, 25.0),
-    createData("Donut", 452, 25.0),
-  ];
-
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const isLastPage = (page + 1) * rowsPerPage >= AssetLogDataArray.length;
@@ -193,6 +179,7 @@ export default function MyAssetListBox({
     setRowsPerPage(parseInt(event.target.value, 5));
     setPage(0);
   };
+
   return (
     <TableContainer
       component={Paper}

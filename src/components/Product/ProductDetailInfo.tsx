@@ -35,7 +35,7 @@ const Container = styled.div`
 `;
 
 const TopBar = styled.div`
-  height: 180vh;
+  height: 120vh;
   width: 75%;
   /* background-color: blue; */
   display: flex;
@@ -46,7 +46,7 @@ const TopBar = styled.div`
 
 const ImgBox = styled.span<{ url: string | undefined; isblur: string }>`
   width: 100%;
-  height: 40%;
+  height: 60%;
 
   background-image: url(${(props) => props.url});
   background-position: center;
@@ -82,7 +82,7 @@ const TextBox = styled.span`
 
 const HeadLine = styled.div`
   width: 100%;
-  height: 15%;
+  height: 30%;
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -104,7 +104,7 @@ const InfoBox = styled.div`
 
 const ButtonBox = styled.div`
   width: 100%;
-  height: 25%;
+  height: 50%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -261,6 +261,29 @@ const CloudBar = styled.div`
   }
 `;
 
+const ChartBar = styled.div`
+  width: 75%;
+  /* background-color: red; */
+  height: 60vh;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const ChartData = styled.div`
+  width: 45%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+
+  /* background-color: blue; */
+`;
+
 export default function ProductDetailInfo({ productId }: IDetailProps) {
   const [remainingTime, setRemainingTime] = useState(0);
   const [data, setData] = useState<IProductProps>();
@@ -323,15 +346,6 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
       } finally {
         let currentDate = new Date();
         let targetDate = new Date(data?.endDate!);
-
-        if (currentDate < targetDate) {
-          const timeDiff = targetDate.getTime() - currentDate.getTime();
-          const dayRemaining = Math.ceil(timeDiff / 1000 / (24 * 60 * 60));
-          setRemainingTime(dayRemaining);
-        } else {
-          setRemainingTime(0);
-        }
-
         if (currentDate > targetDate) {
           setIsBlur("true");
         } else {
@@ -428,7 +442,7 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
           <LeftBox>
             <ImgBox url={data?.profileUrl} isblur={isBlur} />
             {/* {logData && <LineChart dates={datesArray} royals={royalsArray} />} */}
-            <h4>가격 변동 추이</h4>
+            {/* <h4>가격 변동 추이</h4>
             {data && (
               <PriceLogLineChart
                 productType={data?.productType}
@@ -437,12 +451,12 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
             )}
 
             <h4>예측 가격</h4>
-            <PredictedRangeChart />
+            <PredictedRangeChart /> */}
           </LeftBox>
           <TextBox>
             <b>
               {remainingTime > 0 ? (
-                <p>목표 날짜까지 {remainingTime}일 남았습니다.</p>
+                <p>목표 날짜까지 {remainingTime} 초 남았습니다.</p>
               ) : (
                 <p>목표 시간이 이미 지났습니다.</p>
               )}
@@ -485,7 +499,7 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
                   </ProgressBarContainer>
                 </Line>
 
-                <Box>
+                {/* <Box>
                   <h3>수익화 분석</h3>
                   <Info>
                     <Line>
@@ -501,7 +515,7 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
                       <p>안정적</p>
                     </Line>
                   </Info>
-                </Box>
+                </Box> */}
 
                 <Box>
                   <h3>조각 모집 정보</h3>
@@ -547,30 +561,46 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
               </Box> */}
                 <h2>{data?.description}</h2>
               </TextLines>
-
-              <ButtonBox>
-                {isBlur === "true" ? (
-                  <Button
-                    width={"40%"}
-                    height={"20%"}
-                    hover={"red"}
-                    color={"red"}
-                    text={"마감 되었습니다"}
-                  />
-                ) : (
-                  <Button
-                    width={"40%"}
-                    height={"20%"}
-                    hover={"yellow"}
-                    text={"구매 하기"}
-                    onclick={onModal}
-                  />
-                )}
-                {isModal && <Purchase onModal={onModal} />}
-              </ButtonBox>
             </InfoBox>
+
+            <ButtonBox>
+              {isBlur === "true" ? (
+                <Button
+                  width={"40%"}
+                  height={"40%"}
+                  hover={"red"}
+                  color={"red"}
+                  text={"마감 되었습니다"}
+                />
+              ) : (
+                <Button
+                  width={"40%"}
+                  height={"40%"}
+                  hover={"yellow"}
+                  text={"구매 하기"}
+                  onclick={onModal}
+                />
+              )}
+              {isModal && <Purchase onModal={onModal} />}
+            </ButtonBox>
           </TextBox>
         </TopBar>
+        <ChartBar>
+          <ChartData>
+            <h4>가격 변동 추이</h4>
+            {data && (
+              <PriceLogLineChart
+                productType={data?.productType}
+                productId={data?.productId}
+              />
+            )}
+          </ChartData>
+
+          <ChartData>
+            <h4>예측 가격</h4>
+            <PredictedRangeChart />
+          </ChartData>
+        </ChartBar>
         {data?.productType === "music" ? (
           <CloudBar>
             <WordClouds />
