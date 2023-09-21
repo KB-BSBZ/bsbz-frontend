@@ -26,7 +26,7 @@ export default function PredictedRangeChart() {
         series={[
           {
             type: "rangeArea",
-            name: "예측 가격",
+            name: "예측 구간",
             data: predictData.map((item) => ({
               x: new Date(item.date).getTime(), // 올바른 형식의 날짜로 변환
               y: [item.lower, item.upper],
@@ -34,7 +34,7 @@ export default function PredictedRangeChart() {
           },
           {
             type: "line",
-            name: "가격",
+            name: "예측 가격",
             data: predictData.map((item) => ({
               x: new Date(item.date).getTime(),
               y: item.predict,

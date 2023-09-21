@@ -71,10 +71,6 @@ export default function PriceLogLineChart({
             background: "transparent",
           },
 
-          // forecastDataPoints: {
-          //   count: 12,
-          // },
-
           stroke: {
             curve: "smooth",
             width: 2.2,

@@ -256,8 +256,8 @@ const CloudBar = styled.div`
   width: 100%;
   height: 150vh;
   svg {
-    width: 200%;
-    height: 200%;
+    width: 150%;
+    height: 100%;
   }
 `;
 
@@ -603,10 +603,9 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
         </ChartBar>
         {data?.productType === "music" ? (
           <CloudBar>
-            <WordClouds />
+            <WordClouds productId={data?.productId} />
           </CloudBar>
         ) : null}
-
         <StatisticsBar>
           <Static />
         </StatisticsBar>
