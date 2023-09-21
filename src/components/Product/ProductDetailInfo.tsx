@@ -325,6 +325,7 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
         let targetDate = new Date(data?.endDate!);
 
         if (currentDate < targetDate) {
+          const timeDiff = targetDate.getTime() - currentDate.getTime();
           const dayRemaining = Math.ceil(timeDiff / 1000 / (24 * 60 * 60));
           setRemainingTime(dayRemaining);
         } else {
