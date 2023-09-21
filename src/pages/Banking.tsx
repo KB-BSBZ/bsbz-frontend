@@ -19,7 +19,7 @@ import {
 import AssetDoughnutChart from "../components/MyAsset/AssetDoughnutChart";
 import LineChart, { RoyalLog } from "../components/MyAsset/LineChart";
 import Ranking from "../components/MyAsset/Ranking";
-import { LogData } from "../components/MyAsset/LogBox";
+import { LogData } from "../components/MyAsset/MyAssetListBox";
 import LogListBox from "../components/MyAsset/LogListBox";
 import MyAssetListBox from "../components/MyAsset/MyAssetListBox";
 import Loading from "../components/Loading";

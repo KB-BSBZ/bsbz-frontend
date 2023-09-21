@@ -9,8 +9,7 @@ import axios from "axios";
 import LineChart, { RoyalLog } from "../components/MyAsset/LineChart";
 import Ranking from "../components/MyAsset/Ranking";
 import ScrollTop from "../components/ScrollTop";
-import LogBoxDetail, { LogData } from "../components/MyAsset/LogBox";
-import MyProductsListBox from "../components/MyAsset/MyProductsListBox";
+import LogBoxDetail, { LogData } from "../components/MyAsset/MyAssetListBox";
 import UseCountNum from "../components/MyAsset/UseCountUp";
 
 const Container = styled.div`
@@ -552,19 +551,19 @@ export default function MyAsset() {
                 <p>보유중인 나의 자산 리스트 출력 칸</p>
               </Title>
               <AssetList>
-                {assetData
+                {/* {assetData
                   ?.filter((log) => log.tradeRoyalCnt !== 0)
                   .map((log, index) => (
-                    <MyProductsListBox
-                      key={index}
-                      product={log.product}
-                      sumRoyal={log.sumRoyal}
-                      tradeDate={log.tradeDate}
-                      tradeRoyalCnt={log.tradeRoyalCnt}
-                      tradelogId={log.tradelogId}
-                      userId={log.userId}
-                    ></MyProductsListBox>
-                  ))}
+                  //   <MyProductsListBox
+                  //     key={index}
+                  //     product={log.product}
+                  //     sumRoyal={log.sumRoyal}
+                  //     tradeDate={log.tradeDate}
+                  //     tradeRoyalCnt={log.tradeRoyalCnt}
+                  //     tradelogId={log.tradelogId}
+                  //     userId={log.userId}
+                  //   ></MyProductsListBox>
+                  // ))} */}
               </AssetList>
             </LogBox>
             <LogBox>
@@ -572,7 +571,7 @@ export default function MyAsset() {
                 <p>거래 로그 출력 칸</p>
               </Title>
               <TradeLog>
-                {logData?.map((log, index) => (
+                {/* {logData?.map((log, index) => (
                   <LogBoxDetail
                     key={index}
                     product={log.product}
@@ -582,7 +581,7 @@ export default function MyAsset() {
                     tradelogId={log.tradelogId}
                     userId={log.userId}
                   ></LogBoxDetail>
-                ))}
+                ))} */}
               </TradeLog>
             </LogBox>
           </Main>

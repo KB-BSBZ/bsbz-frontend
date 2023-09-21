@@ -11,9 +11,11 @@ import { faCompactDisc, faMusic } from "@fortawesome/free-solid-svg-icons";
 import AssetDoughnutChart from "../components/MyAsset/AssetDoughnutChart";
 import LineChart, { RoyalLog } from "../components/MyAsset/LineChart";
 import Ranking from "../components/MyAsset/Ranking";
-import { LogData } from "../components/MyAsset/LogBox";
 import LogListBox from "../components/MyAsset/LogListBox";
-import MyAssetListBox from "../components/MyAsset/MyAssetListBox";
+import MyAssetListBox, {
+  LogData,
+  LogProduct,
+} from "../components/MyAsset/MyAssetListBox";
 import Loading from "../components/Loading";
 import useScrollReset from "../utils/useScrollReset";
 
@@ -278,7 +280,6 @@ export default function MyAsset() {
         userId,
       },
     };
-
     const asset_options = {
       method: "GET",
       headers: {
@@ -289,7 +290,6 @@ export default function MyAsset() {
         userId,
       },
     };
-
     const bonus_options = {
       method: "GET",
       headers: {
@@ -300,7 +300,6 @@ export default function MyAsset() {
         userId,
       },
     };
-
     const totalroyalsDaily_options = {
       method: "GET",
       headers: {
@@ -485,12 +484,12 @@ export default function MyAsset() {
           ) : tab === "product" ? (
             <InfoBox>
               <h2>보유 항목</h2>
-              <LogListBox></LogListBox>
+              <MyAssetListBox AssetLogDataArray={assetData}></MyAssetListBox>
             </InfoBox>
           ) : tab === "log" ? (
             <InfoBox>
               <h2>거래 로그</h2>
-              <MyAssetListBox></MyAssetListBox>
+              <LogListBox LogDataArray={logData}></LogListBox>
             </InfoBox>
           ) : null}
         </Main>

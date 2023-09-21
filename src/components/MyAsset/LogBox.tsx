@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { styled } from "styled-components";
+import { LogData } from "./MyAssetListBox";
 
 const Main = styled.div`
   height: 100%;
@@ -23,14 +24,7 @@ const Data = styled.div`
   width: 70%;
   border: 1px solid yellow;
 `;
-export interface LogData {
-  product: LogProduct;
-  sumRoyal: number;
-  tradeDate: string;
-  tradeRoyalCnt: number;
-  tradelogId: number;
-  userId: string;
-}
+
 interface LogProduct {
   bonus: number;
   description: string | null;

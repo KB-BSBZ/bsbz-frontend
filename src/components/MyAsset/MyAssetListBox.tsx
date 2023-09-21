@@ -14,6 +14,8 @@ import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
+import { styled } from "styled-components";
+import { useEffect, useState } from "react";
 
 interface TablePaginationActionsProps {
   count: number;
@@ -94,25 +96,89 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
     </Box>
   );
 }
+const OptionBox = styled.div`
+  border: 1px solid;
+`;
+const InfoBox = styled.div`
+  width: 100%;
+  border: 1px solid;
+  display: flex;
+  justify-content: row;
+`;
+const ImgBox = styled.div`
+  width: 20%;
+  height: 80%;
+  border: 1px solid;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+`;
+const Name = styled.div`
+  width: 30%;
+  border: 1px solid;
+  text-align: center;
+`;
+const RoyalSum = styled.div`
+  width: 50%;
+  border: 1px solid;
+  text-align: end;
+`;
 
 function createData(name: string, calories: number, fat: number) {
   return { name, calories, fat };
 }
 
-const rows = [
-  createData("Cupcake", 305, 3.7),
-  createData("Donut", 452, 25.0),
-  createData("Eclair", 262, 16.0),
-  createData("Frozen yoghurt", 159, 6.0),
-].sort((a, b) => (a.calories < b.calories ? -1 : 1));
+export interface LogData {
+  product: LogProduct;
+  sumRoyal: number;
+  tradeDate: string;
+  tradeRoyalCnt: number;
+  tradelogId: number;
+  userId: string;
+}
+export interface LogProduct {
+  bonus: number;
+  description: string | null;
+  endDate: string;
+  extra: string | null;
+  imageUrl: string;
+  leftRoyal: number;
+  productCost: number;
+  productId: number;
+  productName: string;
+  productType: string;
+  profileUrl: string;
+  registerDate: string;
+  totalRoyal: number;
+  views: number;
+}
 
-export default function MyAssetListBox() {
+export default function MyAssetListBox({
+  AssetLogDataArray,
+}: {
+  AssetLogDataArray: LogData[];
+}) {
+  function createData(name: string, calories: number, fat: number) {
+    return { name, calories, fat };
+  }
+
+  const rows = [
+    createData("Cupcake", 305, 3.7),
+    createData("Donut", 452, 25.0),
+    createData("Cupcake", 305, 3.7),
+    createData("Donut", 452, 25.0),
+    createData("Cupcake", 305, 3.7),
+    createData("Donut", 452, 25.0),
+    createData("Donut", 452, 25.0),
+  ];
+
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
-  // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+  const isLastPage = (page + 1) * rowsPerPage >= AssetLogDataArray.length;
+  const emptyRows = isLastPage
+    ? Math.ceil(AssetLogDataArray.length / 5) * 5 - AssetLogDataArray.length
+    : 0;
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -124,60 +190,95 @@ export default function MyAssetListBox() {
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+    setRowsPerPage(parseInt(event.target.value, 5));
     setPage(0);
   };
-
   return (
-    <TableContainer component={Paper}>
+    <TableContainer
+      component={Paper}
+      style={{
+        backgroundColor: "transparent",
+        boxShadow: "0px 4px 13px 0px rgba(0, 0, 0, 0)",
+        borderRadius: "3%",
+        borderTop: "none",
+        height: "85%",
+        overflowY: "auto", // 추가된 부분 - 스크롤 적용
+      }}
+    >
       <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
         <TableBody>
           {(rowsPerPage > 0
-            ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            : rows
-          ).map((row) => (
-            <TableRow key={row.name} style={{ height: "100px" }}>
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell style={{ width: 160 }} align="right">
-                {row.calories}
-              </TableCell>
-              <TableCell style={{ width: 160 }} align="right">
-                {row.fat}
+            ? AssetLogDataArray.slice(
+                page * rowsPerPage,
+                page * rowsPerPage + rowsPerPage
+              )
+            : AssetLogDataArray
+          ).map((AssetLogDataArray, index) => (
+            <TableRow
+              key={index}
+              style={{ height: "100px", border: "none", width: "100%" }}
+            >
+              <TableCell component="th" scope="row" style={{ border: "none" }}>
+                <OptionBox>
+                  <span>{AssetLogDataArray.product.productType} /</span>
+                  <span> 마감</span>
+                </OptionBox>
+                <InfoBox>
+                  <ImgBox>
+                    <img src={AssetLogDataArray.product.profileUrl}></img>
+                  </ImgBox>
+                  <Name>{AssetLogDataArray.product.productName}</Name>
+                  <RoyalSum>{AssetLogDataArray.tradeRoyalCnt}</RoyalSum>
+                </InfoBox>
               </TableCell>
             </TableRow>
           ))}
-          {emptyRows > 0 && (
-            <TableRow style={{ height: 53 * emptyRows }}>
-              <TableCell colSpan={6} />
+          {emptyRows > 0 && isLastPage && (
+            <TableRow
+              style={{
+                height: 100 * emptyRows,
+                backgroundColor: "transparent",
+                border: "none",
+              }}
+            >
+              <TableCell colSpan={5} style={{ border: "none" }} />
             </TableRow>
           )}
         </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              rowsPerPageOptions={[5]}
-              colSpan={3}
-              count={rows.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              SelectProps={{
-                inputProps: {
-                  "aria-label": "rows per page",
-                },
-                native: true,
-              }}
-              labelDisplayedRows={({ from, to, count }) =>
-                `${from} ~ ${to} 총 ${count} 개`
-              }
-              labelRowsPerPage="다음 페이지"
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              ActionsComponent={TablePaginationActions}
-            />
-          </TableRow>
-        </TableFooter>
+        {AssetLogDataArray.length >= 5 && (
+          <TableFooter
+            style={{
+              width: "100%",
+              border: "none",
+            }}
+          >
+            <TableRow style={{ border: "none", width: "100%" }}>
+              <TablePagination
+                rowsPerPageOptions={[5]}
+                colSpan={3}
+                count={AssetLogDataArray.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                SelectProps={{
+                  inputProps: {
+                    "aria-label": "rows per page",
+                  },
+                  native: true,
+                }}
+                labelDisplayedRows={({ from, to, count }) =>
+                  `${from} ~ ${to} 총 ${count} 개`
+                }
+                labelRowsPerPage="다음 페이지"
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                ActionsComponent={TablePaginationActions}
+                style={{
+                  border: "none",
+                }}
+              />
+            </TableRow>
+          </TableFooter>
+        )}
       </Table>
     </TableContainer>
   );
