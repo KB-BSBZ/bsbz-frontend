@@ -59,7 +59,7 @@ const Tabs = styled.div`
 const Tab = styled.div`
   background-color: ${(props) => props.theme.backgroundColor};
   border-radius: 56px;
-  width: 100%;
+  width: 62%;
   height: 30%;
 
   display: flex;
@@ -74,6 +74,11 @@ const Tab = styled.div`
   &:hover {
     color: ${(props) => props.theme.textColor2};
     background-color: ${(props) => props.theme.highlightColor};
+  }
+
+  h4 {
+    text-align: center;
+    font-size: 13px;
   }
 `;
 
@@ -473,13 +478,25 @@ export default function MyAsset() {
         </Main>
         <Tabs>
           <Tab onClick={onTab} id="royal">
-            <h4>보유 ROYAL</h4>
+            <h4>
+              보유
+              <br />
+              ROYAL
+            </h4>
           </Tab>
           <Tab onClick={onTab} id="product">
-            <h4>보유 항목</h4>
+            <h4>
+              보유
+              <br />
+              항목
+            </h4>
           </Tab>
           <Tab onClick={onTab} id="log">
-            <h4>거래 로그</h4>
+            <h4>
+              거래
+              <br />
+              로그
+            </h4>
           </Tab>
         </Tabs>
       </Container>

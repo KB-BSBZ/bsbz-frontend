@@ -55,5 +55,5 @@ export const addCardModalState = atom({
 
 export const cardIndexState = atom({
   key: "cardIndexState",
-  default: "",
+  default: "카드를 선택해주세요.",
 });

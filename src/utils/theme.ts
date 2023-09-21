@@ -2,6 +2,7 @@ import { DefaultTheme } from "styled-components";
 
 export const theme: DefaultTheme = {
   backgroundColor: "#fafafaff",
+  backgroundColor2: "#464964ff",
   // 배경 색
   navColor: "#fafafaff",
   // nav 생상 - 흰색

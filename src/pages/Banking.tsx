@@ -7,7 +7,15 @@ import axios from "axios";
 import DonutChart from "../components/MyAsset/DonutChart";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBuilding, faGem } from "@fortawesome/free-regular-svg-icons";
-import { faCompactDisc, faMusic } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCompactDisc,
+  faDownLong,
+  faEquals,
+  faMinus,
+  faMusic,
+  faPlus,
+  faUpLong,
+} from "@fortawesome/free-solid-svg-icons";
 import AssetDoughnutChart from "../components/MyAsset/AssetDoughnutChart";
 import LineChart, { RoyalLog } from "../components/MyAsset/LineChart";
 import Ranking from "../components/MyAsset/Ranking";
@@ -67,7 +75,7 @@ const Tabs = styled.div`
 const Tab = styled.div`
   background-color: ${(props) => props.theme.backgroundColor};
   border-radius: 56px;
-  width: 100%;
+  width: 62%;
   height: 30%;
 
   display: flex;
@@ -82,6 +90,11 @@ const Tab = styled.div`
   &:hover {
     color: ${(props) => props.theme.textColor2};
     background-color: ${(props) => props.theme.highlightColor};
+  }
+
+  h4 {
+    text-align: center;
+    font-size: 13px;
   }
 `;
 
@@ -99,7 +112,7 @@ const UserBox = styled.div`
 
 const InfoBox = styled.div`
   height: 100%;
-  background-color: ${(props) => props.theme.backgroundColor};
+  background-color: ${(props) => props.theme.backgroundColor2};
   box-shadow: 0px 4px 13px 0px rgb(0, 0, 0, 0.1);
   border-radius: 3%;
 
@@ -213,7 +226,52 @@ const TotalBox = styled.div`
 const Cards = styled.div`
   margin-top: 5%;
   width: 100%;
-  height: 42%;
+  height: 60%;
+`;
+
+const CardBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 70%;
+  background-color: ${(props) => props.theme.backgroundColor};
+`;
+
+const BankingBox = styled.div`
+  width: 100%;
+  height: 28%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+`;
+
+const CalculateBox = styled.div`
+  width: 100%;
+  height: 76%;
+
+  display: flex;
+  flex-direction: row;
+  /* background-color: aliceblue; */
+  justify-content: space-around;
+  align-items: center;
+`;
+
+const BBBox = styled.div`
+  height: 100%;
+  width: 30%;
+
+  /* background-color: bisque; */
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  h3 {
+  }
 `;
 
 export default function Banking() {
@@ -329,19 +387,64 @@ export default function Banking() {
           </UserBox>
           {tab === "deposit" ? (
             <InfoBox>
-              <h2>입 금</h2>
-              <Cards>
-                <CardSlider userId={id} />
-              </Cards>
+              <CardBox>
+                <h3>입 금</h3>
+                <Cards>
+                  <CardSlider userId={id} />
+                </Cards>
+                <h3>{cardIndex}</h3>
+              </CardBox>
+              <BankingBox>
+                <FontAwesomeIcon icon={faDownLong} />
+                <CalculateBox>
+                  <BBBox>
+                    <h3>현재 계좌잔액</h3>
+                    <h2>{account} 원</h2>
+                  </BBBox>
+                  <FontAwesomeIcon icon={faPlus} />
+                  <BBBox>
+                    <h3>입금 할 금액</h3>
+                    <h2>{account} 원</h2>
+                  </BBBox>
+                  <FontAwesomeIcon icon={faEquals} />
+                  <BBBox>
+                    <h3>예상 금액</h3>
+                    <h2>{account} 원</h2>
+                  </BBBox>
+                </CalculateBox>
+                {/* <h1>he</h1> */}
+              </BankingBox>
             </InfoBox>
           ) : tab === "withdraw" ? (
             <InfoBox>
-              <h2>출 금</h2>
+              <h3>출 금</h3>
 
               <Cards>
                 <CardSlider userId={id} />
               </Cards>
-              <h2>{cardIndex}</h2>
+              <h3>{cardIndex}</h3>
+
+              <BankingBox>
+                <FontAwesomeIcon icon={faUpLong} />
+                <CalculateBox>
+                  <BBBox>
+                    <h3>현재 계좌잔액</h3>
+                    <h2>{account} 원</h2>
+                  </BBBox>
+                  <FontAwesomeIcon icon={faMinus} />
+                  <BBBox>
+                    <h3>출금 할 금액</h3>
+                    <h2>{account} 원</h2>
+                  </BBBox>
+                  <FontAwesomeIcon icon={faEquals} />
+                  <BBBox>
+                    <h3>예상 금액</h3>
+                    <h2>{account} 원</h2>
+                  </BBBox>
+                </CalculateBox>
+
+                {/* <h1>he</h1> */}
+              </BankingBox>
             </InfoBox>
           ) : null}
         </Main>

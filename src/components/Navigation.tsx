@@ -34,7 +34,7 @@ const NavBar = styled.div`
   align-items: center;
   gap: 12px;
   width: 55%;
-  margin-left: 20%;
+  margin-left: 12%;
 
   span {
     color: ${(props) => props.theme.textColor};
@@ -61,7 +61,7 @@ const Logo = styled.div`
   height: 100%;
 
   img {
-    height: 30%;
+    height: 70%;
   }
 `;
 
@@ -137,7 +137,7 @@ export default function Navigation() {
         <img
           onClick={onMove}
           id="home"
-          src="../../images/bsbz-icon.png"
+          src="../../images/logo_04.png"
           alt="logo"
         />
       </Logo>

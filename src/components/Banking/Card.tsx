@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { cardIndexState } from "../../utils/atoms";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faX } from "@fortawesome/free-solid-svg-icons";
 
 const Container = styled.div`
   width: 100%;
@@ -11,17 +13,41 @@ const Container = styled.div`
   border: 2px solid ${(props) => props.theme.borderColor};
   border-radius: 5%;
   display: flex;
-  justify-content: row;
+  flex-direction: column;
 `;
 const CardImg = styled.div`
-  width: 90%;
-  height: 100%;
-  border: 1px solid;
+  width: 100%;
+  height: 90%;
+
+  padding: 0 0 2% 2%;
+  /* border: 1px solid; */
+
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
 `;
-const Delete = styled.div`
-  width: 10%;
-  height: 10%;
-  border: 1px solid;
+
+const TobBar = styled.div`
+  width: 100%;
+  height: 15%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+`;
+
+const DeleteButton = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 18%;
+  height: 100%;
+
+  /* background-color: blue; */
+  color: ${(props) => props.theme.backgroundColor};
   cursor: pointer;
 `;
 
@@ -77,11 +103,16 @@ export default function Card({ userId, exAccount }: ICardProps) {
 
   return (
     <Container>
+      <TobBar>
+        <DeleteButton>
+          <FontAwesomeIcon icon={faX} />
+        </DeleteButton>
+      </TobBar>
       <CardImg onClick={onSetCard}>
-        <h4>{userId}님의 외부 계좌</h4>
-        <h4>{exAccount}</h4>
+        {/* <h4>외부 계좌</h4> */}
+        <h4>{exAccount.split(" ")[0]}</h4>
+        <h4>{exAccount.split(" ")[1]}</h4>
       </CardImg>
-      <Delete onClick={deleteBtn}></Delete>
     </Container>
   );
 }
