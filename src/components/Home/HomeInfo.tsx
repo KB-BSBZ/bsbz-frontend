@@ -1,3 +1,7 @@
+import section1 from "../../svgs/section1.svg";
+import section2 from "../../svgs/section2.svg";
+import section3 from "../../svgs/section3.svg";
+
 import styled from "styled-components";
 import Pentagon from "../Pentagon";
 import { theme } from "../../utils/theme";
@@ -7,11 +11,6 @@ import { faForumbee } from "@fortawesome/free-brands-svg-icons";
 import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { Swiper, SwiperSlide } from "swiper/react";
-
-import "swiper/css";
-import "swiper/css/pagination";
-import { Pagination } from "swiper/modules";
 
 const Container = styled.div`
   width: 100vw;
@@ -106,7 +105,7 @@ export default function HomeInfo() {
   return (
     <>
       <Container>
-        <Box bgtype={"null"} url={"../../images/background_07.png"}>
+        <Box bgtype={"null"} url={`${section1}`}>
           <TextBox data-aos="fade-right">
             <Header fontcolor={"default"}>
               <h3
@@ -147,7 +146,7 @@ export default function HomeInfo() {
         </Box>
 
         {/* <Pentagon reverse={"false"} color={"bg"} bgColor={"yellow"} /> */}
-        <Box bgtype={"none"} url={"../../images/background_06.png"}>
+        <Box bgtype={"none"} url={`${section2}`}>
           <ImgBox url={"../../images/resource_img_01.png"} />
           <TextBox data-aos="fade-left">
             <Header fontcolor={"black"}>
@@ -180,7 +179,7 @@ export default function HomeInfo() {
 
         {/* <Pentagon reverse={"false"} color={"yellow"} bgColor={"bg"} /> */}
 
-        <Box bgtype={"none"} url={"../../images/background_08.png"}>
+        <Box bgtype={"none"} url={`${section3}`}>
           <TextBox data-aos="fade-right">
             <Header fontcolor={"default"}>
               <h2

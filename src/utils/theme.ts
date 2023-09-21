@@ -9,7 +9,7 @@ export const theme: DefaultTheme = {
   // footer 색상 - 검정
   borderColor: "#343434ff",
   // 테두리 색
-  highlightColor: "#ffd700ff",
+  highlightColor: "#ffce0bff",
   // 강조 색 - 노랑
   highlightColor2: "#40E0D0ff",
   // 강조 색 - 민트

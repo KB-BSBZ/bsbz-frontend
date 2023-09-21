@@ -22,7 +22,6 @@ const Main = styled.div`
 
   .wrap button {
     padding: 2vmin 4vmin;
-    border: 2px solid #fff;
     background: none;
     color: #fff;
     font-size: 2vmin;
@@ -41,12 +40,19 @@ const Main = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #ffff33ff;
+    background-image: url("../../images/rate_image2.png");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
     width: 20vmin;
     height: 20vmin;
     font-size: 4vmin;
     font-weight: bold;
-    box-shadow: 1px 10px 10px -4px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 1px 10px 10px -4px rgba(0, 0, 0, 0.1); */
+
+    p {
+      margin-bottom: 20%;
+    }
   }
 `;
 
@@ -70,7 +76,6 @@ export default function Ranking({ ranking }: { ranking: number }) {
           whileInView={{
             opacity: 1,
             rotate: [180, 360],
-            borderRadius: ["20%", "50%"],
             transition: { delay: 0.05 },
           }}
           whileHover={{
@@ -78,7 +83,7 @@ export default function Ranking({ ranking }: { ranking: number }) {
             transition: { type: "spring", stiffness: 400, damping: 20 },
           }}
         >
-          <p>상위 {count}%</p>
+          <p>{count}%</p>
         </motion.div>
       </div>
     </Main>
