@@ -341,6 +341,7 @@ export default function Banking() {
               <Cards>
                 <CardSlider userId={id} />
               </Cards>
+              <h2>{cardIndex}</h2>
             </InfoBox>
           ) : null}
         </Main>

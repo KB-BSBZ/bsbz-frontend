@@ -1,12 +1,50 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ApexChart from "react-apexcharts";
 import styled from "styled-components";
-import { logData } from "../jsons/logData";
+// import { logData } from "../jsons/logData";
+import axios from "axios";
 
 const Container = styled.div`
   width: 100%;
 `;
-export default function PriceLogLineChart() {
+
+interface ILogLineProps {
+  data: ILogDataProps[];
+}
+
+export interface ILogDataProps {
+  price: number;
+  ymd: string;
+}
+
+interface IPriceLogData {
+  productType: string;
+  productId: number;
+}
+
+export default function PriceLogLineChart({
+  productType,
+  productId,
+}: IPriceLogData) {
+  const [logData, setLogData] = useState<ILogDataProps[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const url =
+        "http://localhost:8000/pricelog/" +
+        `${productType}` +
+        "_log/" +
+        `${productId}/`;
+
+      await axios
+        .get(url)
+        .then((response) => setLogData(response.data))
+        .catch((error) => console.error(error));
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <Container>
       <ApexChart

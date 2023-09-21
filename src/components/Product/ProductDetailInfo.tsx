@@ -274,10 +274,7 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
   const [isModal, setIsModal] = useState(false);
 
   const [buyProductId, setBuyProductId] = useRecoilState(productIdState);
-  // const setLeftRoyals = useSetRecoilState(leftRoyalsState);
-  // const leftRoyals = useRecoilValue(leftRoyalsState);
-  // const setPrductCost = useSetRecoilState(prductCostState);
-  // const prductCost = useRecoilValue(prductCostState);
+
   const progressBarRef = useRef(null);
 
   const [purchasePopupState, setPurchasePopupState] =
@@ -286,11 +283,14 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
   let bar: any = null;
 
   const [refresh, setRefresh] = useState(false);
-  // 일정 시간(예: 10초) 후에 리랜더링
   useEffect(() => {
     const timer = setTimeout(() => {
       setRefresh(true);
     }, 1000); // 10초(10000밀리초) 후에 리랜더링
+
+    const loadingTimer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
 
     return () => {
       clearTimeout(timer); // 컴포넌트 언마운트 시 타이머 정리
@@ -405,39 +405,6 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
     };
   }, [refresh]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      await axios
-        .get(`http://127.0.0.1:8000/pricelog/log/11/2`)
-        .then((response) => {
-          console.log("전체 데이터");
-          console.log(logData);
-
-          const tempDatesArray: string[] = [];
-          const tempRoyalsArray: number[] = [];
-          // console.log("aaaaaaa");
-
-          response.data.forEach((lineData: any) => {
-            tempDatesArray.push(lineData.ymd);
-            tempRoyalsArray.push(lineData.price);
-          });
-
-          console.log("array 보여줘");
-          console.log(tempDatesArray);
-          console.log(tempRoyalsArray);
-
-          setdatesArray(tempDatesArray);
-          setroyalsArray(tempRoyalsArray);
-        })
-        .catch((error) => console.error(error))
-        .finally(() => {
-          setIsLoading(false);
-        });
-    };
-
-    fetchData();
-  }, [refresh]);
-
   const onModal = () => {
     setIsModal((current) => !current);
   };
@@ -453,7 +420,12 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
             <ImgBox url={data?.profileUrl} isblur={isBlur} />
             {/* {logData && <LineChart dates={datesArray} royals={royalsArray} />} */}
             <h4>가격 변동 추이</h4>
-            <PriceLogLineChart />
+            {data && (
+              <PriceLogLineChart
+                productType={data?.productType}
+                productId={data?.productId}
+              />
+            )}
 
             <h4>예측 가격</h4>
             <PredictedRangeChart />
