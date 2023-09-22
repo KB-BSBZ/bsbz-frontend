@@ -383,7 +383,7 @@ export default function Banking() {
         reset("/login");
       } else {
         try {
-          setIsLoading(true);
+          // setIsLoading(true);
 
           const [account_response, ex_account_response] = await Promise.all([
             axios(account_url, account_options),
@@ -398,7 +398,7 @@ export default function Banking() {
         } catch (error) {
           console.error(error);
         } finally {
-          setIsLoading(false);
+          // setIsLoading(false);
           console.log("유저 아이디 ::");
           console.log(JSON.parse(localStorage.getItem("userData")!).userId);
         }
@@ -406,7 +406,7 @@ export default function Banking() {
     };
 
     fetchData();
-  }, []);
+  }, [isLoading]);
 
   const onTab = (event: React.MouseEvent<HTMLDivElement>) => {
     console.log(event.currentTarget.id);
@@ -437,7 +437,7 @@ export default function Banking() {
     } catch (error) {
     } finally {
       setIsLoading(false);
-      window.location.reload();
+      // window.location.reload();
     }
   };
   const withdraw = async (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -457,7 +457,7 @@ export default function Banking() {
     } catch (error) {
     } finally {
       setIsLoading(false);
-      window.location.reload();
+      // window.location.reload();
     }
   };
   return (
