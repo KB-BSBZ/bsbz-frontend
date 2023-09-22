@@ -36,7 +36,7 @@ export default function WordClouds({ productId }: IWordCloudData) {
     const { minFrequency, maxFrequency } = normalization();
     const scaledVal =
       10 + ((word.value - minFrequency) / (maxFrequency - minFrequency)) * 90;
-    return scaledVal * 2;
+    return scaledVal * 3;
   }, []);
 
   const rotate = useCallback((word: any) => 0, []);
@@ -67,7 +67,7 @@ export default function WordClouds({ productId }: IWordCloudData) {
         value: item.frequency,
       }))}
       width={1000}
-      height={800}
+      height={700}
       padding={1}
       font="times"
       fontWeight="normal"

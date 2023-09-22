@@ -242,13 +242,13 @@ const CloudBar = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: start;
+  align-items: center;
   border: 1px solid black;
   width: 50%;
   height: 100%;
   svg {
-    width: 160%;
-    height: 150%;
+    width: 120%;
+    height: 140%;
   }
 `;
 
@@ -346,6 +346,14 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
       } finally {
         let currentDate = new Date();
         let targetDate = new Date(data?.endDate!);
+
+        if (currentDate < targetDate) {
+          const timeDiff = targetDate.getTime() - currentDate.getTime();
+          const dayRemaining = Math.ceil(timeDiff / 1000 / (24 * 60 * 60));
+          setRemainingTime(dayRemaining);
+        } else {
+          setRemainingTime(0);
+        }
         if (currentDate > targetDate) {
           setIsBlur("true");
         } else {
@@ -456,7 +464,7 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
           <TextBox>
             <b>
               {remainingTime > 0 ? (
-                <p>목표 날짜까지 {remainingTime} 초 남았습니다.</p>
+                <p>목표 날짜까지 {remainingTime} 일 남았습니다.</p>
               ) : (
                 <p>목표 시간이 이미 지났습니다.</p>
               )}
