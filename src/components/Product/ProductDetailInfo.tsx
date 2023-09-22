@@ -493,7 +493,7 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
                   <Info>
                     <Line>
                       <p>현재 모집금액</p>
-                      <p>{data?.productCost}</p>
+                      <p>{data?.productCost.toLocaleString()} 원</p>
                     </Line>
                     <Line>
                       <p>남은 로얄</p>
@@ -546,7 +546,7 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
                     </Line>
                     <Line>
                       <p>모집 가격</p>
-                      <p>{data?.productCost} 원</p>
+                      <p>{data?.productCost.toLocaleString()} 원</p>
                     </Line>
                     <Line>
                       <p>조각당 가격</p>

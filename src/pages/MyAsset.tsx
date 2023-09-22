@@ -431,12 +431,12 @@ export default function MyAsset() {
             <TotalBox>
               <Total>
                 <h2>총 자산</h2>
-                <h3>{total * 10000} 원</h3>
+                <h3>{(total * 10000).toLocaleString()} 원</h3>
               </Total>
 
               <Total>
                 <h2>배당금</h2>
-                <h3>{bonus} 원</h3>
+                <h3>{bonus.toLocaleString()} 원</h3>
               </Total>
             </TotalBox>
             <Ranking ranking={ranking} />

@@ -54,6 +54,8 @@ const TextBox = styled.span`
   margin: 5%;
 
   p {
+    display: flex;
+    justify-content: end;
     color: ${(props) => props.theme.textColor};
   }
 
@@ -269,8 +271,10 @@ export default function ProductBox({
           {isBlur === "true" ? <DetailBox color="red">마 감</DetailBox> : null}
         </Line>
 
-        <p>{leftRoyal}</p>
-        <p>{productCost}</p>
+        <p>
+          {leftRoyal} / {productCost / 10000} ROYAL
+        </p>
+        <p>{productCost.toLocaleString()} 원</p>
       </TextBox>
     </Container>
   );

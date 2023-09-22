@@ -310,6 +310,7 @@ const InputBox = styled.div`
       box-shadow: 0px 4px 13px 0px rgba(0, 0, 0, 0.1);
 
       text-align: center;
+      font-size: 24px;
     }
 
     button {
@@ -335,18 +336,24 @@ export default function Banking() {
   const [addCardModal, setAddCardModal] = useRecoilState(addCardModalState);
   const [cardIndex, setcardIndex] = useRecoilState(cardIndexState);
 
-  const [account, setAccount] = useState();
+  const [account, setAccount] = useState<number>();
   const [exAccount, setExAccount] = useState();
   const [tab, setTab] = useState("deposit");
   const isLogin = localStorage.getItem("userData") ? true : false;
   const [userId, setuserId] = useState("");
   const [amount, setAmount] = useState<number>(0);
   const reset = useScrollReset();
+  const [resultAmount, setResultAmount] = useState<number>();
   if (!isLogin) {
     reset("/login");
   }
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     setAmount(Number(event.target.value));
+    setResultAmount(account ? account + Number(event.target.value) : 0);
+  };
+  const onChange2 = (event: ChangeEvent<HTMLInputElement>) => {
+    setAmount(Number(event.target.value));
+    setResultAmount(account ? account - Number(event.target.value) : 0);
   };
 
   useEffect(() => {
@@ -395,6 +402,7 @@ export default function Banking() {
 
           setAccount(account_response.data);
           setExAccount(ex_account_response.data);
+          setResultAmount(account);
         } catch (error) {
           console.error(error);
         } finally {
@@ -485,7 +493,7 @@ export default function Banking() {
             <TotalBox>
               <Total>
                 <h2>계좌 잔액</h2>
-                <h3>{account} 원</h3>
+                <h3>{account?.toLocaleString()} 원</h3>
               </Total>
             </TotalBox>
           </UserBox>
@@ -502,17 +510,17 @@ export default function Banking() {
                 <CalculateBox>
                   <BBBox>
                     <h3>현재 계좌잔액</h3>
-                    <h2>{account} 원</h2>
+                    <h2>{account?.toLocaleString()} 원</h2>
                   </BBBox>
                   <FontAwesomeIcon icon={faPlus} />
                   <BBBox>
                     <h3>입금 할 금액</h3>
-                    <h2>{amount} 원</h2>
+                    <h2>{amount.toLocaleString()} 원</h2>
                   </BBBox>
                   <FontAwesomeIcon icon={faEquals} />
                   <BBBox>
                     <h3>예상 금액</h3>
-                    <h2>{account} 원</h2>
+                    <h2>{resultAmount?.toLocaleString()} 원</h2>
                   </BBBox>
                 </CalculateBox>
                 <InputBox>
@@ -543,17 +551,17 @@ export default function Banking() {
                 <CalculateBox>
                   <BBBox>
                     <h3>현재 계좌잔액</h3>
-                    <h2>{account} 원</h2>
+                    <h2>{account?.toLocaleString()} 원</h2>
                   </BBBox>
                   <FontAwesomeIcon icon={faMinus} />
                   <BBBox>
                     <h3>출금 할 금액</h3>
-                    <h2>{amount} 원</h2>
+                    <h2>{amount.toLocaleString()} 원</h2>
                   </BBBox>
                   <FontAwesomeIcon icon={faEquals} />
                   <BBBox>
                     <h3>예상 금액</h3>
-                    <h2>{account} 원</h2>
+                    <h2>{resultAmount?.toLocaleString()} 원</h2>
                   </BBBox>
                 </CalculateBox>
                 <InputBox>
@@ -561,7 +569,7 @@ export default function Banking() {
                     <input type="hidden" value={userId} />
                     <input
                       placeholder="출금 할 금액을 입력하세요."
-                      onChange={onChange}
+                      onChange={onChange2}
                       value={amount}
                     />
                     <button onClick={withdraw}>출금 하기</button>

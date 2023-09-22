@@ -278,7 +278,7 @@ export default function Purchase({ onModal }: IPurchaseProps) {
           <h3>구매하기</h3>
           <WriteField>
             <h3>계좌 잔액</h3>
-            <h1>{money} &#8361;</h1>
+            <h1>{money.toLocaleString()} &#8361;</h1>
 
             <h3>구매 수량</h3>
             <form onSubmit={handleSubmit(onValid)}>
