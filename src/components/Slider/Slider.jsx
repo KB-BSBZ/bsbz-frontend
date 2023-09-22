@@ -85,7 +85,7 @@ export default function Slider({ data }) {
           >
             <DataContainer>
               <TextBox>
-                <h3>{product.name}</h3>
+                <h2>{product.name}</h2>
                 <h3>{product.price}</h3>
               </TextBox>
               <ImgBox url={product.url} productid={product.productId} />

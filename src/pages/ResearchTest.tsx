@@ -21,6 +21,7 @@ const Container = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: start;
+  width: 95%;
 `;
 
 const Recommandation = styled.div`
@@ -132,14 +133,6 @@ const RightBox = styled.div`
   align-items: start;
 `;
 
-const News = styled.div`
-  width: 100%;
-  height: 24vh;
-
-  margin-bottom: 2%;
-  background-color: red;
-`;
-
 const TabBox = styled.div`
   width: 90%;
   display: flex;
@@ -161,6 +154,127 @@ const Tab = styled.div`
 
   &:hover {
     border-bottom: 2px solid ${(props) => props.theme.highlightColor};
+  }
+`;
+
+const News = styled.div`
+  border-radius: 8px;
+  overflow: hidden;
+  width: 100%;
+  height: 32vh;
+  margin-bottom: 2%;
+  background-color: red;
+  position: relative;
+`;
+
+const NewsImg_01 = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+    url("/images/news_background_01.png");
+  background-position: center;
+  object-fit: scale-down;
+  background-size: cover;
+`;
+
+const NewsImg_02 = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+    url("/images/news_background_02.png");
+  background-position: center;
+  object-fit: scale-down;
+  background-size: cover;
+`;
+
+const NewsImg_03 = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+    url("/images/news_background_03.png");
+  background-position: center;
+  object-fit: scale-down;
+  background-size: cover;
+`;
+
+const NewsImg_04 = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+    url("/images/news_background_04.png");
+  background-position: center;
+  object-fit: scale-down;
+  background-size: cover;
+`;
+
+const NewsImg_05 = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+    url("/images/news_background_05.png");
+  background-position: center;
+  object-fit: scale-down;
+  background-size: cover;
+`;
+
+const NewsInfo = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #353535;
+
+  color: white;
+
+  transition: opacity 0.3s ease-in-out;
+
+  p {
+    width: 90%;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+`;
+
+const NewsText = styled.div`
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  h3 {
+    font-size: 24px;
+    color: white;
   }
 `;
 
@@ -305,12 +419,45 @@ export default function ResearchTest() {
         <RightBox>
           <NewsTap>
             <h1>최신 소식을 알아보세요.</h1>
-            {/* <NewsSlider data={news} /> */}
-            <News></News>
-            <News></News>
-            <News></News>
-            <News></News>
-            <News></News>
+            {news &&
+              news.map((newsData, index) => (
+                <News key={index}>
+                  <NewsInfo>
+                    <p>{newsData.description}</p>
+                  </NewsInfo>
+                  {index === 0 ? (
+                    <NewsImg_01>
+                      <NewsText>
+                        <h3>{newsData.title}</h3>
+                      </NewsText>
+                    </NewsImg_01>
+                  ) : index === 1 ? (
+                    <NewsImg_02>
+                      <NewsText>
+                        <h3>{newsData.title}</h3>
+                      </NewsText>
+                    </NewsImg_02>
+                  ) : index === 2 ? (
+                    <NewsImg_03>
+                      <NewsText>
+                        <h3>{newsData.title}</h3>
+                      </NewsText>
+                    </NewsImg_03>
+                  ) : index === 3 ? (
+                    <NewsImg_04>
+                      <NewsText>
+                        <h3>{newsData.title}</h3>
+                      </NewsText>
+                    </NewsImg_04>
+                  ) : index === 4 ? (
+                    <NewsImg_05>
+                      <NewsText>
+                        <h3>{newsData.title}</h3>
+                      </NewsText>
+                    </NewsImg_05>
+                  ) : null}
+                </News>
+              ))}
           </NewsTap>
         </RightBox>
 
