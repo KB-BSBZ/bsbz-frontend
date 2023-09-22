@@ -97,32 +97,57 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
   );
 }
 const OptionBox = styled.div`
-  border: 1px solid;
+  background-color: ${(props) => props.theme.borderColor};
+  color: ${(props) => props.theme.backgroundColor};
+  padding: 3px 12px;
 `;
 const InfoBox = styled.div`
   width: 100%;
-  border: 1px solid;
   display: flex;
   justify-content: row;
+  justify-content: space-between;
+
+  box-shadow: 0px 4px 13px 0px rgb(0, 0, 0, 0.2);
 `;
 const ImgBox = styled.div`
   width: 20%;
-  height: 80%;
-  border: 1px solid;
+  height: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
   img {
-    width: 100%;
-    height: 100%;
+    width: 50%;
+    height: 50%;
   }
 `;
 const Name = styled.div`
-  width: 30%;
-  border: 1px solid;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+
+  font-size: 18px;
 `;
 const RoyalSum = styled.div`
-  width: 50%;
-  border: 1px solid;
-  text-align: end;
+  width: 20%;
+  display: flex;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 24px;
+  font-weight: bold;
+`;
+
+const DataBox = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: ${(props) => props.theme.highlightColor};
+  border-radius: 8px;
+  overflow: hidden;
 `;
 
 export interface LogData {
@@ -133,6 +158,7 @@ export interface LogData {
   tradelogId: number;
   userId: string;
 }
+
 export interface LogProduct {
   bonus: number;
   description: string | null;
@@ -202,24 +228,26 @@ export default function MyAssetListBox({
               style={{ height: "100px", border: "none", width: "100%" }}
             >
               <TableCell component="th" scope="row" style={{ border: "none" }}>
-                <OptionBox>
-                  <span>{AssetLogDataArray.product.productType} /</span>
-                  <span> 마감</span>
-                </OptionBox>
-                <InfoBox>
-                  <ImgBox>
-                    {/* <img src={AssetLogDataArray.product.profileUrl}></img> */}
-                    {AssetLogDataArray.product.productType === "esate" ? (
-                      <img src={"../../images/estate-icon.png"} />
-                    ) : AssetLogDataArray.product.productType === "luxury" ? (
-                      <img src={"../../images/luxury-icon2.png"} />
-                    ) : (
-                      <img src={"../../images/music-icon.png"} />
-                    )}
-                  </ImgBox>
-                  <Name>{AssetLogDataArray.product.productName}</Name>
-                  <RoyalSum>{AssetLogDataArray.tradeRoyalCnt}</RoyalSum>
-                </InfoBox>
+                <DataBox>
+                  <OptionBox>
+                    <span>{AssetLogDataArray.product.productType} /</span>
+                    <span> 마감</span>
+                  </OptionBox>
+                  <InfoBox>
+                    <ImgBox>
+                      {/* <img src={AssetLogDataArray.product.profileUrl}></img> */}
+                      {AssetLogDataArray.product.productType === "esate" ? (
+                        <img src={"../../images/estate-icon.png"} />
+                      ) : AssetLogDataArray.product.productType === "luxury" ? (
+                        <img src={"../../images/luxury-icon2.png"} />
+                      ) : (
+                        <img src={"../../images/music-icon.png"} />
+                      )}
+                    </ImgBox>
+                    <Name>{AssetLogDataArray.product.productName}</Name>
+                    <RoyalSum>{AssetLogDataArray.tradeRoyalCnt}</RoyalSum>
+                  </InfoBox>
+                </DataBox>
               </TableCell>
             </TableRow>
           ))}

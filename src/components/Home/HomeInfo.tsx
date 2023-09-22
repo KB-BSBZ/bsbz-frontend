@@ -112,7 +112,7 @@ export default function HomeInfo() {
   return (
     <>
       <Container>
-        <Box bgtype={"null"} url={`${section1}`}>
+        <Box bgtype={"null"} url={`../../images/background_12.png`}>
           <TextBox data-aos="fade-up">
             <Text>
               <p>
@@ -128,7 +128,7 @@ export default function HomeInfo() {
           </TextBox>
         </Box>
 
-        <Box bgtype={"white"} url={"../../images/background_10.png"}>
+        <Box bgtype={"white"} url={"../../images/background_16.png"}>
           <TextBox
             data-aos="fade-up"
             style={{
