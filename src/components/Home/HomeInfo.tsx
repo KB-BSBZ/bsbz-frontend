@@ -10,6 +10,7 @@ import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import styled, { keyframes } from "styled-components";
+import useScrollReset from "../../utils/useScrollReset";
 
 const fadeIn = keyframes`
   from {
@@ -82,8 +83,27 @@ const Line = styled.div`
   display: flex;
   justify-content: space-between;
 `;
+const Luxuries = styled.div`
+  cursor: pointer;
+  width: 30%;
+  height: 30%;
+  border: 1px solid;
+`;
+const Estate = styled.div`
+  cursor: pointer;
+  width: 30%;
+  height: 30%;
+  border: 1px solid;
+`;
+const Music = styled.div`
+  cursor: pointer;
+  width: 30%;
+  height: 30%;
+  border: 1px solid;
+`;
 
 export default function HomeInfo() {
+  const reset = useScrollReset();
   useEffect(() => {
     AOS.init({
       duration: 3000,
@@ -190,7 +210,13 @@ export default function HomeInfo() {
 
         <Box bgtype={"none"} url={`${section3}`}></Box>
 
-        <Box bgtype={"none"} url={"../../images/background_02.png"}></Box>
+        <Box bgtype={"none"} url={"../../images/background_02.png"}>
+          <Luxuries onClick={() => reset("/product/realestate")}>
+            럭 셔 리
+          </Luxuries>
+          <Estate onClick={() => reset("/product/luxuries")}>부 동 산</Estate>
+          <Music onClick={() => reset("/product/musiccopyright")}>음 원</Music>
+        </Box>
         {/* <Pentagon reverse={"false"} color={"mint"} bgColor={"bg"} /> */}
 
         <Box bgtype={"none"} url={"../../images/background_04.png"}></Box>

@@ -5,6 +5,8 @@ import { predictData } from "../jsons/predictData";
 
 const Container = styled.div`
   width: 100%;
+  position: relative;
+  z-index: -1;
 `;
 
 export default function PredictedRangeChart() {

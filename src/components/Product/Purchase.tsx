@@ -100,6 +100,27 @@ const PurchaseButton = styled.span`
   align-items: center;
   cursor: pointer;
 `;
+const AmountPlus = styled.div`
+  width: 40%;
+  height: 75%;
+  /* border: 1px solid; */
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+`;
+const Plus5 = styled.div`
+  cursor: pointer;
+  width: 50%;
+  height: 100%;
+  border: 1px solid;
+`;
+const Plus10 = styled.div`
+  cursor: pointer;
+  width: 50%;
+  height: 100%;
+  border: 1px solid;
+`;
 
 interface IPurchaseData {
   quantity: string;
@@ -138,6 +159,26 @@ export default function Purchase({ onModal }: IPurchaseProps) {
       // 구매량이 잔액을 초과하지 않을 때
       setAmount((current) => {
         const temp = current + 1;
+        setValue("quantity", String(temp));
+        return temp;
+      });
+    }
+  };
+  const onPlus5 = () => {
+    if ((amount + 5) * 10000 <= money) {
+      // 구매량이 잔액을 초과하지 않을 때
+      setAmount((current) => {
+        const temp = current + 5;
+        setValue("quantity", String(temp));
+        return temp;
+      });
+    }
+  };
+  const onPlus10 = () => {
+    if ((amount + 10) * 10000 <= money) {
+      // 구매량이 잔액을 초과하지 않을 때
+      setAmount((current) => {
+        const temp = current + 10;
         setValue("quantity", String(temp));
         return temp;
       });
@@ -259,15 +300,37 @@ export default function Purchase({ onModal }: IPurchaseProps) {
             </form>
           </WriteField>
           <ButtonBox>
-            <Button
+            {/* <Button
               width={"40%"}
               height={"75%"}
               hover={"red"}
-              color={"red"}
+              color={""}
               text={"취 소"}
               border={"15px"}
               onclick={onModal}
-            />
+            /> */}
+            <AmountPlus>
+              <Button
+                width={"40%"}
+                height={"100%"}
+                hover={"yellow"}
+                color={""}
+                text={"5 증가"}
+                border={"15px"}
+                onclick={onPlus5}
+              />{" "}
+              <Button
+                width={"40%"}
+                height={"100%"}
+                hover={"yellow"}
+                color={""}
+                text={"10 증가"}
+                border={"15px"}
+                onclick={onPlus10}
+              />
+              {/* <Plus5 onClick={onPlus5}>5 증 가</Plus5>
+              <Plus10 onClick={onPlus10}>10 증 가</Plus10> */}
+            </AmountPlus>
 
             <Button
               width={"40%"}
