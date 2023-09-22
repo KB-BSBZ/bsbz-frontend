@@ -30,11 +30,15 @@ const Container = styled.div`
   width: 100%;
 `;
 
+const DataContainer = styled.div`
+  width: 100%;
+`;
+
 export default function Slider({ data }) {
   return (
     <Container>
       <Swiper
-        slidesPerView={3}
+        slidesPerView={1}
         spaceBetween={30}
         centeredSlides={true}
         autoplay={{
@@ -58,17 +62,19 @@ export default function Slider({ data }) {
               borderRadius: "36px",
               overflow: "hidden",
               // backgroundColor: product.productId % 2 === 0 ? "black" : "white",
-              width: "calc(100% - 20px)", // 슬라이드 요소의 폭을 간격 포함 크기로 조절
+              width: "calc(90% - 20px)", // 슬라이드 요소의 폭을 간격 포함 크기로 조절
               boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.5)", // box-shadow 적용
               height: "95%",
             }}
           >
-            <ImgBox
-              url={product.url}
-              name={product.name}
-              price={product.price}
-              productid={product.productId}
-            />
+            <DataContainer>
+              <ImgBox
+                url={product.url}
+                name={product.name}
+                price={product.price}
+                productid={product.productId}
+              />
+            </DataContainer>
           </SwiperSlide>
         ))}
       </Swiper>

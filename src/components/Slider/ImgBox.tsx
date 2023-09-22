@@ -18,8 +18,9 @@ const Container = styled.span<{ url: string }>`
     ),
     url(${(props) => props.url});
   background-position: center;
+  background-repeat: no-repeat;
+  object-fit: scale-down;
   background-size: cover;
-  object-fit: cover;
 `;
 
 // const Image = styled.span<{ url: string }>`

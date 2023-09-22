@@ -17,8 +17,6 @@ const Container = styled.div<{ visible: string }>`
   justify-content: center;
   align-items: center;
 
-  cursor: pointer;
-
   color: ${(props) => props.theme.borderColor};
 `;
 
@@ -83,12 +81,18 @@ export default function ScrollTop() {
           icon={faComments}
           fontSize={48}
           onClick={handleChatbotTrue}
+          style={{
+            cursor: "pointer",
+          }}
         />
         <Inner>
           <FontAwesomeIcon
             icon={faSquareCaretUp}
             fontSize={48}
             onClick={scrollToTop}
+            style={{
+              cursor: "pointer",
+            }}
           />
           <h4>TOP</h4>
 

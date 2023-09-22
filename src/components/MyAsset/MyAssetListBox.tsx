@@ -125,10 +125,6 @@ const RoyalSum = styled.div`
   text-align: end;
 `;
 
-function createData(name: string, calories: number, fat: number) {
-  return { name, calories, fat };
-}
-
 export interface LogData {
   product: LogProduct;
   sumRoyal: number;
@@ -212,7 +208,14 @@ export default function MyAssetListBox({
                 </OptionBox>
                 <InfoBox>
                   <ImgBox>
-                    <img src={AssetLogDataArray.product.profileUrl}></img>
+                    {/* <img src={AssetLogDataArray.product.profileUrl}></img> */}
+                    {AssetLogDataArray.product.productType === "esate" ? (
+                      <img src={"../../images/estate-icon.png"} />
+                    ) : AssetLogDataArray.product.productType === "luxury" ? (
+                      <img src={"../../images/luxury-icon2.png"} />
+                    ) : (
+                      <img src={"../../images/music-icon.png"} />
+                    )}
                   </ImgBox>
                   <Name>{AssetLogDataArray.product.productName}</Name>
                   <RoyalSum>{AssetLogDataArray.tradeRoyalCnt}</RoyalSum>
