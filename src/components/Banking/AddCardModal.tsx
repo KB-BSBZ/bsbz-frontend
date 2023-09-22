@@ -50,6 +50,14 @@ const Forms = styled.div`
   justify-content: space-between;
   align-items: center;
 
+  h2 {
+    margin-bottom: 15%;
+
+    padding: 5vh;
+    box-shadow: 0px 4px 13px 0px rgb(0, 0, 0, 0.1);
+    border-radius: 6px;
+  }
+
   form {
     display: flex;
     flex-direction: column;
@@ -70,6 +78,7 @@ const Forms = styled.div`
       width: 180px;
       padding: 1vh;
       border-radius: 6px;
+      box-shadow: 0px 4px 13px 0px rgb(0, 0, 0, 0.1);
     }
   }
 `;
@@ -81,10 +90,10 @@ const ButtonBox = styled.div`
   align-items: center;
 
   border-radius: 8px;
-  border: 2px solid ${(props) => props.theme.borderColor};
+  //border: 2px solid ${(props) => props.theme.borderColor};
 
   overflow: hidden;
-  background-color: ${(props) => props.theme.borderColor};
+  //background-color: ${(props) => props.theme.borderColor};
   padding: 0 1px 6px 1px;
 
   transition: background-color ease 0.3s;
@@ -98,7 +107,7 @@ const ButtonBox = styled.div`
   &:hover {
     cursor: pointer;
     button {
-      color: ${(props) => props.theme.borderColor};
+      color: #ffffff;
       background-color: ${(props) => props.theme.highlightColor};
       cursor: pointer;
     }
@@ -106,10 +115,10 @@ const ButtonBox = styled.div`
 `;
 
 const InputBox = styled.div`
-  background-color: ${(props) => props.theme.borderColor};
+  //background-color: ${(props) => props.theme.borderColor};
   margin-bottom: 2vh;
   border-radius: 8px;
-  border: 2px solid ${(props) => props.theme.borderColor};
+  //border: 2px solid ${(props) => props.theme.borderColor};
   overflow: hidden;
   padding: 0 1px 6px 1px;
 
@@ -179,6 +188,7 @@ export default function AddCardModal({ userId }: ICardProps) {
             <h1 onClick={() => setAddCardModal(false)}>X</h1>
           </HeadLine>
           <Forms>
+            <h2>등록할 은행 정보를 입력해주세요</h2>
             <form onSubmit={handleSubmit(onValid)}>
               <InputBox>
                 <input
@@ -188,6 +198,8 @@ export default function AddCardModal({ userId }: ICardProps) {
                   type="text"
                   placeholder="은행명"
                 />
+              </InputBox>
+              <InputBox>
                 <input
                   {...register("accountNumber", {
                     required: "계좌번호를 입력하세요.",
@@ -196,7 +208,6 @@ export default function AddCardModal({ userId }: ICardProps) {
                   placeholder="계좌번호"
                 />
               </InputBox>
-
               <ButtonBox>
                 <button>등록 하기</button>
               </ButtonBox>
