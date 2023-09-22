@@ -71,15 +71,6 @@ const ImgBox = styled.span<{ url: string | undefined; isblur: string }>`
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
 `;
 
-const TextBox = styled.span`
-  width: 45%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: start;
-`;
-
 const HeadLine = styled.div`
   width: 100%;
   height: 30%;
@@ -282,6 +273,15 @@ const ChartData = styled.div`
   align-items: center;
 
   /* background-color: blue; */
+`;
+
+const TextBox = styled.span`
+  width: 45%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
 `;
 
 export default function ProductDetailInfo({ productId }: IDetailProps) {
@@ -585,6 +585,7 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
             </ButtonBox>
           </TextBox>
         </TopBar>
+
         <ChartBar>
           <ChartData>
             <h4>가격 변동 추이</h4>
@@ -595,17 +596,18 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
               />
             )}
           </ChartData>
-
-          <ChartData>
-            <h4>예측 가격</h4>
-            <PredictedRangeChart />
-          </ChartData>
+          {data?.productType === "music" ? (
+            <CloudBar>
+              <WordClouds productId={data?.productId} />
+            </CloudBar>
+          ) : (
+            <ChartData>
+              <h4>예측 가격</h4>
+              <PredictedRangeChart />
+            </ChartData>
+          )}
         </ChartBar>
-        {data?.productType === "music" ? (
-          <CloudBar>
-            <WordClouds productId={data?.productId} />
-          </CloudBar>
-        ) : null}
+
         <StatisticsBar>
           <Static />
         </StatisticsBar>

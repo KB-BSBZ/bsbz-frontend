@@ -112,7 +112,7 @@ const UserBox = styled.div`
 
 const InfoBox = styled.div`
   height: 100%;
-  background-color: ${(props) => props.theme.backgroundColor2};
+  background-color: ${(props) => props.theme.backgroundColor};
   box-shadow: 0px 4px 13px 0px rgb(0, 0, 0, 0.1);
   border-radius: 3%;
 
@@ -238,6 +238,7 @@ const CardBox = styled.div`
   width: 100%;
   height: 70%;
   background-color: ${(props) => props.theme.backgroundColor};
+  z-index: 100;
 `;
 
 const BankingBox = styled.div`
@@ -251,14 +252,17 @@ const BankingBox = styled.div`
 `;
 
 const CalculateBox = styled.div`
-  width: 100%;
+  width: 90%;
   height: 76%;
+  background-color: ${(props) => props.theme.blurColor2};
+  border-radius: 12px;
 
   display: flex;
   flex-direction: row;
   /* background-color: aliceblue; */
   justify-content: space-around;
   align-items: center;
+  box-shadow: 0px 4px 13px 0px rgba(0, 0, 0, 0.1);
 `;
 
 const BBBox = styled.div`
@@ -396,7 +400,6 @@ export default function Banking() {
                 <h3>{cardIndex}</h3>
               </CardBox>
               <BankingBox>
-                <FontAwesomeIcon icon={faDownLong} />
                 <CalculateBox>
                   <BBBox>
                     <h3>현재 계좌잔액</h3>
@@ -418,15 +421,16 @@ export default function Banking() {
             </InfoBox>
           ) : tab === "withdraw" ? (
             <InfoBox>
-              <h3>출 금</h3>
+              <CardBox>
+                <h3>출 금</h3>
 
-              <Cards>
-                <CardSlider userId={id} />
-              </Cards>
-              <h3>{cardIndex}</h3>
+                <Cards>
+                  <CardSlider userId={id} />
+                </Cards>
+                <h3>{cardIndex}</h3>
+              </CardBox>
 
               <BankingBox>
-                <FontAwesomeIcon icon={faUpLong} />
                 <CalculateBox>
                   <BBBox>
                     <h3>현재 계좌잔액</h3>
