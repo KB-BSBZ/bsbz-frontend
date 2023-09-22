@@ -1,7 +1,7 @@
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer/Footer";
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import { useEffect, useState, ChangeEvent, MouseEvent } from "react";
 import { async } from "q";
 import axios from "axios";
 import DonutChart from "../components/MyAsset/DonutChart";
@@ -339,28 +339,20 @@ export default function Banking() {
   const [exAccount, setExAccount] = useState();
   const [tab, setTab] = useState("deposit");
   const isLogin = localStorage.getItem("userData") ? true : false;
-  const [id, setId] = useState("");
-
+  const [userId, setuserId] = useState("");
+  const [amount, setAmount] = useState<number>(0);
   const reset = useScrollReset();
   if (!isLogin) {
     reset("/login");
   }
+  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setAmount(Number(event.target.value));
+  };
 
   useEffect(() => {
     const userId = JSON.parse(localStorage.getItem("userData")!).userId;
-    setId(userId);
+    setuserId(userId);
     const account_url = "http://localhost:9999/account/balance?" + userId;
-    const account_options = {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      params: {
-        userId,
-      },
-    };
-
     const ex_account_url =
       "http://localhost:9999/user/getexternalaccounts?" + userId;
     const ex_account_options = {
@@ -373,6 +365,18 @@ export default function Banking() {
         userId,
       },
     };
+
+    const account_options = {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      params: {
+        userId,
+      },
+    };
+
     const fetchData = async () => {
       if (!localStorage.getItem("userData")) {
         // 로그인 되어있지 않으면 로그인 창으로
@@ -407,14 +411,60 @@ export default function Banking() {
   const onTab = (event: React.MouseEvent<HTMLDivElement>) => {
     console.log(event.currentTarget.id);
     setTab(event.currentTarget.id);
+    setAmount(0);
     // 값 전달
   };
+  interface result {
+    userId: string;
+    amount: number;
+  }
+  const BASE_URL = "http://localhost:9999";
+  const deposit = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    try {
+      setIsLoading(true);
 
+      const data: result = {
+        userId,
+        amount,
+      };
+      data.userId = userId;
+      data.amount = amount;
+      console.log("유저 아이디");
+      console.log(userId);
+      console.log(data.amount);
+      await axios.put(`${BASE_URL}/account/deposit`, data);
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+      window.location.reload();
+    }
+  };
+  const withdraw = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    try {
+      setIsLoading(true);
+
+      const data: result = {
+        userId,
+        amount,
+      };
+      data.userId = userId;
+      data.amount = amount;
+      console.log("유저 아이디");
+      console.log(userId);
+      await axios.put(`${BASE_URL}/account/withdraw`, data);
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+      window.location.reload();
+    }
+  };
   return (
     <>
       <Navigation />
       {isLoading && <Loading />}
-      {addCardModal && <AddCardModal userId={id} />}
+      {addCardModal && <AddCardModal userId={userId} />}
       <Container>
         <Hood title={"입출금"} />
         <Main>
@@ -444,7 +494,7 @@ export default function Banking() {
               <CardBox>
                 <h3>입 금</h3>
                 <Cards>
-                  <CardSlider userId={id} />
+                  <CardSlider userId={userId} />
                 </Cards>
                 <h3>{cardIndex}</h3>
               </CardBox>
@@ -457,7 +507,7 @@ export default function Banking() {
                   <FontAwesomeIcon icon={faPlus} />
                   <BBBox>
                     <h3>입금 할 금액</h3>
-                    <h2>{account} 원</h2>
+                    <h2>{amount} 원</h2>
                   </BBBox>
                   <FontAwesomeIcon icon={faEquals} />
                   <BBBox>
@@ -467,8 +517,13 @@ export default function Banking() {
                 </CalculateBox>
                 <InputBox>
                   <form>
-                    <input placeholder="입금 할 금액을 입력하세요." />
-                    <button>입금 하기</button>
+                    <input type="hidden" value={userId} />
+                    <input
+                      placeholder="입금 할 금액을 입력하세요."
+                      onChange={onChange}
+                      value={amount}
+                    />
+                    <button onClick={deposit}>입금 하기</button>
                   </form>
                 </InputBox>
               </BankingBox>
@@ -479,7 +534,7 @@ export default function Banking() {
                 <h3>출 금</h3>
 
                 <Cards>
-                  <CardSlider userId={id} />
+                  <CardSlider userId={userId} />
                 </Cards>
                 <h3>{cardIndex}</h3>
               </CardBox>
@@ -493,7 +548,7 @@ export default function Banking() {
                   <FontAwesomeIcon icon={faMinus} />
                   <BBBox>
                     <h3>출금 할 금액</h3>
-                    <h2>{account} 원</h2>
+                    <h2>{amount} 원</h2>
                   </BBBox>
                   <FontAwesomeIcon icon={faEquals} />
                   <BBBox>
@@ -503,8 +558,13 @@ export default function Banking() {
                 </CalculateBox>
                 <InputBox>
                   <form>
-                    <input placeholder="출금 할 금액을 입력하세요." />
-                    <button>출금 하기</button>
+                    <input type="hidden" value={userId} />
+                    <input
+                      placeholder="출금 할 금액을 입력하세요."
+                      onChange={onChange}
+                      value={amount}
+                    />
+                    <button onClick={withdraw}>출금 하기</button>
                   </form>
                 </InputBox>
               </BankingBox>
