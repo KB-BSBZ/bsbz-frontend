@@ -241,14 +241,14 @@ const Static = styled.div`
 const CloudBar = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: start;
-  align-items: center;
-
-  width: 100%;
-  height: 150vh;
+  justify-content: center;
+  align-items: start;
+  border: 1px solid black;
+  width: 50%;
+  height: 100%;
   svg {
-    width: 150%;
-    height: 100%;
+    width: 160%;
+    height: 150%;
   }
 `;
 
@@ -598,6 +598,7 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
           </ChartData>
           {data?.productType === "music" ? (
             <CloudBar>
+              <h4>워드클라우드</h4>
               <WordClouds productId={data?.productId} />
             </CloudBar>
           ) : (
