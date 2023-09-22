@@ -83,7 +83,7 @@ export default function Ranking({ ranking }: { ranking: number }) {
             transition: { type: "spring", stiffness: 400, damping: 20 },
           }}
         >
-          <p>{count}%</p>
+          <p>{100 - count}%</p>
         </motion.div>
       </div>
     </Main>
