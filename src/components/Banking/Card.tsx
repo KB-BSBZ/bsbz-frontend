@@ -104,7 +104,7 @@ export default function Card({ userId, exAccount }: ICardProps) {
   return (
     <Container>
       <TobBar>
-        <DeleteButton>
+        <DeleteButton onClick={deleteBtn}>
           <FontAwesomeIcon icon={faX} />
         </DeleteButton>
       </TobBar>
