@@ -20,10 +20,10 @@ import Loading from "../components/Loading";
 import useScrollReset from "../utils/useScrollReset";
 
 const Container = styled.div`
-  padding-top: 20vh;
+  padding-top: 18vh;
+  padding-bottom: 10vh;
 
   width: 100%;
-  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -85,7 +85,7 @@ const Tab = styled.div`
 `;
 
 const UserBox = styled.div`
-  height: 100%;
+  height: 80vh;
   background-color: ${(props) => props.theme.blurColor3};
 
   display: flex;
@@ -97,7 +97,7 @@ const UserBox = styled.div`
 `;
 
 const InfoBox = styled.div`
-  height: 100%;
+  height: auto;
   background-color: ${(props) => props.theme.backgroundColor};
   box-shadow: 0px 4px 13px 0px rgb(0, 0, 0, 0.1);
   border-radius: 3%;

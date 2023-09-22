@@ -31,9 +31,10 @@ import CardSlider from "../components/Banking/CardSlider";
 import { addCardModalState, cardIndexState } from "../utils/atoms";
 import { useRecoilState } from "recoil";
 import AddCardModal from "../components/Banking/AddCardModal";
+import Button from "../components/Button";
 
 const Container = styled.div`
-  padding-top: 20vh;
+  padding-top: 18vh;
 
   width: 100%;
   height: 100vh;
@@ -99,7 +100,7 @@ const Tab = styled.div`
 `;
 
 const UserBox = styled.div`
-  height: 100%;
+  height: 80vh;
   background-color: ${(props) => props.theme.blurColor3};
 
   display: flex;
@@ -111,7 +112,7 @@ const UserBox = styled.div`
 `;
 
 const InfoBox = styled.div`
-  height: 100%;
+  height: auto;
   background-color: ${(props) => props.theme.backgroundColor};
   box-shadow: 0px 4px 13px 0px rgb(0, 0, 0, 0.1);
   border-radius: 3%;
@@ -227,7 +228,7 @@ const TotalBox = styled.div`
 const Cards = styled.div`
   margin-top: 5%;
   width: 100%;
-  height: 60%;
+  height: 54%;
 `;
 
 const CardBox = styled.div`
@@ -239,6 +240,10 @@ const CardBox = styled.div`
   height: 70%;
   background-color: ${(props) => props.theme.backgroundColor};
   z-index: 100;
+
+  h3 {
+    margin-bottom: 16px;
+  }
 `;
 
 const BankingBox = styled.div`
@@ -276,6 +281,50 @@ const BBBox = styled.div`
   align-items: center;
   justify-content: space-evenly;
   h3 {
+  }
+`;
+
+const InputBox = styled.div`
+  width: 100%;
+  height: 30%;
+  margin-top: 12px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  form {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
+    input {
+      border: none;
+      background-color: ${(props) => props.theme.blurColor2};
+      width: 40%;
+      height: 100%;
+      box-shadow: 0px 4px 13px 0px rgba(0, 0, 0, 0.1);
+
+      text-align: center;
+    }
+
+    button {
+      width: 40%;
+      height: 100%;
+
+      background-color: ${(props) => props.theme.highlightColor};
+      cursor: pointer;
+      border: none;
+      font-size: 18px;
+      font-weight: bold;
+      box-shadow: 0px 4px 13px 0px rgba(0, 0, 0, 0.1);
+
+      border-radius: 8px;
+    }
   }
 `;
 
@@ -416,7 +465,12 @@ export default function Banking() {
                     <h2>{account} 원</h2>
                   </BBBox>
                 </CalculateBox>
-                {/* <h1>he</h1> */}
+                <InputBox>
+                  <form>
+                    <input placeholder="입금 할 금액을 입력하세요." />
+                    <button>입금 하기</button>
+                  </form>
+                </InputBox>
               </BankingBox>
             </InfoBox>
           ) : tab === "withdraw" ? (
@@ -447,8 +501,12 @@ export default function Banking() {
                     <h2>{account} 원</h2>
                   </BBBox>
                 </CalculateBox>
-
-                {/* <h1>he</h1> */}
+                <InputBox>
+                  <form>
+                    <input placeholder="출금 할 금액을 입력하세요." />
+                    <button>출금 하기</button>
+                  </form>
+                </InputBox>
               </BankingBox>
             </InfoBox>
           ) : null}
