@@ -323,6 +323,7 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setIsLoading(true);
         const url = "http://localhost:9999/product/detail/";
 
         const options = {
@@ -430,7 +431,7 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
     };
 
     fetchData();
-
+    setIsLoading(false);
     return () => {
       bar.destroy();
     };
@@ -604,7 +605,7 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
               />
             )}
           </ChartData>
-          {data?.productType === "music" ? (
+          {data && data?.productType === "music" ? (
             <CloudBar>
               <h4>워드클라우드</h4>
               <WordClouds productId={data?.productId} />

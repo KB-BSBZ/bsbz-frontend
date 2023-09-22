@@ -6,6 +6,7 @@ import { schemeCategory10 } from "d3-scale-chromatic";
 import axios from "axios";
 import "../css/WordClouds-styles.css";
 import { styled } from "styled-components";
+import Loading from "./Loading";
 
 const Container = styled.div`
   width: 100%;
@@ -22,7 +23,7 @@ interface IWordCloudData {
 
 export default function WordClouds({ productId }: IWordCloudData) {
   const [wordData, setwordData] = useState<IWordCloudProps[]>([]);
-
+  const [isLoading, setIsLoading] = useState(true);
   // 정규화
   const normalization = () => {
     const frequencies = wordData.map((item) => item.frequency);
@@ -32,12 +33,15 @@ export default function WordClouds({ productId }: IWordCloudData) {
   };
 
   //const fontSize = useCallback((word: any) => Math.log2(word.value) * 15, []);
-  const fontSize = useCallback((word: any) => {
-    const { minFrequency, maxFrequency } = normalization();
-    const scaledVal =
-      10 + ((word.value - minFrequency) / (maxFrequency - minFrequency)) * 90;
-    return scaledVal * 3;
-  }, []);
+  const fontSize = useCallback(
+    (word: any) => {
+      const { minFrequency, maxFrequency } = normalization();
+      const scaledVal =
+        10 + ((word.value - minFrequency) / (maxFrequency - minFrequency)) * 90;
+      return scaledVal * 2;
+    },
+    [wordData]
+  );
 
   const rotate = useCallback((word: any) => 0, []);
   const fill = useCallback(
@@ -46,6 +50,7 @@ export default function WordClouds({ productId }: IWordCloudData) {
   );
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       const url =
         "http://localhost:8000/pricelog/music_predict/" + `${productId}/`;
 
@@ -53,6 +58,7 @@ export default function WordClouds({ productId }: IWordCloudData) {
         .get(url)
         .then((response) => {
           setwordData(response.data);
+          setIsLoading(false);
         })
         .catch((error) => console.error(error));
     };
@@ -60,22 +66,24 @@ export default function WordClouds({ productId }: IWordCloudData) {
     fetchData();
   }, []);
 
-  return (
-    <WordCloud
-      data={wordData.map((item) => ({
-        text: item.word,
-        value: item.frequency,
-      }))}
-      width={1000}
-      height={700}
-      padding={1}
-      font="times"
-      fontWeight="normal"
-      fontSize={fontSize}
-      spiral="rectangular"
-      rotate={rotate}
-      random={Math.random}
-      fill={fill}
-    />
-  );
+  return wordData.length > 0 ? (
+    <>
+      <WordCloud
+        data={wordData.map((item) => ({
+          text: item.word,
+          value: item.frequency,
+        }))}
+        width={1000}
+        height={700}
+        padding={1}
+        font="times"
+        fontWeight="normal"
+        fontSize={fontSize}
+        spiral="rectangular"
+        rotate={rotate}
+        random={Math.random}
+        fill={fill}
+      />
+    </>
+  ) : null;
 }
