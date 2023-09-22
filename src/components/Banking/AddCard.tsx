@@ -12,7 +12,7 @@ const Container = styled.div`
   width: 100%;
   height: 95%;
   background-color: ${(props) => props.theme.blurColor2};
-  border: 2px dashed ${(props) => props.theme.borderColor};
+  border: 1px dashed ${(props) => props.theme.borderColor};
   border-radius: 5%;
 
   display: flex;

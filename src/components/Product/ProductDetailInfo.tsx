@@ -576,7 +576,7 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
               {isBlur === "true" ? (
                 <Button
                   width={"40%"}
-                  height={"40%"}
+                  height={"25%"}
                   hover={"red"}
                   color={"red"}
                   text={"마감 되었습니다"}
@@ -584,7 +584,7 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
               ) : (
                 <Button
                   width={"40%"}
-                  height={"40%"}
+                  height={"25%"}
                   hover={"yellow"}
                   text={"구매 하기"}
                   onclick={onModal}

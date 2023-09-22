@@ -99,9 +99,11 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 }
 
 const OptionBox = styled.div`
+  display: flex;
+  justify-content: space-between;
   background-color: ${(props) => props.theme.borderColor};
   color: ${(props) => props.theme.backgroundColor};
-  padding: 3px 12px;
+  padding: 3px 18px;
 `;
 const InfoBox = styled.div`
   width: 100%;
@@ -134,13 +136,13 @@ const Name = styled.div`
   font-size: 18px;
 `;
 const RoyalSum = styled.div`
-  width: 50%;
+  width: 20%;
   display: flex;
-  display: flex;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-around;
   align-items: center;
 
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
 `;
 
@@ -217,8 +219,8 @@ export default function LogListBox({
               <TableCell component="th" scope="row" style={{ border: "none" }}>
                 <DataBox>
                   <OptionBox>
-                    <span>{LogDataArray.product.productType}</span>
-                    <span> :: 마감</span>
+                    <p>{LogDataArray.product.productType}</p>
+                    <p>거래 일자 - {LogDataArray.tradeDate}</p>
                   </OptionBox>
                   <InfoBox>
                     <ImgBox>
@@ -232,9 +234,8 @@ export default function LogListBox({
                     </ImgBox>
                     <Name>{LogDataArray.product.productName}</Name>
                     <RoyalSum>
-                      거래 일자
-                      {LogDataArray.tradeDate}| 거래 수
-                      {LogDataArray.tradeRoyalCnt}
+                      <p>거래수</p>
+                      <p>{LogDataArray.tradeRoyalCnt}</p>
                     </RoyalSum>
                   </InfoBox>
                 </DataBox>

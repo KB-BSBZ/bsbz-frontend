@@ -484,12 +484,12 @@ export default function MyAsset() {
           ) : tab === "product" ? (
             <InfoBox>
               <h2>보유 항목</h2>
-              <MyAssetListBox AssetLogDataArray={assetData}></MyAssetListBox>
+              <MyAssetListBox AssetLogDataArray={assetData} />
             </InfoBox>
           ) : tab === "log" ? (
             <InfoBox>
-              <h2>거래 로그</h2>
-              <LogListBox LogDataArray={logData}></LogListBox>
+              <h2>거래 내역</h2>
+              <LogListBox LogDataArray={logData} />
             </InfoBox>
           ) : null}
         </Main>
@@ -512,7 +512,7 @@ export default function MyAsset() {
             <h4>
               거래
               <br />
-              로그
+              내역
             </h4>
           </Tab>
         </Tabs>

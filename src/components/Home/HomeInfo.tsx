@@ -83,23 +83,16 @@ const Line = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-const Luxuries = styled.div`
+const Items = styled.div<{ url: string }>`
   cursor: pointer;
-  width: 30%;
+  width: 18%;
   height: 30%;
-  border: 1px solid;
-`;
-const Estate = styled.div`
-  cursor: pointer;
-  width: 30%;
-  height: 30%;
-  border: 1px solid;
-`;
-const Music = styled.div`
-  cursor: pointer;
-  width: 30%;
-  height: 30%;
-  border: 1px solid;
+
+  background-image: url(${(props) => props.url});
+  background-position: center;
+  background-repeat: no-repeat;
+  object-fit: scale-down;
+  background-size: cover;
 `;
 
 export default function HomeInfo() {
@@ -208,15 +201,22 @@ export default function HomeInfo() {
           </TextBox>
         </Box>
 
-        <Box bgtype={"none"} url={`${section3}`}></Box>
-
-        <Box bgtype={"none"} url={"../../images/background_02.png"}>
-          <Luxuries onClick={() => reset("/product/realestate")}>
-            럭 셔 리
-          </Luxuries>
-          <Estate onClick={() => reset("/product/luxuries")}>부 동 산</Estate>
-          <Music onClick={() => reset("/product/musiccopyright")}>음 원</Music>
+        <Box bgtype={"none"} url={"../../images/background_17.png"}>
+          <Items
+            onClick={() => reset("/product/realestate")}
+            url={"../../images/home-estate-icon.png"}
+          />
+          <Items
+            onClick={() => reset("/product/luxuries")}
+            url={"../../images/home-luxury-icon.png"}
+          />
+          <Items
+            onClick={() => reset("/product/musiccopyright")}
+            url={"../../images/home-music-icon.png"}
+          />
         </Box>
+
+        <Box bgtype={"none"} url={"../../images/background_02.png"}></Box>
         {/* <Pentagon reverse={"false"} color={"mint"} bgColor={"bg"} /> */}
 
         <Box bgtype={"none"} url={"../../images/background_04.png"}></Box>

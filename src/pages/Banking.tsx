@@ -111,6 +111,19 @@ const UserBox = styled.div`
   padding: 0 5%;
 `;
 
+const Wallet = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+
+  img {
+    width: 80%;
+  }
+`;
+
 const InfoBox = styled.div`
   height: auto;
   background-color: ${(props) => props.theme.backgroundColor};
@@ -242,6 +255,7 @@ const CardBox = styled.div`
   z-index: 100;
 
   h3 {
+    margin-top: 16px;
     margin-bottom: 16px;
   }
 `;
@@ -445,6 +459,7 @@ export default function Banking() {
     } catch (error) {
     } finally {
       setIsLoading(false);
+      setAmount(0);
       // window.location.reload();
     }
   };
@@ -465,7 +480,7 @@ export default function Banking() {
     } catch (error) {
     } finally {
       setIsLoading(false);
-      // window.location.reload();
+      setAmount(0);
     }
   };
   return (
@@ -490,6 +505,9 @@ export default function Banking() {
                 <p>좋은 하루 되세요!</p>
               </UserName>
             </UserHeader>
+            <Wallet>
+              <img src="../../images/wallet.png" />
+            </Wallet>
             <TotalBox>
               <Total>
                 <h2>계좌 잔액</h2>

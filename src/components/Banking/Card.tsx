@@ -6,14 +6,26 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 
-const Container = styled.div`
+const Container = styled.div<{ card: string }>`
   width: 100%;
   height: 95%;
-  background-color: red;
-  border: 2px solid ${(props) => props.theme.borderColor};
+  background-color: ${(props) =>
+    props.card === "국민"
+      ? "yellow"
+      : props.card === "신한"
+      ? "blue"
+      : props.card === "하나"
+      ? "green"
+      : props.card === "카카오"
+      ? "orange"
+      : "black"};
+  border: 1px solid transparent;
   border-radius: 5%;
   display: flex;
   flex-direction: column;
+
+  box-shadow: 8px 4px 13px 0px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
 `;
 const CardImg = styled.div`
   width: 100%;
@@ -25,6 +37,10 @@ const CardImg = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: end;
+
+  img {
+    width: 50%;
+  }
 `;
 
 const TobBar = styled.div`
@@ -102,13 +118,22 @@ export default function Card({ userId, exAccount }: ICardProps) {
   };
 
   return (
-    <Container>
+    <Container card={exAccount.split(" ")[0]}>
       <TobBar>
         <DeleteButton onClick={deleteBtn}>
           <FontAwesomeIcon icon={faX} />
         </DeleteButton>
       </TobBar>
       <CardImg onClick={onSetCard}>
+        {exAccount.split(" ")[0] === "국민" ? (
+          <img src="../../images/kb-logo.png" />
+        ) : exAccount.split(" ")[0] === "신한" ? (
+          <img src="../../images/shinhan-logo.png" />
+        ) : exAccount.split(" ")[0] === "카카오" ? (
+          <img src="../../images/kakao-logo.png" />
+        ) : exAccount.split(" ")[0] === "하나" ? (
+          <img src="../../images/hana-logo.png" />
+        ) : null}
         {/* <h4>외부 계좌</h4> */}
         <h4>{exAccount.split(" ")[0]}</h4>
         <h4>{exAccount.split(" ")[1]}</h4>
