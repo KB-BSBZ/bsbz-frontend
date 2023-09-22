@@ -46,7 +46,7 @@ const LogOutPopup = () => {
         <Button
           width={"40%"}
           height={"12%"}
-          hover={"mint"}
+          hover={"yellow"}
           text={"확 인"}
           onclick={() => home()}
         />

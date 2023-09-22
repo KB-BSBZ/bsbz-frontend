@@ -6,6 +6,8 @@ import axios from "axios";
 
 const Container = styled.div`
   width: 100%;
+  position: relative;
+  z-index: -1;
 `;
 
 interface ILogLineProps {
@@ -48,6 +50,7 @@ export default function PriceLogLineChart({
   return (
     <Container>
       <ApexChart
+        style={{ position: "relative", zIndex: -1 }}
         type="line"
         series={[
           {

@@ -15,7 +15,7 @@ const ModalBackground = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 999; /* 팝업이 화면 위에 오도록 설정합니다. */
+  z-index: 9999; /* 팝업이 화면 위에 오도록 설정합니다. */
 `;
 
 const ModalContent = styled.div`

@@ -222,14 +222,14 @@ export default function Popup() {
               <Button
                 width={"100%"}
                 height={"50%"}
-                hover={"mint"}
+                hover={"yellow"}
                 text={"부동산"}
                 onclick={() => handlePreferenceSelect("부동산")}
               />
               <Button
                 width={"100%"}
                 height={"50%"}
-                hover={"mint"}
+                hover={"yellow"}
                 text={"럭셔리"}
                 onclick={() => handlePreferenceSelect("럭셔리")}
               />
@@ -237,7 +237,7 @@ export default function Popup() {
               <Button
                 width={"100%"}
                 height={"50%"}
-                hover={"mint"}
+                hover={"yellow"}
                 text={"음악 저작권"}
                 onclick={() => {
                   handlePreferenceSelect("음악 저작권");
