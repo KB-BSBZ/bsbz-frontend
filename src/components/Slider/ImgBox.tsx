@@ -4,8 +4,8 @@ import useScrollReset from "../../utils/useScrollReset";
 // import { ISliderData } from "./Slider";
 
 const Container = styled.span<{ url: string }>`
-  width: 100%;
-  height: 100%;
+  width: 50%;
+  height: 90%;
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -69,7 +69,7 @@ const TextBox = styled.div`
   }
 `;
 
-export default function ImgBox({ url, name, price, productid }: any) {
+export default function ImgBox({ url, productid }: any) {
   // const nav = useNavigate();
   let reset = useScrollReset();
 
@@ -82,12 +82,6 @@ export default function ImgBox({ url, name, price, productid }: any) {
   return (
     <Container url={url} onClick={onMoveDetail} id={productid}>
       {/* <Image /> */}
-      <TextBox>
-        <h2>{name}</h2>
-        <p>{price}</p>
-        <p>{price}</p>
-        <p>{price}</p>
-      </TextBox>
     </Container>
   );
 }

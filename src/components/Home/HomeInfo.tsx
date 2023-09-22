@@ -1,8 +1,6 @@
 import section1 from "../../svgs/section1.svg";
 import section2 from "../../svgs/section2.svg";
 import section3 from "../../svgs/section3.svg";
-
-import styled from "styled-components";
 import Pentagon from "../Pentagon";
 import { theme } from "../../utils/theme";
 import Button from "../Button";
@@ -11,6 +9,16 @@ import { faForumbee } from "@fortawesome/free-brands-svg-icons";
 import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import styled, { keyframes } from "styled-components";
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
 
 const Container = styled.div`
   width: 100vw;
@@ -46,7 +54,7 @@ const Box = styled.div<{ bgtype: string; url?: string }>`
 const TextBox = styled.div`
   width: 90%;
   height: 85%;
-
+  animation: ${fadeIn} 1s ease; /* 애니메이션 적용 */
   /* background-color: aliceblue; */
   display: flex;
   flex-direction: column;
@@ -85,7 +93,7 @@ export default function HomeInfo() {
     <>
       <Container>
         <Box bgtype={"null"} url={`${section1}`}>
-          <TextBox>
+          <TextBox data-aos="fade-up">
             <Text>
               <p>
                 <b>모든 사람</b>을 위한
@@ -102,6 +110,7 @@ export default function HomeInfo() {
 
         <Box bgtype={"white"} url={"../../images/background_10.png"}>
           <TextBox
+            data-aos="fade-up"
             style={{
               display: "flex",
               justifyContent: "center",
