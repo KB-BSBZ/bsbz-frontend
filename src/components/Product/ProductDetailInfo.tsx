@@ -205,6 +205,7 @@ const HeadInfo = styled.div`
 const LeftBox = styled.div`
   width: 50%;
   height: 100%;
+  position: relative;
 
   display: flex;
   flex-direction: column;
@@ -281,6 +282,30 @@ const TextBox = styled.span`
   flex-direction: column;
   justify-content: center;
   align-items: start;
+`;
+
+const Closed = styled.div`
+  width: 90%;
+  height: 18%;
+
+  border-radius: 2px;
+  border: 3px solid ${(props) => props.theme.errorColor};
+
+  top: 20%;
+  left: 5%;
+  transform: rotate(320deg);
+  color: ${(props) => props.theme.errorColor};
+  font-size: 38px;
+  background-color: ${(props) => props.theme.blurColor};
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  opacity: 1;
+  z-index: 2;
 `;
 
 export default function ProductDetailInfo({ productId }: IDetailProps) {
@@ -445,6 +470,7 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
         <Hood title={data?.productName || ""} />
         <TopBar>
           <LeftBox>
+            {isBlur === "true" ? <Closed>CLOSED</Closed> : null}
             <ImgBox url={data?.profileUrl} isblur={isBlur} />
             {/* {logData && <LineChart dates={datesArray} royals={royalsArray} />} */}
             {/* <h4>가격 변동 추이</h4>
