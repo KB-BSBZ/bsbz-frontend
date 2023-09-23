@@ -62,7 +62,7 @@ const Logo = styled.div`
   height: 100%;
 
   img {
-    height: 70%;
+    height: 50%;
     cursor: pointer;
   }
 `;

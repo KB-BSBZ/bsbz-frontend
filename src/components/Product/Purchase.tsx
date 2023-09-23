@@ -311,21 +311,21 @@ export default function Purchase({ onModal }: IPurchaseProps) {
             /> */}
             <AmountPlus>
               <Button
-                width={"40%"}
+                width={"30%"}
                 height={"100%"}
-                hover={"yellow"}
+                hover={"black"}
                 color={""}
-                text={"5 증가"}
-                border={"15px"}
+                text={"+ 5"}
+                border={"50%"}
                 onclick={onPlus5}
               />{" "}
               <Button
-                width={"40%"}
+                width={"30%"}
                 height={"100%"}
-                hover={"yellow"}
+                hover={"black"}
                 color={""}
-                text={"10 증가"}
-                border={"15px"}
+                text={"+ 10"}
+                border={"50%"}
                 onclick={onPlus10}
               />
               {/* <Plus5 onClick={onPlus5}>5 증 가</Plus5>

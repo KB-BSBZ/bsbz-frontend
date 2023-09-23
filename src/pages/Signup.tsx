@@ -16,18 +16,18 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 100%;
 
   padding-top: 12vh;
-  background-color: ${(props) => props.theme.backgroundColor};
+  /* background-color: ${(props) => props.theme.backgroundColor}; */
 
-  background-image: url("../../images/background_05.png");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
 `;
 
 const Main = styled.div`
-  height: 76vh;
+  height: 100%;
   width: 100%;
 
   display: flex;
@@ -37,12 +37,18 @@ const Main = styled.div`
 `;
 
 const TextBox = styled.div`
-  height: 68vh;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 24px;
+  padding: 2% 0;
+  width: 32%;
+  height: 90%;
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: center;
   align-items: center;
-  margin: 3vh 0 3vh 0;
+
+  margin-top: 24px;
+  margin-bottom: 24px;
 
   span {
     color: ${(props) => props.theme.errorColor};
@@ -60,27 +66,31 @@ const Forms = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 
   form {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 75%;
     // 입력 폼
 
     input {
       // 데이터 입력 폼
       border: none;
       padding: 1vh;
-      width: 240px;
       border-radius: 8px;
+      width: 100%;
     }
 
     button {
       border: none;
-      width: 180px;
+      width: 100%;
       padding: 1vh;
       border-radius: 6px;
+
+      cursor: pointer;
     }
   }
 `;
@@ -88,41 +98,102 @@ const Forms = styled.div`
 const ButtonBox = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: space-around;
   align-items: center;
 
+  margin-bottom: 12px;
+
+  width: 100%;
+
   border-radius: 8px;
-  border: 2px solid ${(props) => props.theme.borderColor};
 
   overflow: hidden;
-  background-color: ${(props) => props.theme.borderColor};
-  padding: 0 1px 6px 1px;
 
   transition: background-color ease 0.3s;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 
   button {
-    background-color: ${(props) => props.theme.backgroundColor};
-    transition: color ease 0.3s, background-color ease 0.3s;
+    width: 100%;
+    background-color: ${(props) => props.theme.highlightColor};
     font-weight: bold;
-  }
-
-  &:hover {
-    cursor: pointer;
-    button {
-      color: ${(props) => props.theme.borderColor};
-      background-color: ${(props) => props.theme.highlightColor};
-      cursor: pointer;
-    }
   }
 `;
 
 const InputBox = styled.div`
-  background-color: ${(props) => props.theme.borderColor};
-  margin-bottom: 2vh;
-  border-radius: 8px;
-  border: 2px solid ${(props) => props.theme.borderColor};
   overflow: hidden;
-  padding: 0 1px 6px 1px;
+  display: flex;
+  justify-content: space-between;
+
+  border: 3px solid ${(props) => props.theme.blurColor2};
+  border-radius: 8px;
+  width: 100%;
+
+  margin-bottom: 18px;
+  label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+  }
+`;
+
+const Lines = styled.div`
+  color: ${(props) => props.theme.highlightColor};
+  font-size: 24px;
+  h2 {
+    font-size: 32px;
+    color: ${(props) => props.theme.highlightColor2};
+  }
+
+  h3 {
+    font-size: 24px;
+    color: ${(props) => props.theme.textColor};
+  }
+
+  h4 {
+    font-size: 24px;
+    color: ${(props) => props.theme.textColor};
+  }
+
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Line = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  gap: 6px;
+  margin-bottom: 2vh;
+
+  img {
+    width: 8%;
+    height: 100%;
+  }
+`;
+
+const Header = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 12px;
+  font-size: 24px;
+  color: ${(props) => props.theme.highlightColor};
+  h4 {
+    color: ${(props) => props.theme.textColor};
+  }
+
+  img {
+    width: 36px;
+  }
 `;
 
 interface IFormData {
@@ -209,11 +280,22 @@ export default function Signup() {
       <Container>
         <Main>
           <TextBox>
+            <Lines>
+              {/* <Line>
+                <h2>환영합니다!</h2>
+              </Line> */}
+              {/* <Line>
+                <h3>투자의 세계로 떠나보세요.</h3>
+              </Line> */}
+            </Lines>
             <Forms>
-              <h2>회원 가입</h2>
-
+              <Header>
+                <h4>회원 가입</h4>
+                <img src="../../../images/bsbz-bee.png" />
+              </Header>
               <form onSubmit={handleSubmit(onValid)}>
                 <InputBox>
+                  <label htmlFor="userId">아이디</label>
                   <input
                     {...register("userId", {
                       required: "아이디를 입력하세요.",
@@ -223,11 +305,12 @@ export default function Signup() {
                       },
                     })}
                     type="text"
-                    placeholder="아이디"
+                    placeholder="최소 5글자"
                     autoComplete="username"
                   />
                 </InputBox>
                 <InputBox>
+                  <label htmlFor="password">비밀번호</label>
                   <input
                     {...register("password", {
                       required: "비밀번호를 입력하세요.",
@@ -247,10 +330,11 @@ export default function Signup() {
                     })}
                     type="password"
                     autoComplete="current-password"
-                    placeholder="비밀번호"
+                    placeholder="숫자와 특수문자를 섞은 8-16 자리 숫자"
                   />
                 </InputBox>
                 <InputBox>
+                  <label htmlFor="email">이메일</label>
                   <input
                     {...register("email", {
                       required: "이메일을 입력하세요.",
@@ -260,10 +344,11 @@ export default function Signup() {
                         message: "이메일 형식만 가능합니다.",
                       },
                     })}
-                    placeholder="이메일"
+                    placeholder="이메일 형식"
                   />
                 </InputBox>
                 <InputBox>
+                  <label htmlFor="userName">이 름</label>
                   <input
                     {...register("userName", {
                       required: "이름을 입력하세요.",
@@ -272,6 +357,7 @@ export default function Signup() {
                   />
                 </InputBox>
                 <InputBox>
+                  <label htmlFor="ssn">주민번호</label>
                   <input
                     {...register("ssn", {
                       required: "주민등록번호를 입력하세요.",
@@ -289,11 +375,12 @@ export default function Signup() {
                         event.target.value = formatSSN(event.target.value);
                       },
                     })}
-                    placeholder="주민등록번호"
+                    placeholder="( - ) 없이 입력"
                     maxLength={14}
                   />
                 </InputBox>
                 <InputBox>
+                  <label htmlFor="phoneNum">전화번호</label>
                   <input
                     {...register("phoneNum", {
                       required: "전화번호를 입력해 주세요.",
@@ -307,7 +394,7 @@ export default function Signup() {
                         event.target.value = formatPhone(event.target.value);
                       },
                     })}
-                    placeholder="전화번호"
+                    placeholder="( - ) 없이 입력"
                     maxLength={13}
                   />
                 </InputBox>

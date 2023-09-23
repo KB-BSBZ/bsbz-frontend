@@ -45,7 +45,7 @@ const PurchasePopup = ({ productId }: id) => {
     <ModalBackground>
       <ModalContent>
         <h2>구매 완료</h2>
-        <p>이용해 주셔서 감사합니다!</p>
+        <p>정상적으로 구매되었습니다.</p>
         <Button
           width={"40%"}
           height={"12%"}

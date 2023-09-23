@@ -21,6 +21,8 @@ const InnerBox = styled.div<IBoxProps>`
       ? props.theme.errorColor
       : props.color === "yellow"
       ? props.theme.highlightColor
+      : props.color === "black"
+      ? props.theme.borderColor
       : props.theme.backgroundColor};
   width: 100%;
   height: 100%;
@@ -43,7 +45,9 @@ const InnerBox = styled.div<IBoxProps>`
         ? props.theme.highlightColor
         : props.hover === "white"
         ? props.theme.backgroundColor
-        : null};
+        : props.hover === "black"
+        ? props.theme.borderColor
+        : "none"};
 
     color: ${(props) => props.theme.backgroundColor};
   }

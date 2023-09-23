@@ -16,13 +16,18 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 100%;
 
   padding-top: 12vh;
-  background-color: ${(props) => props.theme.backgroundColor};
+  /* background-color: ${(props) => props.theme.backgroundColor}; */
+
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 `;
 
 const Main = styled.div`
-  height: 76vh;
+  height: 100%;
   width: 100%;
 
   display: flex;
@@ -32,12 +37,18 @@ const Main = styled.div`
 `;
 
 const TextBox = styled.div`
-  height: 68vh;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 24px;
+  padding: 2% 0;
+  width: 32%;
+  height: 90%;
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: center;
   align-items: center;
-  margin: 3vh 0 3vh 0;
+
+  margin-top: 24px;
+  margin-bottom: 24px;
 
   span {
     color: ${(props) => props.theme.errorColor};
@@ -55,27 +66,31 @@ const Forms = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 
   form {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 75%;
     // 입력 폼
 
     input {
       // 데이터 입력 폼
       border: none;
       padding: 1vh;
-      width: 240px;
       border-radius: 8px;
+      width: 100%;
     }
 
     button {
       border: none;
-      width: 180px;
+      width: 100%;
       padding: 1vh;
       border-radius: 6px;
+
+      cursor: pointer;
     }
   }
 `;
@@ -83,75 +98,49 @@ const Forms = styled.div`
 const ButtonBox = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: space-around;
   align-items: center;
 
+  margin-bottom: 12px;
+
+  width: 100%;
+
   border-radius: 8px;
-  border: 2px solid ${(props) => props.theme.borderColor};
 
   overflow: hidden;
-  background-color: ${(props) => props.theme.borderColor};
-  padding: 0 1px 6px 1px;
 
   transition: background-color ease 0.3s;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 
   button {
-    background-color: ${(props) => props.theme.backgroundColor};
-    transition: color ease 0.3s, background-color ease 0.3s;
+    width: 100%;
+    background-color: ${(props) => props.theme.highlightColor};
     font-weight: bold;
-  }
-
-  &:hover {
-    cursor: pointer;
-    button {
-      color: ${(props) => props.theme.borderColor};
-      background-color: ${(props) => props.theme.highlightColor};
-      cursor: pointer;
-    }
   }
 `;
 
 const InputBox = styled.div`
-  background-color: ${(props) => props.theme.borderColor};
-  margin-bottom: 2vh;
-  border-radius: 8px;
-  border: 2px solid ${(props) => props.theme.borderColor};
   overflow: hidden;
-  padding: 0 1px 6px 1px;
+  display: flex;
+  justify-content: space-between;
+
+  border: 3px solid ${(props) => props.theme.blurColor2};
+  border-radius: 8px;
+  width: 100%;
+
+  margin-bottom: 18px;
+
+  label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+  }
 
   input[readonly] {
     background-color: #ccc; /* 회색 배경색 설정 */
   }
-`;
-
-const Withdrawal = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: center;
-
-  border-radius: 8px;
-  border: 2px solid ${(props) => props.theme.borderColor};
-
-  overflow: hidden;
-  background-color: ${(props) => props.theme.borderColor};
-  padding: 0 1px 6px 1px;
-
-  transition: background-color ease 0.3s;
-
-  &:hover {
-    cursor: pointer;
-    button {
-      color: ${(props) => props.theme.borderColor};
-      background-color: ${(props) => props.theme.highlightColor};
-      cursor: pointer;
-    }
-  }
-`;
-const Btn = styled.div`
-  background-color: ${(props) => props.theme.backgroundColor};
-  transition: color ease 0.3s, background-color ease 0.3s;
-  font-weight: bold;
 `;
 
 interface IFormData {
@@ -162,6 +151,35 @@ interface IFormData {
   ssn: string | undefined;
   phoneNum: string | undefined;
 }
+
+const Withdraw = styled.div`
+  width: 75%;
+  height: 20%;
+  padding: 1vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const WithdrawButton = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: ${(props) => props.theme.backgroundColor};
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+
+  font-size: 14px;
+  font-weight: bold;
+  padding: 6px 0;
+
+  background-color: ${(props) => props.theme.blurColor2};
+  cursor: pointer;
+`;
 
 export default function MyPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -311,6 +329,7 @@ export default function MyPage() {
               {userInfo && (
                 <form onSubmit={handleSubmit(onValid)}>
                   <InputBox>
+                    <label htmlFor="userId">아이디</label>
                     <input
                       {...register("userId", {
                         required: "아이디를 입력하세요.",
@@ -326,6 +345,7 @@ export default function MyPage() {
                     />
                   </InputBox>
                   <InputBox>
+                    <label htmlFor="password">비밀번호</label>
                     <input
                       {...register("password", {
                         required: "비밀번호를 입력하세요.",
@@ -349,6 +369,7 @@ export default function MyPage() {
                     />
                   </InputBox>
                   <InputBox>
+                    <label htmlFor="email">이 메 일</label>
                     <input
                       {...register("email", {
                         required: "이메일을 입력하세요.",
@@ -362,6 +383,7 @@ export default function MyPage() {
                     />
                   </InputBox>
                   <InputBox>
+                    <label htmlFor="userName">이 름</label>
                     <input
                       {...register("userName", {
                         required: "이름을 입력하세요.",
@@ -370,6 +392,8 @@ export default function MyPage() {
                     />
                   </InputBox>
                   <InputBox>
+                    <label htmlFor="ssn">주민 번호</label>
+
                     <input
                       {...register("ssn", {
                         required: "주민등록번호를 입력하세요.",
@@ -390,6 +414,7 @@ export default function MyPage() {
                     />
                   </InputBox>
                   <InputBox>
+                    <label htmlFor="phoneNum">전화 번호</label>
                     <input
                       {...register("phoneNum", {
                         required: "전화번호를 입력해 주세요.",
@@ -412,9 +437,9 @@ export default function MyPage() {
                   </ButtonBox>
                 </form>
               )}
-              <Withdrawal>
-                <Btn onClick={deletUser}>회원 탈퇴</Btn>
-              </Withdrawal>
+              <Withdraw>
+                <WithdrawButton onClick={deletUser}>회원 탈퇴</WithdrawButton>
+              </Withdraw>
             </Forms>
 
             <span>

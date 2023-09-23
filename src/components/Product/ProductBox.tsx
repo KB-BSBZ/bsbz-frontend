@@ -261,7 +261,7 @@ export default function ProductBox({
   return (
     <Container onClick={onMove}>
       {isLoading && <Loading />}
-      {isBlur === "true" ? <Closed>CLOSED.</Closed> : null}
+      {isBlur === "true" ? <Closed>CLOSED</Closed> : null}
 
       <ImgBox url={profileUrl} isblur={isBlur}>
         <InnerBar>
@@ -295,7 +295,7 @@ export default function ProductBox({
               ? productName.slice(0, 12) + " ..."
               : productName}
           </h3>
-          {isBlur === "true" ? <DetailBox color="red">마 감</DetailBox> : null}
+          {/* {isBlur === "true" ? <DetailBox color="red">마 감</DetailBox> : null} */}
         </Line>
 
         <p>

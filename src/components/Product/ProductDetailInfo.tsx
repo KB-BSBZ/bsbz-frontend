@@ -322,7 +322,6 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setIsLoading(true);
         const url = "http://localhost:9999/product/detail/";
 
         const options = {
@@ -337,7 +336,6 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
         };
         const response = await axios(url, options);
         setData(response.data);
-        console.log("아이디이이이이이이ㅣ");
         console.log(data?.productId);
         setBuyProductId(data?.productId);
         // console.log(response.data);
@@ -430,7 +428,6 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
     };
 
     fetchData();
-    setIsLoading(false);
     return () => {
       bar.destroy();
     };
