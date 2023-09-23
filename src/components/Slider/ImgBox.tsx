@@ -11,6 +11,8 @@ const Container = styled.span<{ url: string }>`
   justify-content: start;
   align-items: flex-end;
 
+  box-shadow: 0px 4px 13px 0px rgb(0, 0, 0, 0.6);
+
   border-radius: 12px;
 
   background-image: linear-gradient(

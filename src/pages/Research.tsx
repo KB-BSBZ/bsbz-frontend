@@ -5,7 +5,7 @@ import Footer from "../components/Footer/Footer";
 import Slider from "../components/Slider/Slider";
 import { useEffect, useState } from "react";
 
-import { imgList } from "../jsons/imgList";
+// import { imgList } from "../jsons/imgList";
 
 import Loading from "../components/Loading";
 import Chart from "../components/Research/Chart";
@@ -15,6 +15,9 @@ import NewsSlider from "../components/Research/NewsSlider";
 import ResearchSlider from "../components/Research/ResearchSlider";
 import { chartList } from "../jsons/chartList";
 import { IProductProps } from "../components/Product/ProductBox";
+import useScrollReset from "../utils/useScrollReset";
+import { useNavigate, useNavigation } from "react-router-dom";
+import ResearchList from "../components/Research/ResearchList";
 
 const Container = styled.div`
   display: flex;
@@ -27,7 +30,7 @@ const Container = styled.div`
 const Recommandation = styled.div`
   /* background-color: ${(props) => props.theme.highlightColor}; */
 
-  height: 100vh;
+  height: 90vh;
   width: 100%;
 
   padding-top: 10vh;
@@ -82,7 +85,6 @@ const SoaringTap = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 70vh;
   width: 100%;
 
   h1 {
@@ -139,7 +141,7 @@ const TabBox = styled.div`
   display: flex;
   justify-content: end;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 10%;
 `;
 
 const Tab = styled.div`
@@ -164,8 +166,11 @@ const News = styled.div`
   width: 100%;
   height: 32vh;
   margin-bottom: 2%;
-  background-color: red;
+  /* background-color: red; */
   position: relative;
+
+  cursor: pointer;
+  box-shadow: 0px 4px 13px 0px rgb(0, 0, 0, 0.6);
 `;
 
 const NewsImg_01 = styled.div`
@@ -286,6 +291,7 @@ export default function ResearchTest() {
   const [rank, setRank] = useState<IProductProps[]>([]);
   const [deadline, setDeadline] = useState<IProductProps[]>([]);
   const [recent, setRecent] = useState<IProductProps[]>([]);
+  const [recommend, setRecommend] = useState<IProductProps[]>([]);
 
   const [tab, isTab] = useState("rank");
 
@@ -293,6 +299,18 @@ export default function ResearchTest() {
     const news_url = "http://localhost:8000/pricelog/news/";
     const product_url = "http://localhost:9999/product/allproducts";
     const allproduct_url = `${product_url}`;
+    const recommend_url = "http://localhost:9999/product/recommend";
+
+    const recommend_options = {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      params: {
+        orderType: "그냥",
+      },
+    };
 
     const allproduct_options = {
       method: "GET",
@@ -344,17 +362,20 @@ export default function ResearchTest() {
           allproduct_response,
           deadline_response,
           recent_response,
+          recommend_response,
         ] = await Promise.all([
           axios(news_url, news_options),
           axios(allproduct_url, allproduct_options),
           axios(allproduct_url, deadline_options),
           axios(allproduct_url, recent_options),
+          axios(recommend_url, recommend_options),
         ]);
 
         setNews(news_response.data);
         setRank(allproduct_response.data);
         setDeadline(deadline_response.data);
         setRecent(recent_response.data);
+        setRecommend(recommend_response.data);
       } catch (error) {
         console.error("에러 발생 : ", error);
       } finally {
@@ -386,7 +407,7 @@ export default function ResearchTest() {
         <LeftBox>
           <Recommandation>
             <h1>지금. 이 투자상품을 만나보세요.</h1>
-            <Slider data={imgList} />
+            <Slider data={recommend} />
           </Recommandation>
           <TabBox>
             <Tab onClick={onTab} id={"rank"}>
@@ -402,17 +423,17 @@ export default function ResearchTest() {
           {tab === "rank" ? (
             <SoaringTap>
               <h1>실시간 급상승 품목 📈</h1>
-              <ResearchSlider data={rank} />
+              <ResearchList data={rank} />
             </SoaringTap>
           ) : tab === "deadline" ? (
             <SoaringTap>
               <h1>마감 임박 품목 ⌛</h1>
-              <ResearchSlider data={deadline} />
+              <ResearchList data={deadline} />
             </SoaringTap>
           ) : (
             <SoaringTap>
               <h1>실시간 거래 품목 ⚡</h1>
-              <ResearchSlider data={recent} />
+              <ResearchList data={recent} />
             </SoaringTap>
           )}
         </LeftBox>
@@ -422,7 +443,12 @@ export default function ResearchTest() {
             <h1>최신 소식을 알아보세요.</h1>
             {news &&
               news.map((newsData, index) => (
-                <News key={index}>
+                <News
+                  key={index}
+                  onClick={() =>
+                    (window.location.href = `${newsData.originallink}`)
+                  }
+                >
                   <NewsInfo>
                     <p>{newsData.description}</p>
                   </NewsInfo>
