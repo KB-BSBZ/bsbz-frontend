@@ -23,7 +23,6 @@ import ProductMusicDeadline from "./pages/Product/ProductMusic/ProductMusicDeadl
 import ProductDeadline from "./pages/Product/ProductDeadline";
 import ProductViews from "./pages/Product/ProductViews";
 import MyAsset from "./pages/MyAsset";
-import ResearchTest from "./pages/ResearchTest";
 
 export default function App() {
   return (
@@ -70,7 +69,6 @@ export default function App() {
       <Route path="/product/detail/:productId" element={<ProductDetail />} />
       <Route path="/mypage" element={<MyPage />} />
       <Route path="/myasset" element={<MyAsset />} />
-      <Route path="/test" element={<ResearchTest />} />
     </Routes>
   );
 }

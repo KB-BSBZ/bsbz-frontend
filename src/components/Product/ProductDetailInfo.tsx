@@ -241,13 +241,12 @@ const Static = styled.div`
 const CloudBar = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  border: 1px solid black;
   width: 50%;
   height: 100%;
   svg {
-    width: 120%;
+    width: 140%;
     height: 140%;
   }
 `;
@@ -269,7 +268,7 @@ const ChartData = styled.div`
 
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 
   /* background-color: blue; */
@@ -597,23 +596,24 @@ export default function ProductDetailInfo({ productId }: IDetailProps) {
 
         <ChartBar>
           <ChartData>
-            <h4>가격 변동 추이</h4>
             {data && (
               <PriceLogLineChart
                 productType={data?.productType}
                 productId={data?.productId}
               />
             )}
+
+            <h4>가격 변동 추이</h4>
           </ChartData>
           {data && data?.productType === "music" ? (
             <CloudBar>
-              <h4>워드클라우드</h4>
               <WordClouds productId={data?.productId} />
+              <h4>워드클라우드</h4>
             </CloudBar>
           ) : (
             <ChartData>
-              <h4>예측 가격</h4>
               <PredictedRangeChart />
+              <h4>예측 가격</h4>
             </ChartData>
           )}
         </ChartBar>

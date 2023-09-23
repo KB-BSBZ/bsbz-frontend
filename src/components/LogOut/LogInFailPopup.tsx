@@ -19,8 +19,8 @@ const ModalBackground = styled.div`
 `;
 
 const ModalContent = styled.div`
-  height: 30%;
-  width: 20%;
+  height: 40%;
+  width: 40%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -44,7 +44,7 @@ const LogInFailPopup = () => {
         <p>ID 또는 PASSWORD를 다시 확인해 주세요</p>
         <Button
           width={"40%"}
-          height={"12%"}
+          height={"20%"}
           hover={"yellow"}
           text={"확 인"}
           onclick={() => home()}

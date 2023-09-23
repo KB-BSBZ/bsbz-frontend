@@ -21,6 +21,7 @@ const Container = styled.div`
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5); // box-shadow 적용
 
   margin-bottom: 8vh;
+  position: relative;
 `;
 
 const ImgBox = styled.div<{ url: string; isblur: string }>`
@@ -135,6 +136,30 @@ const ProgressBarContainer = styled.div`
   position: relative;
 `;
 
+const Closed = styled.div`
+  width: 90%;
+  height: 18%;
+
+  border-radius: 2px;
+  border: 3px solid ${(props) => props.theme.errorColor};
+
+  top: 30%;
+  left: 5%;
+  transform: rotate(320deg);
+  color: ${(props) => props.theme.errorColor};
+  font-size: 38px;
+  background-color: ${(props) => props.theme.blurColor};
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  opacity: 1;
+  z-index: 2;
+`;
+
 export interface IProductProps {
   bonus: number;
   description: string | null;
@@ -236,6 +261,8 @@ export default function ProductBox({
   return (
     <Container onClick={onMove}>
       {isLoading && <Loading />}
+      {isBlur === "true" ? <Closed>CLOSED.</Closed> : null}
+
       <ImgBox url={profileUrl} isblur={isBlur}>
         <InnerBar>
           <LineInfo>

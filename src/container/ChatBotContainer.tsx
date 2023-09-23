@@ -345,7 +345,7 @@ const Chatbot = ({ handleChatbotFalse }: ChatbotProps) => {
       <ChatContainer ref={chatContainerRef}>
         <StartBox>
           <StartImg>
-            <img src="../images/bee.png" />
+            <img src="../../images/bee.png" />
           </StartImg>
           <StartTextBox>
             <StartContents>

@@ -17,6 +17,12 @@ import "swiper/css/pagination";
 // import required modules
 import { EffectCube, Pagination } from "swiper/modules";
 import useScrollReset from "../utils/useScrollReset";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBuilding,
+  faCompactDisc,
+  faGem,
+} from "@fortawesome/free-solid-svg-icons";
 
 const X = styled.div`
   width: 100%;
@@ -88,6 +94,7 @@ const Forms = styled.div`
   }
 `;
 const ButtonBox = styled.div`
+  margin-top: 18px;
   width: 100%;
   height: 15%;
   display: flex;
@@ -112,11 +119,44 @@ const ImgBox = styled.div`
   background-size: cover;
 `;
 
+const IconBox = styled.div`
+  width: 80%;
+  height: 80%;
+
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const Icon = styled.div`
+  width: 30%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 96px;
+
+  svg {
+    cursor: pointer;
+    transition: margin-bottom 0.3s ease-in-out, color 0.3s ease-in-out;
+
+    &:hover {
+      margin-bottom: 24px;
+      color: ${(props) => props.theme.highlightColor};
+    }
+  }
+`;
+
 export default function Popup() {
   // 팝업 상태 및 선택한 취향 상태 초기화
   const [popup, setPopup] = useRecoilState(popupState);
   const [selectedPreference, setSelectedPreference] = useState("");
   const reset = useScrollReset();
+
+  const [clicked, setClicked] = useState(false);
 
   // 팝업 열기 함수
   const openPopup = () => {
@@ -181,7 +221,7 @@ export default function Popup() {
                   }}
                 />
               </X>
-              <h1>취향을 선택하세요</h1>
+              <h1>관심 분야를 선택하세요</h1>
             </Header>
             {/* {data && data.map((resource) => <h1>{resource.productName}</h1>)} */}
             {data && (
@@ -218,32 +258,67 @@ export default function Popup() {
               </Swiper>
             )}
 
-            <ButtonBox>
-              <Button
-                width={"100%"}
-                height={"50%"}
-                hover={"yellow"}
-                text={"부동산"}
-                onclick={() => handlePreferenceSelect("부동산")}
-              />
-              <Button
-                width={"100%"}
-                height={"50%"}
-                hover={"yellow"}
-                text={"럭셔리"}
-                onclick={() => handlePreferenceSelect("럭셔리")}
-              />
+            {!clicked && (
+              <IconBox>
+                <Icon>
+                  <FontAwesomeIcon
+                    icon={faBuilding}
+                    onClick={() => {
+                      handlePreferenceSelect("부동산");
+                      setClicked(true);
+                    }}
+                  />
+                </Icon>
+                <Icon>
+                  <FontAwesomeIcon
+                    icon={faCompactDisc}
+                    onClick={() => {
+                      handlePreferenceSelect("음악 저작권");
+                      setClicked(true);
+                    }}
+                  />
+                </Icon>
+                <Icon>
+                  <FontAwesomeIcon
+                    icon={faGem}
+                    onClick={() => {
+                      handlePreferenceSelect("럭셔리");
+                      setClicked(true);
+                    }}
+                  />
+                </Icon>
+              </IconBox>
+            )}
 
-              <Button
-                width={"100%"}
-                height={"50%"}
-                hover={"yellow"}
-                text={"음악 저작권"}
-                onclick={() => {
-                  handlePreferenceSelect("음악 저작권");
-                }}
-              />
-            </ButtonBox>
+            {clicked && (
+              <ButtonBox>
+                <Button
+                  width={"100%"}
+                  height={"50%"}
+                  hover={"yellow"}
+                  text={"부동산"}
+                  onclick={() => handlePreferenceSelect("부동산")}
+                />
+
+                <Button
+                  width={"100%"}
+                  height={"50%"}
+                  hover={"yellow"}
+                  text={"럭셔리"}
+                  onclick={() => handlePreferenceSelect("럭셔리")}
+                />
+
+                <Button
+                  width={"100%"}
+                  height={"50%"}
+                  hover={"yellow"}
+                  text={"음악 저작권"}
+                  onclick={() => {
+                    handlePreferenceSelect("음악 저작권");
+                  }}
+                />
+              </ButtonBox>
+            )}
           </Forms>
         </Content>
       </Container>

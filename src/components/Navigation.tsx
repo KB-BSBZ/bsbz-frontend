@@ -42,6 +42,7 @@ const NavBar = styled.div`
     border: 2px solid ${(props) => props.theme.navColor};
     transition: border-top ease-in-out 0.3s, border-right 0.3s ease-in-out 0.1s,
       border-bottom 0.3s ease-in-out 0.2s, border-left 0.3s ease-in-out 0.3s;
+    cursor: pointer;
   }
 
   span:hover {
@@ -62,6 +63,7 @@ const Logo = styled.div`
 
   img {
     height: 70%;
+    cursor: pointer;
   }
 `;
 

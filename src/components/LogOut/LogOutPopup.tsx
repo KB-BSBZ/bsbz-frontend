@@ -42,7 +42,7 @@ const LogOutPopup = () => {
     <ModalBackground>
       <ModalContent>
         <h2>로그아웃</h2>
-        <p>로그아웃 완료</p>
+        <p>정상적으로 로그아웃 되었습니다.</p>
         <Button
           width={"40%"}
           height={"12%"}

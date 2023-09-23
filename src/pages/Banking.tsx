@@ -318,7 +318,10 @@ const InputBox = styled.div`
 
     input {
       border: none;
-      background-color: ${(props) => props.theme.blurColor2};
+      border-radius: 8px;
+      color: ${(props) => props.theme.textColor2};
+
+      background-color: ${(props) => props.theme.blurColor};
       width: 40%;
       height: 100%;
       box-shadow: 0px 4px 13px 0px rgba(0, 0, 0, 0.1);
