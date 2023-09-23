@@ -84,7 +84,7 @@ const Line = styled.div`
   justify-content: space-between;
 `;
 
-const Items = styled.div<{ url: string }>`
+const Items = styled.div<{ url: string; text: string }>`
   cursor: pointer;
   width: 24%;
   height: 65%;
@@ -234,22 +234,25 @@ export default function HomeInfo() {
           url={"../../images/background_03.png"}
         >
           <TextLine>
-            <h1>짜잔</h1>
-            <h1>짜잔</h1>
-            <h1>짜잔</h1>
+            <h1><b>BSBZ만의 핵심 서비스</b></h1>
+            <h2>인생 첫 조각투자를 클릭 한번으로 시작해보세요!</h2>
+            {/* <h1>짜잔</h1> */}
           </TextLine>
           <ItemBox>
             <Items
               onClick={() => reset("/product/realestate")}
               url={"../../images/home-estate-icon.png"}
+              text="부동산"
             />
             <Items
               onClick={() => reset("/product/luxuries")}
               url={"../../images/home-luxury-icon.png"}
+              text="부동산"
             />
             <Items
               onClick={() => reset("/product/musiccopyright")}
               url={"../../images/home-music-icon.png"}
+              text="부동산"
             />
           </ItemBox>
         </Box>
