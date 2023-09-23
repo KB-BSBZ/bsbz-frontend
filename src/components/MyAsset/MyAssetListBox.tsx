@@ -97,8 +97,10 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
   );
 }
 const OptionBox = styled.div`
-  background-color: ${(props) => props.theme.borderColor};
-  color: ${(props) => props.theme.backgroundColor};
+  background-color: ${(props) => props.theme.blurColor3};
+  color: ${(props) => props.theme.textColor};
+  display: flex;
+  justify-content: space-between;
   padding: 3px 12px;
 `;
 const InfoBox = styled.div`
@@ -106,12 +108,13 @@ const InfoBox = styled.div`
   display: flex;
   justify-content: row;
   justify-content: space-between;
+  background-color: ${(props) => props.theme.backgroundColor};
 
   box-shadow: 0px 4px 13px 0px rgb(0, 0, 0, 0.2);
 `;
 const ImgBox = styled.div`
   width: 20%;
-  height: 20%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -148,6 +151,8 @@ const DataBox = styled.div`
   background-color: ${(props) => props.theme.highlightColor};
   border-radius: 8px;
   overflow: hidden;
+
+  box-shadow: 0px 4px 13px 0px rgb(0, 0, 0, 0.2);
 `;
 
 export interface LogData {

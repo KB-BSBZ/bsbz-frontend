@@ -11,7 +11,7 @@ const Container = styled.div<{ card: string }>`
   height: 95%;
   background-color: ${(props) =>
     props.card === "국민"
-      ? "yellow"
+      ? props.theme.highlightColor
       : props.card === "신한"
       ? "blue"
       : props.card === "하나"

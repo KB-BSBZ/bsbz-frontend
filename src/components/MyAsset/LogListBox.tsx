@@ -99,17 +99,18 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 }
 
 const OptionBox = styled.div`
+  background-color: ${(props) => props.theme.blurColor3};
+  color: ${(props) => props.theme.textColor};
   display: flex;
   justify-content: space-between;
-  background-color: ${(props) => props.theme.borderColor};
-  color: ${(props) => props.theme.backgroundColor};
-  padding: 3px 18px;
+  padding: 3px 12px;
 `;
 const InfoBox = styled.div`
   width: 100%;
   display: flex;
   justify-content: row;
   justify-content: space-between;
+  background-color: ${(props) => props.theme.backgroundColor};
 
   box-shadow: 0px 4px 13px 0px rgb(0, 0, 0, 0.2);
 `;
@@ -131,27 +132,28 @@ const Name = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 40%;
+  width: 50%;
 
   font-size: 18px;
 `;
 const RoyalSum = styled.div`
   width: 20%;
   display: flex;
-  flex-direction: row;
+  display: flex;
   justify-content: space-around;
   align-items: center;
 
-  font-size: 20px;
+  font-size: 24px;
   font-weight: bold;
 `;
 
 const DataBox = styled.div`
   width: 100%;
   height: 100%;
-  background-color: ${(props) => props.theme.highlightColor};
+  /* background-color: ${(props) => props.theme.highlightColor}; */
   border-radius: 8px;
   overflow: hidden;
+  box-shadow: 0px 4px 13px 0px rgb(0, 0, 0, 0.2);
 `;
 
 export default function LogListBox({
@@ -234,7 +236,13 @@ export default function LogListBox({
                     </ImgBox>
                     <Name>{LogDataArray.product.productName}</Name>
                     <RoyalSum>
-                      <p>거래수</p>
+                      <p
+                        style={{
+                          fontSize: "16px",
+                        }}
+                      >
+                        거래수
+                      </p>
                       <p>{LogDataArray.tradeRoyalCnt}</p>
                     </RoyalSum>
                   </InfoBox>
