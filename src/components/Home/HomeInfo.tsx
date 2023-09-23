@@ -86,8 +86,8 @@ const Line = styled.div`
 
 const Items = styled.div<{ url: string }>`
   cursor: pointer;
-  width: 18%;
-  height: 30%;
+  width: 24%;
+  height: 65%;
   box-shadow: 0px 4px 13px 0px rgba(0, 0, 0, 0.3);
   border-radius: 15px;
 
@@ -97,6 +97,24 @@ const Items = styled.div<{ url: string }>`
   background-position: center;
   background-repeat: no-repeat;
   object-fit: scale-down;
+`;
+
+const TextLine = styled.div`
+  width: 100%;
+  height: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ItemBox = styled.div`
+  width: 100%;
+  height: 60%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
 `;
 
 export default function HomeInfo() {
@@ -205,19 +223,35 @@ export default function HomeInfo() {
           </TextBox>
         </Box>
 
-        <Box bgtype={"none"} url={"../../images/background_03.png"}>
-          <Items
-            onClick={() => reset("/product/realestate")}
-            url={"../../images/home-estate-icon.png"}
-          />
-          <Items
-            onClick={() => reset("/product/luxuries")}
-            url={"../../images/home-luxury-icon.png"}
-          />
-          <Items
-            onClick={() => reset("/product/musiccopyright")}
-            url={"../../images/home-music-icon.png"}
-          />
+        <Box
+          style={{
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "0",
+          }}
+          bgtype={"none"}
+          url={"../../images/background_03.png"}
+        >
+          <TextLine>
+            <h1>짜잔</h1>
+            <h1>짜잔</h1>
+            <h1>짜잔</h1>
+          </TextLine>
+          <ItemBox>
+            <Items
+              onClick={() => reset("/product/realestate")}
+              url={"../../images/home-estate-icon.png"}
+            />
+            <Items
+              onClick={() => reset("/product/luxuries")}
+              url={"../../images/home-luxury-icon.png"}
+            />
+            <Items
+              onClick={() => reset("/product/musiccopyright")}
+              url={"../../images/home-music-icon.png"}
+            />
+          </ItemBox>
         </Box>
 
         <Box bgtype={"none"} url={"../../images/background_02.png"}></Box>
