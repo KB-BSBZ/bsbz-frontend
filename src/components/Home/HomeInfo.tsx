@@ -83,16 +83,20 @@ const Line = styled.div`
   display: flex;
   justify-content: space-between;
 `;
+
 const Items = styled.div<{ url: string }>`
   cursor: pointer;
   width: 18%;
   height: 30%;
+  box-shadow: 0px 4px 13px 0px rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
 
+  background-color: white;
   background-image: url(${(props) => props.url});
+  background-size: 50% 50%;
   background-position: center;
   background-repeat: no-repeat;
   object-fit: scale-down;
-  background-size: cover;
 `;
 
 export default function HomeInfo() {
@@ -201,7 +205,7 @@ export default function HomeInfo() {
           </TextBox>
         </Box>
 
-        <Box bgtype={"none"} url={"../../images/background_17.png"}>
+        <Box bgtype={"none"} url={"../../images/background_03.png"}>
           <Items
             onClick={() => reset("/product/realestate")}
             url={"../../images/home-estate-icon.png"}
