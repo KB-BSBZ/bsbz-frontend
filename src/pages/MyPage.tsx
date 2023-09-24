@@ -284,7 +284,7 @@ export default function MyPage() {
           setValue("password", userInfo?.password);
           setValue("email", userInfo?.email);
           setValue("userName", userInfo?.userName);
-          setValue("ssn", userInfo?.ssn);
+          setValue("ssn", userInfo?.ssn?.slice(0, 7) + "*******");
           setValue("phoneNum", userInfo?.phoneNum);
           setIsLoading(false);
           // getValues();

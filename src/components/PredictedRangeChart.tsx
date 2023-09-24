@@ -129,7 +129,7 @@ export default function PredictedRangeChart() {
             max: maxDataValue + 1000,
             labels: {
               formatter: (value) =>
-                `${value.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} 원`, // 천원 단위로 ',' 추가
+                `${value.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`, // 천원 단위로 ',' 추가
             },
             axisBorder: {
               show: true,
