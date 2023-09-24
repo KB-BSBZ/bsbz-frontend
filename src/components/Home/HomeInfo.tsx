@@ -87,9 +87,11 @@ const Line = styled.div`
 const Items = styled.div<{ url: string; text: string }>`
   cursor: pointer;
   width: 24%;
-  height: 65%;
+  height: 64%;
   box-shadow: 0px 4px 13px 0px rgba(0, 0, 0, 0.3);
   border-radius: 15px;
+
+  opacity: 0.8;
 
   background-color: white;
   background-image: url(${(props) => props.url});
@@ -97,6 +99,8 @@ const Items = styled.div<{ url: string; text: string }>`
   background-position: center;
   background-repeat: no-repeat;
   object-fit: scale-down;
+
+  transition: opacity 0.2s ease-in-out;
 `;
 
 const TextLine = styled.div`
@@ -106,6 +110,12 @@ const TextLine = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 12px;
+
+  h1 {
+    font-size: 36px;
+    font-weight: 700;
+  }
 `;
 
 const ItemBox = styled.div`
@@ -115,6 +125,16 @@ const ItemBox = styled.div`
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
+`;
+
+const AiBox = styled.div`
+  width: 80%;
+  height: 70%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: end;
 `;
 
 export default function HomeInfo() {
@@ -152,7 +172,7 @@ export default function HomeInfo() {
               alignItems: "center",
             }}
           >
-            <Text
+            {/* <Text
               style={{
                 width: "60vw",
               }}
@@ -219,7 +239,8 @@ export default function HomeInfo() {
                   빅데이터와 AI를 기반으로 한 전문성
                 </p>
               </Line>
-            </Text>
+            </Text> */}
+            <img src="../../images/background_02_image.png" />
           </TextBox>
         </Box>
 
@@ -233,12 +254,12 @@ export default function HomeInfo() {
           bgtype={"none"}
           url={"../../images/background_03.png"}
         >
-          <TextLine>
-            <h1><b>BSBZ만의 핵심 서비스</b></h1>
-            <h2>인생 첫 조각투자를 클릭 한번으로 시작해보세요!</h2>
+          <TextLine data-aos="fade-up">
+            <h1>BSBZ만의 핵심 서비스</h1>
+            <h2>인생 첫 조각투자를 클릭 한 번으로 시작해보세요 !</h2>
             {/* <h1>짜잔</h1> */}
           </TextLine>
-          <ItemBox>
+          <ItemBox data-aos="fade-up">
             <Items
               onClick={() => reset("/product/realestate")}
               url={"../../images/home-estate-icon.png"}
@@ -257,7 +278,11 @@ export default function HomeInfo() {
           </ItemBox>
         </Box>
 
-        <Box bgtype={"none"} url={"../../images/background_02.png"}></Box>
+        <Box bgtype={"none"} url={"../../images/background_04.png"}>
+          <AiBox data-aos="fade-up">
+            <img src="../../images/background_04_word.png" />
+          </AiBox>
+        </Box>
         {/* <Pentagon reverse={"false"} color={"mint"} bgColor={"bg"} /> */}
 
         <Box bgtype={"none"} url={"../../images/background_04.png"}></Box>

@@ -196,8 +196,6 @@ export default function ProductBox({
   };
 
   const progressBarRef = useRef(null);
-  // const [leftRoyals, setLeftRoyals] = useRecoilState(leftRoyalsState);
-  // const [prductCost, setPrductCost] = useRecoilState(prductCostState);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -238,7 +236,7 @@ export default function ProductBox({
           step: (state: any, bar: any) => {
             // 여기서 퍼센테이지 텍스트를 업데이트합니다.
             bar.setText(Math.floor(bar.value() * 100) + " %");
-            console.log(Math.floor(bar.value() * 100));
+            // console.log(Math.floor(bar.value() * 100));
           },
         });
 
@@ -297,11 +295,15 @@ export default function ProductBox({
           </h3>
           {/* {isBlur === "true" ? <DetailBox color="red">마 감</DetailBox> : null} */}
         </Line>
-
-        <p>
-          {leftRoyal} / {productCost / 10000} ROYAL
-        </p>
-        <p>{productCost.toLocaleString()} 원</p>
+        <Line>
+          <p>잔여 ROYAL</p>
+          <p>{leftRoyal}</p>
+        </Line>
+        <Line>
+          <p>총 ROYAL</p>
+          <p>{productCost / 10000}</p>
+        </Line>
+        {/* <p>{productCost.toLocaleString()} 원</p> */}
       </TextBox>
     </Container>
   );

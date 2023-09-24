@@ -139,6 +139,12 @@ const Icon = styled.div`
 
   font-size: 96px;
 
+  p {
+    margin-top: 24px;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
   svg {
     cursor: pointer;
     transition: margin-bottom 0.3s ease-in-out, color 0.3s ease-in-out;
@@ -268,6 +274,7 @@ export default function Popup() {
                       setClicked(true);
                     }}
                   />
+                  <p>부 동 산</p>
                 </Icon>
                 <Icon>
                   <FontAwesomeIcon
@@ -277,6 +284,8 @@ export default function Popup() {
                       setClicked(true);
                     }}
                   />
+
+                  <p>음악 저작권</p>
                 </Icon>
                 <Icon>
                   <FontAwesomeIcon
@@ -286,6 +295,8 @@ export default function Popup() {
                       setClicked(true);
                     }}
                   />
+
+                  <p>럭 셔 리</p>
                 </Icon>
               </IconBox>
             )}
