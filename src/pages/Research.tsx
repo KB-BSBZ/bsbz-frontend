@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import Navigation from "../components/Navigation";
 import Hood from "../components/Hood";
 import Footer from "../components/Footer/Footer";
@@ -33,8 +33,6 @@ const Recommandation = styled.div`
   height: 90vh;
   width: 100%;
 
-  padding-top: 10vh;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -48,7 +46,6 @@ const Recommandation = styled.div`
 `;
 
 const NewsTap = styled.div`
-  padding-top: 10vh;
   height: 100%;
   width: 100%;
 
@@ -284,6 +281,47 @@ const NewsText = styled.div`
   }
 `;
 
+const Belt = styled.div`
+  padding-top: 10vh;
+  width: 100%;
+  height: 56px;
+
+  display: flex;
+  white-space: nowrap;
+  overflow: hidden;
+`;
+
+const beltScroll = keyframes`
+  0% {
+    transform: translateX(1200%);
+  }
+  100% {
+    transform: translateX(-1200%);
+  }
+`;
+
+const ScrollingText = styled.div`
+  padding: 10px;
+  margin-right: 20px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  animation: ${beltScroll} 150s linear infinite;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+interface IPortfolioProps {
+  product_name: string;
+  price: number;
+}
+
+interface ICloudProps {
+  word: string;
+  frequency: number;
+}
+
 export default function ResearchTest() {
   const [sliderData, setSliderData] = useState<ISliderProps[]>();
   const [isLoading, setIsLoading] = useState(false);
@@ -292,10 +330,25 @@ export default function ResearchTest() {
   const [deadline, setDeadline] = useState<IProductProps[]>([]);
   const [recent, setRecent] = useState<IProductProps[]>([]);
   const [recommend, setRecommend] = useState<IProductProps[]>([]);
+  const [cloud_01, setCloud_01] = useState<ICloudProps[]>([]);
+  const [cloud_02, setCloud_02] = useState<ICloudProps[]>([]);
 
   const [tab, isTab] = useState("rank");
 
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const scrollSpeed = 2; // 움직이는 속도
+
   useEffect(() => {
+    const scrollInterval = setInterval(() => {
+      setScrollPosition((prevPosition) => prevPosition + scrollSpeed);
+    }, 16); // 60fps
+
+    return () => clearInterval(scrollInterval);
+  }, []);
+
+  useEffect(() => {
+    const cloud_01_url = "http://localhost:8000/pricelog/luxury_cloud_word/";
+    const cloud_02_url = "http://localhost:8000/pricelog/estate_cloud_word/";
     const news_url = "http://localhost:8000/pricelog/news/";
     const product_url = "http://localhost:9999/product/allproducts";
     const allproduct_url = `${product_url}`;
@@ -403,6 +456,8 @@ export default function ResearchTest() {
       {isLoading && <Loading />}
       <Hood title={"리서치"} />
       <Navigation />
+      <Belt style={{ transform: `translateX(-${scrollPosition}px)` }}></Belt>
+
       <Container>
         <LeftBox>
           <Recommandation>

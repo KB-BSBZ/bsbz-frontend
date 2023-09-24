@@ -3,7 +3,6 @@ import section2 from "../../svgs/section2.svg";
 import section3 from "../../svgs/section3.svg";
 import Pentagon from "../Pentagon";
 import { theme } from "../../utils/theme";
-import Button from "../Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faForumbee } from "@fortawesome/free-brands-svg-icons";
 import React, { useEffect } from "react";
@@ -135,6 +134,30 @@ const AiBox = styled.div`
   flex-direction: column;
   justify-content: end;
   align-items: end;
+`;
+
+const Button = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  border-radius: 24px;
+
+  padding: 12px 48px;
+  box-shadow: 0px 4px 13px 0px rgba(0, 0, 0, 0.3);
+  color: ${(props) => props.theme.borderColor};
+  background-color: ${(props) => props.theme.backgroundColor};
+  bottom: 80px;
+  right: 310px;
+
+  cursor: pointer;
+  transition: color 0.3s linear, borderColor 0.3s linear;
+
+  &:hover {
+    background-color: ${(props) => props.theme.highlightColor};
+    color: ${(props) => props.theme.backgroundColor};
+  }
 `;
 
 export default function HomeInfo() {
@@ -279,13 +302,56 @@ export default function HomeInfo() {
         </Box>
 
         <Box bgtype={"none"} url={"../../images/background_04.png"}>
-          <AiBox data-aos="fade-up">
-            <img src="../../images/background_04_word.png" />
+          <AiBox
+            style={{
+              width: "100%",
+              height: "100%",
+            }}
+            data-aos="fade-up"
+          >
+            <img
+              style={{
+                width: "36%",
+                height: "72%",
+
+                marginRight: "180px",
+                marginBottom: "240px",
+              }}
+              src="../../images/background_19_text.png"
+            />
           </AiBox>
         </Box>
         {/* <Pentagon reverse={"false"} color={"mint"} bgColor={"bg"} /> */}
 
-        <Box bgtype={"none"} url={"../../images/background_04.png"}></Box>
+        <Box
+          bgtype={"none"}
+          url={"../../images/background_20.png"}
+          style={{
+            position: "relative",
+          }}
+        >
+          <AiBox
+            style={{
+              width: "100%",
+              height: "100%",
+            }}
+            data-aos="fade-up"
+          >
+            <img
+              style={{
+                width: "60%",
+                height: "54%",
+                marginRight: "280px",
+                marginBottom: "180px",
+              }}
+              src="../../images/background_20_text.png"
+            />
+
+            <Button onClick={() => reset("/product/allproducts")}>
+              <h2>투자상품 보러가기</h2>
+            </Button>
+          </AiBox>
+        </Box>
       </Container>
     </>
   );

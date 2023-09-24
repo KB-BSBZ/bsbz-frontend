@@ -79,9 +79,9 @@ export default function Footer() {
 
           <p>KBIT4 - team.bsbz</p>
           <Lines>
-            <Line>1</Line>
-            <Line>2</Line>
-            <Line>3</Line>
+            <Line> </Line>
+            <Line> </Line>
+            <Line> </Line>
           </Lines>
         </Info>
 

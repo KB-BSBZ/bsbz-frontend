@@ -108,6 +108,7 @@ const SearchImg = styled.div`
 
   background-color: ${(props) => props.theme.borderColor};
   color: ${(props) => props.theme.blurColor2};
+  cursor: pointer;
 `;
 
 const SearchForm = styled.div`

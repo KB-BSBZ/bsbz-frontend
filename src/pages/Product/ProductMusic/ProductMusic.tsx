@@ -13,6 +13,8 @@ import Hood from "../../../components/Hood";
 import { option } from "yargs";
 import useScrollReset from "../../../utils/useScrollReset";
 import ScrollTop from "../../../components/ScrollTop";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 const Container = styled.div`
   padding-top: 10vh;
   /* background-color: wheat; */
@@ -52,7 +54,7 @@ const TabBox = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: end;
-  width: 100%;
+  width: 50%;
   gap: 24px;
 `;
 
@@ -74,6 +76,54 @@ const Products = styled.div`
   grid-template-columns: repeat(4, 1fr);
   gap: 2vh;
   flex-direction: column;
+`;
+
+const Line = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  width: 100%;
+`;
+const SearchBox = styled.div`
+  background-color: ${(props) => props.theme.blurColor2};
+  border-radius: 12px;
+  overflow: hidden;
+  width: 50%;
+  height: 40%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  /* border-bottom: 3px solid ${(props) => props.theme.borderColor}; */
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+`;
+const SearchImg = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+  height: 100%;
+  background-color: ${(props) => props.theme.borderColor};
+  color: ${(props) => props.theme.blurColor2};
+`;
+const SearchForm = styled.div`
+  width: 75%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  form {
+    width: 100%;
+    height: 100%;
+    input {
+      width: 100%;
+      height: 100%;
+      background-color: transparent;
+      border: none;
+    }
+  }
 `;
 
 export default function ProductMusic() {
@@ -131,6 +181,13 @@ export default function ProductMusic() {
     fetchData(); // 비동기 함수 호출
   }, [orderType, type, isCounter, url]);
 
+  const handleSubmit = async (event: any) => {
+    console.log(event);
+    // try {
+    //   const url = await fetch("https://localhost:9999/product/search/" + event.);
+    // }
+  };
+
   const onMoveClick = (event: React.MouseEvent<HTMLSpanElement>) => {
     let destination = event.currentTarget.id;
     destination === "latest"
@@ -185,21 +242,33 @@ export default function ProductMusic() {
             </span>
           </ButtonBox>
           <MainBox>
-            <TabBox>
-              <Tab clicked={latestClicked} onClick={onMoveClick} id="latest">
-                <h3>등록순</h3>
-              </Tab>
-              <Tab clicked={viewsClicked} onClick={onMoveClick} id="views">
-                <h3>조회순</h3>
-              </Tab>
-              <Tab
-                clicked={deadlineClicked}
-                onClick={onMoveClick}
-                id="deadline"
-              >
-                <h3>마감순</h3>
-              </Tab>
-            </TabBox>
+            <Line>
+              <SearchBox>
+                <SearchImg>
+                  <FontAwesomeIcon icon={faMagnifyingGlass} />
+                </SearchImg>
+                <SearchForm>
+                  <form onSubmit={handleSubmit}>
+                    <input />
+                  </form>
+                </SearchForm>
+              </SearchBox>
+              <TabBox>
+                <Tab clicked={latestClicked} onClick={onMoveClick} id="latest">
+                  <h3>등록순</h3>
+                </Tab>
+                <Tab clicked={viewsClicked} onClick={onMoveClick} id="views">
+                  <h3>조회순</h3>
+                </Tab>
+                <Tab
+                  clicked={deadlineClicked}
+                  onClick={onMoveClick}
+                  id="deadline"
+                >
+                  <h3>마감순</h3>
+                </Tab>
+              </TabBox>
+            </Line>
 
             <Products>
               {data?.map((product, index) => (
